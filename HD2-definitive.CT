@@ -6558,16 +6558,16 @@ aobUnlock3:
     updatemenuitem.Caption = state and 'Get Table Update' or 'Get Table Update'
     if force == nil then
         local url = 'https://raw.githubusercontent.com/prebombo/helldivers-2-CT/main/version.txt'
-        local current_version = '1.0'  -- Your current CT version
+        local current_version = '1.0'  -- Cambia esto por la versión actual de tu tabla
         local new_version = internet.getURL(url)
 
         if new_version ~= current_version then
-            local result = messageDialog('New version available: ' .. new_version .. '. ¿Do you want to download it?', mtConfirmation, mbYes, mbNo)
+            local result = messageDialog('Nueva versión disponible: ' .. new_version .. '. ¿Quieres descargarla?', mtConfirmation, mbYes, mbNo)
             if result == mrYes then
                 shellExecute('https://github.com/prebombo/helldivers-2-CT/tree/main')
             end
         else
-            showMessage('You alredy have the most recent version.')
+            showMessage('Ya tienes la versión más reciente.')
         end
     end
   end
@@ -6587,6 +6587,22 @@ aobUnlock3:
   pushUpdate( nil, true )
 
 
+  function pushDocumentation( sender )
+    shellExecute('https://docs.google.com/document/d/1FbxxnKTwDbqlnLpvSrEzOBdMFZYR-AApij6THXyc2_A/edit?usp=drive_link')
+  end
+
+
+  function addDocumentationButton()
+    if documentationmenualreadyexists then return end
+      local parent = getMainForm().Menu.Items
+      documentationmenuitem = createMenuItem( parent )
+      parent.add( documentationmenuitem )
+      documentationmenuitem.Caption = 'Open Documentation'
+      documentationmenuitem.OnClick = pushDocumentation
+      documentationmenualreadyexists = 'yes'
+  end
+
+  addDocumentationButton()
 
   --getMemoryViewForm().Visible = true
   getAutoAttachList().add("helldivers2.exe")
