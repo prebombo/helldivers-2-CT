@@ -6979,17 +6979,9 @@ aobUnlock3:
     end
     updatemenuitem.Caption = state and 'Get Table Update' or 'Get Table Update'
     if force == nil then
-        local url = 'https://raw.githubusercontent.com/prebombo/helldivers-2-CT/main/version.txt'
-        local current_version = '1.1'  -- This is your actual version
-        local new_version = internet.getURL(url)
-
-        if new_version ~= current_version then
-            local result = messageDialog('New version available: ' .. new_version .. '. ¿Do you want to download it?', mtConfirmation, mbYes, mbNo)
-            if result == mrYes then
-                shellExecute('https://github.com/prebombo/helldivers-2-CT/tree/main')
-            end
-        else
-            showMessage('You alredy have the newest version.')
+        local result = messageDialog('¿Do you want to check if there is a new version on GitHub?', mtConfirmation, mbYes, mbNo)
+        if result == mrYes then
+            shellExecute('https://github.com/prebombo/helldivers-2-CT/tree/main')
         end
     end
   end
