@@ -684,7 +684,7 @@ unregistersymbol(aobTimeSub)
             </CheatEntry>
             <CheatEntry>
               <ID>113865</ID>
-              <Description>"Infinite Backpack                                                            (by ???)"</Description>
+              <Description>"Infinite Autocannon Backpack                                        (by ???)"</Description>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_Autocannon,game.dll,2B CE BA 52 97 88 69)
@@ -3373,7 +3373,7 @@ nop 3
         </CheatEntry>
         <CheatEntry>
           <ID>117453</ID>
-          <Description>"Infinite Backpack                                                                  (by ???)"</Description>
+          <Description>"Infinite Autocannon Backpack                                              (by ???)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_Autocannon,game.dll,2B CE BA 52 97 88 69)
@@ -6783,6 +6783,47 @@ aob_FinnikScript:
   db FF 4C 87 04
 
 unregistersymbol(aob_FinnikScript)
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>16</Key>
+            <Key>39</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+          <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>117454</ID>
+      <Description>"Higher spread ratio                                                                (by sakuno)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript Async="1">[ENABLE]
+//Patch 1.001.002  arc_settings.dl_bin
+{$lua}
+-- ArcSet
+registerSymbol("arc_ARC_3", '["game.dll"+01FB3738]+50')
+{$asm}
+
+arc_ARC_3-4: //RayCount
+  dd #1 //0 /1
+arc_ARC_3-8: //ChainCount
+  dd #60 //1 /20
+arc_ARC_3-1C: //Main Range
+  dd (float)200 //50 /100
+arc_ARC_3-18: //Aim Scan Range 1
+  dd (float)80 //40 ;170
+arc_ARC_3-14: //Aim Scan Range 2
+  dd (float)80 //40 ;170
+arc_ARC_3-10: //Chain Scan Degree
+  dd (float)140 //60 ;300
+arc_ARC_3-C: //Aim Size
+  dd (float)6 //3
+
+[DISABLE]
 </AssemblerScript>
       <Hotkeys>
         <Hotkey>
