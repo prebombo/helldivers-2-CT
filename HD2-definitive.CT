@@ -6255,6 +6255,392 @@ dealloc(dmg_newmem)
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
+      <ID>117448</ID>
+      <Description>"OnClick Armory Weapon Editor                                             (by cfemen)"</Description>
+      <Options moHideChildren="1"/>
+      <Color>FF8000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : helldivers2.exe
+  Version: 
+  Date   : 2024-03-21
+  Author : cfe
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(aobReadWeapon3,game.dll,66 0F 6E 40 04 4D 8B C6 41 8B 57 0C 0F 5B C0) // should be unique
+alloc(newmem4,$1000)
+
+label(code4)
+label(return4)
+
+newmem4:
+
+code4:
+  push rbx
+  mov rbx,pWeapon
+  mov [rbx],rax
+  pop rbx
+  movd xmm0,[rax+04]
+  mov r8,r14
+  mov edx,[r15+0C]
+  cvtdq2ps xmm0,xmm0
+  jmp return4
+
+aobReadWeapon3:
+  jmp far newmem4
+  nop
+return4:
+registersymbol(aobReadWeapon3)
+
+aobscanmodule(aobBlitzerFire,game.dll,0F 10 48 10 48 8D 8D B0 00 00 00 0F 29 85 B0 00 00 00) // should be unique
+alloc(newmem5,$1000)
+
+label(code5)
+label(return5)
+
+newmem5:
+
+code5:
+  push rbx
+  push rcx
+  mov rbx,pFirerate
+  lea rcx,[rax-4]
+  mov [rbx],rcx
+  pop rcx
+  pop rbx
+  movups xmm1,[rax+10]
+  lea rcx,[rbp+000000B0]
+  movaps [rbp+000000B0],xmm0
+  jmp return5
+
+aobBlitzerFire:
+  jmp far newmem5
+  nop 4
+return5:
+registersymbol(aobBlitzerFire)
+
+aobscanmodule(aobBlitzerDamage,game.dll,44 8B 7A 24 49 8B D6 66 0F 6E 70 04 0F 5B F6) // should be unique
+alloc(newmem6,$1000)
+
+label(code6)
+label(return6)
+
+newmem6:
+
+code6:
+  push rbx
+  mov rbx,pWeapon
+  mov [rbx],rax
+  pop rbx
+  mov r15d,[rdx+24]
+  mov rdx,r14
+  movd xmm6,[rax+04]
+  cvtdq2ps xmm6,xmm6
+  jmp return6
+
+aobBlitzerDamage:
+  jmp far newmem6
+  nop
+return6:
+registersymbol(aobBlitzerDamage)
+
+
+aobscanmodule(aobFireRate,game.dll,48 8D 80 80 00 00 00 0F 11 41 80 0F 10 40 A0 0F 11 49 90 0F 10 48 B0 0F 11 41 A0 0F 10 40 C0 0F 11 49 B0 0F 10 48 D0 0F 11 41 C0 0F 10 40 E0 0F 11 49 D0 0F 10 48 F0 0F 11 41 E0 0F 11 49 F0 49 2B D5 75 AE 0F 10 00 0F 10 48 10 0F 11 01 0F 10 40 20 0F 11 49 10 0F 10 48 30 0F 11 41 20 0F 10 40 40 0F 11 49 30 0F 10 48 50) // should be unique
+alloc(newmem7,$1000)
+
+label(code7)
+label(return7)
+
+newmem7:
+
+code7:
+  push rbx
+  mov ebx,[rax+8]
+  test ebx,ebx
+  je short @f
+   mov rbx,pFirerate
+   mov [rbx],rax
+  @@:
+  pop rbx
+  lea rax,[rax+00000080]
+  movups [rcx-80],xmm0
+  movups xmm0,[rax-60]
+  jmp return7
+
+aobFireRate:
+  jmp far newmem7
+  nop
+return7:
+registersymbol(aobFireRate)
+
+
+aobscanmodule(aobReadDMG,game.dll,F3 44 0F 10 8D F8 01 00 00 4D 8B C6 66 0F 6E 40 04) // should be unique
+alloc(newmem8,$1000)
+
+label(code8)
+label(return8)
+
+newmem8:
+
+code8:
+  push rbx
+  mov rbx,pWeapon
+  mov [rbx],rax
+  pop rbx
+  movss xmm9,[rbp+000001F8]
+  mov r8,r14
+  movd xmm0,[rax+04]
+  jmp return8
+
+aobReadDMG:
+  jmp far newmem8
+  nop 3
+return8:
+registersymbol(aobReadDMG)
+
+aobscanmodule(aobDamageSpecial,game.dll,F3 44 0F 10 B5 F8 01 00 00 4D 8B C6 66 0F 6E 40 04) // should be unique
+alloc(newmem9,$1000)
+
+label(code9)
+label(return9)
+
+newmem9:
+
+code9:
+  push rbx
+  mov rbx,pWeapon
+  mov [rbx],rax
+  pop rbx
+  movss xmm14,[rbp+000001F8]
+  mov r8,r14
+  movd xmm0,[rax+04]
+  jmp return9
+
+aobDamageSpecial:
+  jmp far newmem9
+  nop 3
+return9:
+registersymbol(aobDamageSpecial)
+
+[DISABLE]
+
+
+
+aobReadWeapon3:
+  db 66 0F 6E 40 04 4D 8B C6 41 8B 57 0C 0F 5B C0
+
+unregistersymbol(aobReadWeapon3)
+dealloc(newmem4)
+
+
+aobBlitzerFire:
+  db 0F 10 48 10 48 8D 8D B0 00 00 00 0F 29 85 B0 00 00 00
+
+unregistersymbol(aobBlitzerFire)
+dealloc(newmem5)
+
+aobBlitzerDamage:
+  db 44 8B 7A 24 49 8B D6 66 0F 6E 70 04 0F 5B F6
+
+unregistersymbol(aobBlitzerDamage)
+dealloc(newmem6)
+
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+CFDA33
+
+game.dll+CFDA0A: 8B 85 F0 00 00 00        - mov eax,[rbp+000000F0]
+game.dll+CFDA10: 48 89 54 24 60           - mov [rsp+60],rdx
+game.dll+CFDA15: 85 C0                    - test eax,eax
+game.dll+CFDA17: 74 08                    - je game.dll+CFDA21
+game.dll+CFDA19: 4D 8B AC C0 70 FD C9 01  - mov r13,[r8+rax*8+01C9FD70]
+game.dll+CFDA21: 8B 4A 3C                 - mov ecx,[rdx+3C]
+game.dll+CFDA24: 49 8B C6                 - mov rax,r14
+game.dll+CFDA27: 85 C9                    - test ecx,ecx
+game.dll+CFDA29: 74 08                    - je game.dll+CFDA33
+game.dll+CFDA2B: 49 8B 84 C8 80 F0 C9 01  - mov rax,[r8+rcx*8+01C9F080]
+// ---------- INJECTING HERE ----------
+game.dll+CFDA33: 41 8B 7D 3C              - mov edi,[r13+3C]
+// ---------- DONE INJECTING  ----------
+game.dll+CFDA37: 49 8B D6                 - mov rdx,r14
+game.dll+CFDA3A: 66 0F 6E 70 04           - movd xmm6,[rax+04]
+game.dll+CFDA3F: 0F 5B F6                 - cvtdq2ps xmm6,xmm6
+game.dll+CFDA42: 85 FF                    - test edi,edi
+game.dll+CFDA44: 74 08                    - je game.dll+CFDA4E
+game.dll+CFDA46: 49 8B 94 F8 80 F0 C9 01  - mov rdx,[r8+rdi*8+01C9F080]
+game.dll+CFDA4E: 49 8B C6                 - mov rax,r14
+game.dll+CFDA51: 85 C9                    - test ecx,ecx
+game.dll+CFDA53: 74 08                    - je game.dll+CFDA5D
+game.dll+CFDA55: 49 8B 84 C8 80 F0 C9 01  - mov rax,[r8+rcx*8+01C9F080]
+}
+aobFireRate:
+  db 48 8D 80 80 00 00 00 0F 11 41 80 0F 10 40 A0
+
+unregistersymbol(aobFireRate)
+dealloc(newmem7)
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+D04C9E
+
+game.dll+D04C6B: 45 0F 57 C0                       - xorps xmm8,xmm8
+game.dll+D04C6F: 4D 85 DB                          - test r11,r11
+game.dll+D04C72: 0F 84 35 2B 00 00                 - je game.dll+D077AD
+game.dll+D04C78: 49 8B C3                          - mov rax,r11
+game.dll+D04C7B: 48 8D 8D F0 01 00 00              - lea rcx,[rbp+000001F0]
+game.dll+D04C82: 41 8B D4                          - mov edx,r12d
+game.dll+D04C85: 66 66 66 0F 1F 84 00 00 00 00 00  - nop word ptr [rax+rax+00000000]
+game.dll+D04C90: 48 8D 89 80 00 00 00              - lea rcx,[rcx+00000080]
+game.dll+D04C97: 0F 10 00                          - movups xmm0,[rax]
+game.dll+D04C9A: 0F 10 48 10                       - movups xmm1,[rax+10]
+// ---------- INJECTING HERE ----------
+game.dll+D04C9E: 48 8D 80 80 00 00 00              - lea rax,[rax+00000080]
+// ---------- DONE INJECTING  ----------
+game.dll+D04CA5: 0F 11 41 80                       - movups [rcx-80],xmm0
+game.dll+D04CA9: 0F 10 40 A0                       - movups xmm0,[rax-60]
+game.dll+D04CAD: 0F 11 49 90                       - movups [rcx-70],xmm1
+game.dll+D04CB1: 0F 10 48 B0                       - movups xmm1,[rax-50]
+game.dll+D04CB5: 0F 11 41 A0                       - movups [rcx-60],xmm0
+game.dll+D04CB9: 0F 10 40 C0                       - movups xmm0,[rax-40]
+game.dll+D04CBD: 0F 11 49 B0                       - movups [rcx-50],xmm1
+game.dll+D04CC1: 0F 10 48 D0                       - movups xmm1,[rax-30]
+game.dll+D04CC5: 0F 11 41 C0                       - movups [rcx-40],xmm0
+game.dll+D04CC9: 0F 10 40 E0                       - movups xmm0,[rax-20]
+}
+aobReadDMG:
+  db F3 44 0F 10 8D F8 01 00 00 4D 8B C6 66 0F 6E 40 04
+
+unregistersymbol(aobReadDMG)
+dealloc(newmem8)
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+D06A0C
+
+game.dll+D069E3: 8B 85 90 05 00 00           - mov eax,[rbp+00000590]
+game.dll+D069E9: 85 C0                       - test eax,eax
+game.dll+D069EB: 74 08                       - je game.dll+D069F5
+game.dll+D069ED: 4D 8B BC C1 80 7D CA 01     - mov r15,[r9+rax*8+01CA7D80]
+game.dll+D069F5: 8B 4F 3C                    - mov ecx,[rdi+3C]
+game.dll+D069F8: 49 8B C6                    - mov rax,r14
+game.dll+D069FB: 44 89 64 24 20              - mov [rsp+20],r12d
+game.dll+D06A00: 85 C9                       - test ecx,ecx
+game.dll+D06A02: 74 08                       - je game.dll+D06A0C
+game.dll+D06A04: 49 8B 84 C9 90 70 CA 01     - mov rax,[r9+rcx*8+01CA7090]
+// ---------- INJECTING HERE ----------
+game.dll+D06A0C: F3 44 0F 10 8D F8 01 00 00  - movss xmm9,[rbp+000001F8]
+// ---------- DONE INJECTING  ----------
+game.dll+D06A15: 4D 8B C6                    - mov r8,r14
+game.dll+D06A18: 66 0F 6E 40 04              - movd xmm0,[rax+04]
+game.dll+D06A1D: 41 0F 28 C9                 - movaps xmm1,xmm9
+game.dll+D06A21: 41 8B 57 3C                 - mov edx,[r15+3C]
+game.dll+D06A25: F3 44 0F 11 4C 24 50        - movss [rsp+50],xmm9
+game.dll+D06A2C: F3 41 0F 5E CA              - divss xmm1,xmm10
+game.dll+D06A31: 0F 5B C0                    - cvtdq2ps xmm0,xmm0
+game.dll+D06A34: F3 0F 59 C1                 - mulss xmm0,xmm1
+game.dll+D06A38: F3 0F 11 44 24 24           - movss [rsp+24],xmm0
+game.dll+D06A3E: 85 D2                       - test edx,edx
+}
+aobDamageSpecial:
+  db F3 44 0F 10 B5 F8 01 00 00 4D 8B C6 66 0F 6E 40 04
+
+unregistersymbol(aobDamageSpecial)
+dealloc(newmem9)
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+D04F27
+
+game.dll+D04EFD: 8B 85 F0 00 00 00           - mov eax,[rbp+000000F0]
+game.dll+D04F03: 85 C0                       - test eax,eax
+game.dll+D04F05: 74 08                       - je game.dll+D04F0F
+game.dll+D04F07: 49 8B BC C1 80 7D CA 01     - mov rdi,[r9+rax*8+01CA7D80]
+game.dll+D04F0F: 41 8B 4D 3C                 - mov ecx,[r13+3C]
+game.dll+D04F13: 49 8B C6                    - mov rax,r14
+game.dll+D04F16: 44 89 64 24 20              - mov [rsp+20],r12d
+game.dll+D04F1B: 85 C9                       - test ecx,ecx
+game.dll+D04F1D: 74 08                       - je game.dll+D04F27
+game.dll+D04F1F: 49 8B 84 C9 90 70 CA 01     - mov rax,[r9+rcx*8+01CA7090]
+// ---------- INJECTING HERE ----------
+game.dll+D04F27: F3 44 0F 10 B5 F8 01 00 00  - movss xmm14,[rbp+000001F8]
+// ---------- DONE INJECTING  ----------
+game.dll+D04F30: 4D 8B C6                    - mov r8,r14
+game.dll+D04F33: 66 0F 6E 40 04              - movd xmm0,[rax+04]
+game.dll+D04F38: 41 0F 28 CE                 - movaps xmm1,xmm14
+game.dll+D04F3C: 8B 57 3C                    - mov edx,[rdi+3C]
+game.dll+D04F3F: F3 44 0F 11 74 24 4C        - movss [rsp+4C],xmm14
+game.dll+D04F46: F3 41 0F 5E CA              - divss xmm1,xmm10
+game.dll+D04F4B: 0F 5B C0                    - cvtdq2ps xmm0,xmm0
+game.dll+D04F4E: F3 0F 59 C1                 - mulss xmm0,xmm1
+game.dll+D04F52: F3 0F 11 44 24 24           - movss [rsp+24],xmm0
+game.dll+D04F58: 85 D2                       - test edx,edx
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>73</ID>
+          <Description>"Firerate:"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>pFirerate</Address>
+          <Offsets>
+            <Offset>8</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117449</ID>
+          <Description>"Damage:"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pWeapon</Address>
+          <Offsets>
+            <Offset>4</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117450</ID>
+          <Description>"Structure Penetration"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pWeapon</Address>
+          <Offsets>
+            <Offset>8</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117451</ID>
+          <Description>"Penetration (No Angle)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pWeapon</Address>
+          <Offsets>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117452</ID>
+          <Description>"Penetration (Angle)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pWeapon</Address>
+          <Offsets>
+            <Offset>10</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>109</ID>
+          <Description>"Demolition"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>pWeapon</Address>
+          <Offsets>
+            <Offset>1C</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
       <ID>117440</ID>
       <Description>"No ammo consume/inf mecha                                              (by gir489)"</Description>
       <VariableType>Auto Assembler Script</VariableType>
@@ -6558,16 +6944,16 @@ aobUnlock3:
     updatemenuitem.Caption = state and 'Get Table Update' or 'Get Table Update'
     if force == nil then
         local url = 'https://raw.githubusercontent.com/prebombo/helldivers-2-CT/main/version.txt'
-        local current_version = '1.0'  -- Cambia esto por la versión actual de tu tabla
+        local current_version = '1.0'  -- This is your actual version
         local new_version = internet.getURL(url)
 
         if new_version ~= current_version then
-            local result = messageDialog('Nueva versión disponible: ' .. new_version .. '. ¿Quieres descargarla?', mtConfirmation, mbYes, mbNo)
+            local result = messageDialog('New version available: ' .. new_version .. '. ¿Do you want to download it?', mtConfirmation, mbYes, mbNo)
             if result == mrYes then
                 shellExecute('https://github.com/prebombo/helldivers-2-CT/tree/main')
             end
         else
-            showMessage('Ya tienes la versión más reciente.')
+            showMessage('You alredy have the newest version.')
         end
     end
   end
@@ -6603,6 +6989,24 @@ aobUnlock3:
   end
 
   addDocumentationButton()
+
+
+  function pushBypass( sender )
+    shellExecute('https://www.patreon.com/cfemen')
+  end
+
+
+  function addBypassButton()
+    if bypassmenualreadyexists then return end
+      local parent = getMainForm().Menu.Items
+      bypassmenuitem = createMenuItem( parent )
+      parent.add( bypassmenuitem )
+      bypassmenuitem.Caption = 'Bypass'
+      bypassmenuitem.OnClick = pushBypass
+      bypassmenualreadyexists = 'yes'
+  end
+
+  addBypassButton()
 
   --getMemoryViewForm().Visible = true
   getAutoAttachList().add("helldivers2.exe")
