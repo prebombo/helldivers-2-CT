@@ -5506,6 +5506,8 @@ dmg_newmem:
     je dmg_Pistol
   cmp [rcx+00], #47 // P-4 Senator revolver
     je dmg_Pistol
+  cmp [rcx+00], #29 // Knight
+    je dmg_Pistol
   cmp [rcx+00], #54 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
     je dmg_Machinegun
   cmp [rcx+00], #128 // anti material rifle
@@ -6291,8 +6293,8 @@ dealloc(dmg_newmem)
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
-      <ID>117448</ID>
-      <Description>"OnClick Armory Weapon Editor                                             (by cfemen)"</Description>
+      <ID>138</ID>
+      <Description>"OnClick Armory Weapon Editor                                            (by cfemen)"</Description>
       <Options moHideChildren="1"/>
       <Color>FF8000</Color>
       <VariableType>Auto Assembler Script</VariableType>
@@ -6305,6 +6307,15 @@ dealloc(dmg_newmem)
 }
 
 [ENABLE]
+globalalloc(fSpeed,4)
+fSpeed:
+dd (float)2
+globalalloc(pWeapon,8)
+pWeapon:
+dq 0
+globalalloc(pFirerate,8)
+pFirerate:
+dq 0
 
 aobscanmodule(aobReadWeapon3,game.dll,66 0F 6E 40 04 4D 8B C6 41 8B 57 0C 0F 5B C0) // should be unique
 alloc(newmem4,$1000)
@@ -6461,6 +6472,28 @@ aobDamageSpecial:
 return9:
 registersymbol(aobDamageSpecial)
 
+aobscanmodule(aobReadSpecialDamage,game.dll,45 8B C4 0F 28 C7 66 0F 6E 70 04 0F 5B F6) // should be unique
+alloc(newmem10,$1000)
+
+label(code10)
+label(return10)
+
+newmem10:
+
+code10:
+  mov r8,pWeapon
+  mov [r8],rax
+  mov r8d,r12d
+  movaps xmm0,xmm7
+  movd xmm6,[rax+04]
+  cvtdq2ps xmm6,xmm6
+  jmp return10
+
+aobReadSpecialDamage:
+  jmp far newmem10
+return10:
+registersymbol(aobReadSpecialDamage)
+
 [DISABLE]
 
 
@@ -6612,10 +6645,43 @@ game.dll+D04F4E: F3 0F 59 C1                 - mulss xmm0,xmm1
 game.dll+D04F52: F3 0F 11 44 24 24           - movss [rsp+24],xmm0
 game.dll+D04F58: 85 D2                       - test edx,edx
 }
+aobReadSpecialDamage:
+  db 45 8B C4 0F 28 C7 66 0F 6E 70 04 0F 5B F6
+
+unregistersymbol(aobReadSpecialDamage)
+dealloc(newmem10)
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+E1E082
+
+game.dll+E1E051: E8 9A C0 FF FF           - call game.dll+E1A0F0
+game.dll+E1E056: 83 FF 2E                 - cmp edi,2E
+game.dll+E1E059: 0F 83 F1 2A 00 00        - jae game.dll+E20B50
+game.dll+E1E05F: 8B 4D 38                 - mov ecx,[rbp+38]
+game.dll+E1E062: E8 C9 B0 E0 FF           - call game.dll+C29130
+game.dll+E1E067: 8B 8D 78 01 00 00        - mov ecx,[rbp+00000178]
+game.dll+E1E06D: 66 0F 6E 78 04           - movd xmm7,[rax+04]
+game.dll+E1E072: 0F 5B FF                 - cvtdq2ps xmm7,xmm7
+game.dll+E1E075: F3 0F 59 3D CF 90 38 00  - mulss xmm7,[game.dll+11A714C]
+game.dll+E1E07D: E8 AE B0 E0 FF           - call game.dll+C29130
+// ---------- INJECTING HERE ----------
+game.dll+E1E082: 45 8B C4                 - mov r8d,r12d
+// ---------- DONE INJECTING  ----------
+game.dll+E1E085: 0F 28 C7                 - movaps xmm0,xmm7
+game.dll+E1E088: 66 0F 6E 70 04           - movd xmm6,[rax+04]
+game.dll+E1E08D: 0F 5B F6                 - cvtdq2ps xmm6,xmm6
+game.dll+E1E090: F3 0F 59 35 B4 90 38 00  - mulss xmm6,[game.dll+11A714C]
+game.dll+E1E098: 0F 28 CE                 - movaps xmm1,xmm6
+game.dll+E1E09B: E8 90 85 FC FF           - call game.dll+DE6630
+game.dll+E1E0A0: 45 33 DB                 - xor r11d,r11d
+game.dll+E1E0A3: 8B CF                    - mov ecx,edi
+game.dll+E1E0A5: 48 6B D1 1C              - imul rdx,rcx,1C
+game.dll+E1E0A9: FF C7                    - inc edi
+}
 </AssemblerScript>
       <CheatEntries>
         <CheatEntry>
-          <ID>73</ID>
+          <ID>139</ID>
           <Description>"Firerate:"</Description>
           <ShowAsSigned>0</ShowAsSigned>
           <VariableType>Float</VariableType>
@@ -6625,7 +6691,7 @@ game.dll+D04F58: 85 D2                       - test edx,edx
           </Offsets>
         </CheatEntry>
         <CheatEntry>
-          <ID>117449</ID>
+          <ID>140</ID>
           <Description>"Damage:"</Description>
           <ShowAsSigned>0</ShowAsSigned>
           <VariableType>4 Bytes</VariableType>
@@ -6635,7 +6701,7 @@ game.dll+D04F58: 85 D2                       - test edx,edx
           </Offsets>
         </CheatEntry>
         <CheatEntry>
-          <ID>117450</ID>
+          <ID>141</ID>
           <Description>"Structure Penetration"</Description>
           <ShowAsSigned>0</ShowAsSigned>
           <VariableType>4 Bytes</VariableType>
@@ -6645,7 +6711,7 @@ game.dll+D04F58: 85 D2                       - test edx,edx
           </Offsets>
         </CheatEntry>
         <CheatEntry>
-          <ID>117451</ID>
+          <ID>142</ID>
           <Description>"Penetration (No Angle)"</Description>
           <ShowAsSigned>0</ShowAsSigned>
           <VariableType>4 Bytes</VariableType>
@@ -6655,7 +6721,7 @@ game.dll+D04F58: 85 D2                       - test edx,edx
           </Offsets>
         </CheatEntry>
         <CheatEntry>
-          <ID>117452</ID>
+          <ID>143</ID>
           <Description>"Penetration (Angle)"</Description>
           <ShowAsSigned>0</ShowAsSigned>
           <VariableType>4 Bytes</VariableType>
@@ -6665,7 +6731,7 @@ game.dll+D04F58: 85 D2                       - test edx,edx
           </Offsets>
         </CheatEntry>
         <CheatEntry>
-          <ID>109</ID>
+          <ID>144</ID>
           <Description>"Demolition"</Description>
           <ShowAsSigned>0</ShowAsSigned>
           <VariableType>4 Bytes</VariableType>
@@ -6824,6 +6890,22 @@ arc_ARC_3-C: //Aim Size
   dd (float)6 //3
 
 [DISABLE]
+
+/*Example recommended max value are stable
+arc_ARC_3-4: //RayCount
+  dd #14 &lt;—————————————————— Each shot's lightning count
+arc_ARC_3-8: //ChainCount
+  dd #0 // &lt;—————————————————— Reduce this value if you can see ghosting lightning.
+arc_ARC_3-1C: //Main Range
+  dd (float)200 //&lt;—————————————————— Arc Max Range, Recommended below 1000
+arc_ARC_3-18: //Target Scan Angle 1
+  dd (float)80 // &lt;—————————————————— Recommended below 350
+arc_ARC_3-14: //Target Scan Angle 2
+  dd (float)80// &lt;—————————————————— Recommended below 350
+arc_ARC_3-10: //Chain Target Scan Degree
+  dd (float)140 // &lt;—————————————————— Recommended below 300, Reduce this value if you can see ghosting lightning.
+arc_ARC_3-C: //Target Scan Window Size
+  dd (float)6 // &lt;—————————————————— Recommended below 360
 </AssemblerScript>
       <Hotkeys>
         <Hotkey>
@@ -6985,7 +7067,20 @@ aobUnlock3:
 </AssemblerScript>
     </CheatEntry>
   </CheatEntries>
-  <UserdefinedSymbols/>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>fSpeed</Name>
+      <Address>1C4C6540000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>pWeapon</Name>
+      <Address>1C4C6540010</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>pFirerate</Name>
+      <Address>1C4C6540020</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
 
   function cycleFullCompact( sender, force )
