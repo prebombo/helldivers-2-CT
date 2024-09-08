@@ -704,6 +704,43 @@ unregistersymbol(aob_Autocannon)
         </CheatEntry>
         <CheatEntry>
           <ID>52</ID>
+          <Description>"Climb All                                                                             (by sakuno)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{
+  Game   : helldivers2.exe
+  Version: 1.001.xxx
+  Date   : 2024-08-25
+  Author : (Discord)Sakuno
+
+  This little script allow you to climb up anything can climb.
+}
+{$lua}
+AvatarDataReplacer=decodeFunction('c-n1^!AiqG5QhJ4m$,8MLPb!a=4guigvffyZ8sZw5/CR#QBo61p;1HBs:ciU=F0Bic^DdkMFodp[-6i{Wp:LbH%W{k()qFThce38,arEr@ePEj4vy:#ec[5HC6oo.OJHCvVSx1??dSl[,3:B6.J]:UX,v0erE,QuJE!esNCwi9,Gj(JM((tiZ]1Bfy)C3qB3D$J8p[l_7)XYg@GTq15b$xp#h43GWhg3c:C{3S[Ydh/M[g-ur?4rJ?n4Vc*Ar2-*YJK9RrJW:,w^z2v-!HnOuSuA@9AiTTj_AoIjz;{eIJOjG,P%Y-xB.6U,twn=f')
+AvatarDataReplacer()
+{$asm}
+// X
+AvatarClimbAddr:
+  dd (float)50.0 // Default 1.95
+
+// Y
+AvatarClimbAddr+4:
+  dd (float)50.0 // Default 1.40
+
+[DISABLE]
+// X
+AvatarClimbAddr:
+  dd (float)1.95
+
+// Y
+AvatarClimbAddr+4:
+  dd (float)1.40
+
+unregistersymbol(AvatarClimbAddr)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117455</ID>
           <Description>"No Recoil                                                                            (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
@@ -4405,6 +4442,43 @@ game.dll+2CC80A: C7 40 04 FF FF FF FF  - mov [rax+04],FFFFFFFF
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
+          <ID>117457</ID>
+          <Description>"Climb All                                                                                (by sakuno)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{
+  Game   : helldivers2.exe
+  Version: 1.001.xxx
+  Date   : 2024-08-25
+  Author : (Discord)Sakuno
+
+  This little script allow you to climb up anything can climb.
+}
+{$lua}
+AvatarDataReplacer=decodeFunction('c-n1^!AiqG5QhJ4m$,8MLPb!a=4guigvffyZ8sZw5/CR#QBo61p;1HBs:ciU=F0Bic^DdkMFodp[-6i{Wp:LbH%W{k()qFThce38,arEr@ePEj4vy:#ec[5HC6oo.OJHCvVSx1??dSl[,3:B6.J]:UX,v0erE,QuJE!esNCwi9,Gj(JM((tiZ]1Bfy)C3qB3D$J8p[l_7)XYg@GTq15b$xp#h43GWhg3c:C{3S[Ydh/M[g-ur?4rJ?n4Vc*Ar2-*YJK9RrJW:,w^z2v-!HnOuSuA@9AiTTj_AoIjz;{eIJOjG,P%Y-xB.6U,twn=f')
+AvatarDataReplacer()
+{$asm}
+// X
+AvatarClimbAddr:
+  dd (float)50.0 // Default 1.95
+
+// Y
+AvatarClimbAddr+4:
+  dd (float)50.0 // Default 1.40
+
+[DISABLE]
+// X
+AvatarClimbAddr:
+  dd (float)1.95
+
+// Y
+AvatarClimbAddr+4:
+  dd (float)1.40
+
+unregistersymbol(AvatarClimbAddr)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
           <ID>31</ID>
           <Description>"Add x? Resources(Samples) On Pickup                                 (by cfemen)"</Description>
           <Options moHideChildren="1"/>
@@ -5456,6 +5530,43 @@ game.dll+41F548: 74 2B                    - je game.dll+41F575
 }
 </AssemblerScript>
         </CheatEntry>
+        <CheatEntry>
+          <ID>117458</ID>
+          <Description>"Climb All                                                                                (by sakuno)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{
+  Game   : helldivers2.exe
+  Version: 1.001.xxx
+  Date   : 2024-08-25
+  Author : (Discord)Sakuno
+
+  This little script allow you to climb up anything can climb.
+}
+{$lua}
+AvatarDataReplacer=decodeFunction('c-n1^!AiqG5QhJ4m$,8MLPb!a=4guigvffyZ8sZw5/CR#QBo61p;1HBs:ciU=F0Bic^DdkMFodp[-6i{Wp:LbH%W{k()qFThce38,arEr@ePEj4vy:#ec[5HC6oo.OJHCvVSx1??dSl[,3:B6.J]:UX,v0erE,QuJE!esNCwi9,Gj(JM((tiZ]1Bfy)C3qB3D$J8p[l_7)XYg@GTq15b$xp#h43GWhg3c:C{3S[Ydh/M[g-ur?4rJ?n4Vc*Ar2-*YJK9RrJW:,w^z2v-!HnOuSuA@9AiTTj_AoIjz;{eIJOjG,P%Y-xB.6U,twn=f')
+AvatarDataReplacer()
+{$asm}
+// X
+AvatarClimbAddr:
+  dd (float)50.0 // Default 1.95
+
+// Y
+AvatarClimbAddr+4:
+  dd (float)50.0 // Default 1.40
+
+[DISABLE]
+// X
+AvatarClimbAddr:
+  dd (float)1.95
+
+// Y
+AvatarClimbAddr+4:
+  dd (float)1.40
+
+unregistersymbol(AvatarClimbAddr)
+</AssemblerScript>
+        </CheatEntry>
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
@@ -5705,7 +5816,7 @@ dmg_Enemy:
   cvtdq2ps xmm1,xmm1
   cvtdq2ps xmm3,xmm3
   mulss xmm3, dword ptr [enemydmg_multiplier]
-  mulss xmm1, dword ptr [enemydmg_multiplier]
+  mulss xmm1, dword ptr [admg_multiplier_fall]
   jmp dmg_return
 
 dmg_code:
@@ -6921,6 +7032,43 @@ arc_ARC_3-C: //Target Scan Window Size
       </Hotkeys>
     </CheatEntry>
     <CheatEntry>
+      <ID>117456</ID>
+      <Description>"Climb All                                                                                (by sakuno)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{
+  Game   : helldivers2.exe
+  Version: 1.001.xxx
+  Date   : 2024-08-25
+  Author : (Discord)Sakuno
+
+  This little script allow you to climb up anything can climb.
+}
+{$lua}
+AvatarDataReplacer=decodeFunction('c-n1^!AiqG5QhJ4m$,8MLPb!a=4guigvffyZ8sZw5/CR#QBo61p;1HBs:ciU=F0Bic^DdkMFodp[-6i{Wp:LbH%W{k()qFThce38,arEr@ePEj4vy:#ec[5HC6oo.OJHCvVSx1??dSl[,3:B6.J]:UX,v0erE,QuJE!esNCwi9,Gj(JM((tiZ]1Bfy)C3qB3D$J8p[l_7)XYg@GTq15b$xp#h43GWhg3c:C{3S[Ydh/M[g-ur?4rJ?n4Vc*Ar2-*YJK9RrJW:,w^z2v-!HnOuSuA@9AiTTj_AoIjz;{eIJOjG,P%Y-xB.6U,twn=f')
+AvatarDataReplacer()
+{$asm}
+// X
+AvatarClimbAddr:
+  dd (float)50.0 // Default 1.95
+
+// Y
+AvatarClimbAddr+4:
+  dd (float)50.0 // Default 1.40
+
+[DISABLE]
+// X
+AvatarClimbAddr:
+  dd (float)1.95
+
+// Y
+AvatarClimbAddr+4:
+  dd (float)1.40
+
+unregistersymbol(AvatarClimbAddr)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
       <ID>117429</ID>
       <Description>"Semi weapons fire rate remover (outdated)                           (by impushingp.)"</Description>
       <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
@@ -7079,6 +7227,10 @@ aobUnlock3:
     <SymbolEntry>
       <Name>pFirerate</Name>
       <Address>1C4C6540020</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>AvatarClimbAddr</Name>
+      <Address>23AE122AB5C</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
