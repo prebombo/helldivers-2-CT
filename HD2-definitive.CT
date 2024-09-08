@@ -7032,40 +7032,37 @@ arc_ARC_3-C: //Target Scan Window Size
       </Hotkeys>
     </CheatEntry>
     <CheatEntry>
-      <ID>117456</ID>
-      <Description>"Climb All                                                                                (by sakuno)"</Description>
+      <ID>117459</ID>
+      <Description>"Mortar_Proj_Mod                                                                   (by sakuno)"</Description>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
 {
   Game   : helldivers2.exe
-  Version: 1.001.xxx
-  Date   : 2024-08-25
-  Author : (Discord)Sakuno
-
-  This little script allow you to climb up anything can climb.
+  Version: 1.001.005
+  Date   : 2024-08-22
+  Mortar for helldiver 2
 }
 {$lua}
-AvatarDataReplacer=decodeFunction('c-n1^!AiqG5QhJ4m$,8MLPb!a=4guigvffyZ8sZw5/CR#QBo61p;1HBs:ciU=F0Bic^DdkMFodp[-6i{Wp:LbH%W{k()qFThce38,arEr@ePEj4vy:#ec[5HC6oo.OJHCvVSx1??dSl[,3:B6.J]:UX,v0erE,QuJE!esNCwi9,Gj(JM((tiZ]1Bfy)C3qB3D$J8p[l_7)XYg@GTq15b$xp#h43GWhg3c:C{3S[Ydh/M[g-ur?4rJ?n4Vc*Ar2-*YJK9RrJW:,w^z2v-!HnOuSuA@9AiTTj_AoIjz;{eIJOjG,P%Y-xB.6U,twn=f')
-AvatarDataReplacer()
-{$asm}
-// X
-AvatarClimbAddr:
-  dd (float)50.0 // Default 1.95
 
-// Y
-AvatarClimbAddr+4:
-  dd (float)50.0 // Default 1.40
+registerSymbol("mortar_base", '["game.dll"+01FBA868]+0')
+
+{$asm}
+//  PROJECTILE-231: MORTAR
+mortar_base+1C: //num_projectiles
+  dd #10 //1
+mortar_base+8C: //explosion_type_on_impact
+  dd #155 //197
+
+
 
 [DISABLE]
-// X
-AvatarClimbAddr:
-  dd (float)1.95
+//  PROJECTILE-231: MORTAR
+mortar_base+1C: //num_projectiles
+  dd #1 //1
+mortar_base+8C: //explosion_type_on_impact
+  dd #197 //197
 
-// Y
-AvatarClimbAddr+4:
-  dd (float)1.40
 
-unregistersymbol(AvatarClimbAddr)
 </AssemblerScript>
     </CheatEntry>
     <CheatEntry>
