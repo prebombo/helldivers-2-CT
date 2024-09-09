@@ -7135,66 +7135,23 @@ decodeFunction("c-n1?NspQU0EKZfZS5pYFTJ!q8L$})5L^qTLk5L$DUJwks8OP9ijF9YED6c^hyKt
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
-      <ID>48</ID>
-      <Description>"Temp Unlock Armor, Weapons, Strategems                          (by gir489)"</Description>
-      <Color>00FFFF</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">// Author: gir489
-[ENABLE]
-aobscanmodule(aob_armor,game.dll,48 83 EC 08 44 8B 49 04)
-
-aob_armor:
-  db B0 01 C3
-
-aobscanmodule(aob_equipment,game.dll,83 B9 1C ? ? ? ? 76 ? 85 D2 74 ? 44 8B 89 ? ? ? ? 45 33 C0 45 85 C9 74 ? 48 8D 81 ? ? ? ? 39 50 ? 74 ? 41 FF C0 48 83 C0 ? 45 3B C1 72 ? 32 C0 C3 8B 00 48 69 C8)
-
-aob_equipment:
-  db B0 01 C3
-
-aobscanmodule(aob_stratagems,game.dll,48 89 5C 24 08 48 8B D9 85)
-
-aob_stratagems:
-  db B0 01 C3
-
-registersymbol(aob_armor)
-registersymbol(aob_equipment)
-registersymbol(aob_stratagems)
-
-[DISABLE]
-
-aob_armor:
-  db 48 83 EC
-
-
-aob_equipment:
-  db 83 B9 1C
-
-
-aob_stratagems:
-  db 48 89 5C
-
-unregistersymbol(aob_armor)
-unregistersymbol(aob_equipment)
-unregistersymbol(aob_stratagems)
-
-
-
-</AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
       <ID>117439</ID>
       <Description>"Temp Unlock Armor, Weapons, Strategems                          (by cfemen)"</Description>
       <Color>00FFFF</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript Async="1">[ENABLE]
 
-aobscanmodule(aobUnlock1,game.dll,48 89 5C 24 08 48 8B D9 85 D2 75 09)
+// stragem:
+aobscanmodule(aobUnlock1,game.dll,48 89 5C 24 08 85 D2 75 09)
 registersymbol(aobUnlock1)
 
-aobscanmodule(aobUnlock2,game.dll,83 B9 1C 96 1F 00 07 76 2B 85 D2 74 27 44 8B 89 68 53 00 00 45 33 C0 45 85 C9 74 18 48 8D 81 70 DB 04 00 39 50 04 74 0F 41 FF C0 48 83 C0 18 45 3B C1 72 EF 32 C0 C3 8B 00 48 69 C8 E8 00 00 00) // should be unique
+// weapon:
+aobscanmodule(aobUnlock2,game.dll,83 B9 ?? ?? ?? ?? 07 76 2B 85 D2 74 27 44 8B 89 ?? ?? ?? ??  45 33 C0 45 85 C9 74 18 48 8D 81 ?? ?? ?? ?? 39 50 04 74 0F 41 FF C0 48 83 C0 18 45 3B C1 72 EF 32 C0 C3 8B 00 48 69 C8 E8 00 00 00)
 registersymbol(aobUnlock2)
 
+// armor:
 aobscanmodule(aobUnlock3,game.dll,48 83 EC 08 44 8B 49 04 45 33 C0 8B 01)
+registersymbol(aobUnlock3)
 
 aobUnlock1:
   db b0 01 c3
@@ -7204,7 +7161,6 @@ aobUnlock2:
 
 aobUnlock3:
   db b0 01 c3
-
 
 [DISABLE]
 
