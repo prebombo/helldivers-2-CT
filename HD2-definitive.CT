@@ -180,29 +180,30 @@ unregistersymbol(aobSprintWrite)
 // EXE Compile Date  : August 02, 2024 11:21 AM
 // Script Date       : August 06, 2024 09:38 AM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 4B 8D 0C 40 48 03 C9 45 8B 7C CC ? 41 FF CF)
+aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 49 8B 52)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
 label(return_Syringes)
 
 newmem_Syringes:
-  lea rcx,[r8+r8*2]
-  add rcx,rcx
-  mov r15d,[r12+rcx*8+18]
-  cmp r15d,#1
+  lea rax, [rdx+rdx*2]
+  mov rdx, [r10+58]
+  add rax, rax
+  mov r12d, [rdx+rax*8+18]
+  cmp r12d, #1
   je short @f
-    dec r15d
+    dec r12d
   @@:
   jmp return_Syringes
 
 aob_Syringes:
   jmp far newmem_Syringes
-  nop
+  nop 5
 return_Syringes:
 
 [DISABLE]
 aob_Syringes:
-  db 48 8D 0C 40 48 03 C9 45 89 7C CC 18 41 8B 45 08
+  db 48 8D 04 52 49 8B 52 58 48 03 C0 44 8B 64 C2 18 41 FF
 
 unregistersymbol(aob_Syringes)
 dealloc(newmem_Syringes)
@@ -1446,191 +1447,6 @@ evacHVA_return:
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
-          <ID>113913</ID>
-          <Description>"instant complete all hives and bases                                   (by ZoDDel)"</Description>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>{ Game   : helldivers2.exe
-  Version: 
-  Date   : 2024-05-03
-  Author : ZoDDeL
-
-  This script does blah blah blah
-}
-
-[ENABLE]
-
-aobscanmodule(completeHiveBase,game.dll,48 8D 04 F6 8B FE 4C 69 DF 90 02 00 00 4C 03 5B 48) // should be unique
-alloc(completeHiveBase_newmem,$1000)
-
-label(completeHiveBase_code)
-label(completeHiveBase_return)
-
-completeHiveBase_newmem:
-
-completeHiveBase_code:
-  lea rax,[rsi+rsi*8]  // +F8E0E4
-  mov edi,esi
-  imul r11,rdi,00000290
-  add r11,[rbx+48]
-  mov byte ptr [rcx+rax*4+21],01 // +F8E103 cmp byte ptr [rcx+rax*4+21],00
-  jmp completeHiveBase_return
-
-completeHiveBase:
-  jmp far completeHiveBase_newmem
-  nop 3
-completeHiveBase_return:
-registersymbol(completeHiveBase)
-
-[DISABLE]
-
-completeHiveBase:
-  db 48 8D 04 F6 8B FE 4C 69 DF 90 02 00 00 4C 03 5B 48
-
-unregistersymbol(completeHiveBase)
-dealloc(completeHiveBase_newmem)
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F8E0E4
-
-game.dll+F8E0AE: 72 B0                          - jb game.dll+F8E060
-game.dll+F8E0B0: 48 8B 1D 29 B4 91 00           - mov rbx,[game.dll+18A94E0]
-game.dll+F8E0B7: 33 F6                          - xor esi,esi
-game.dll+F8E0B9: 39 73 0C                       - cmp [rbx+0C],esi
-game.dll+F8E0BC: 0F 86 4A 02 00 00              - jbe game.dll+F8E30C
-game.dll+F8E0C2: 48 8B 2D B7 60 9B 00           - mov rbp,[game.dll+1944180]
-game.dll+F8E0C9: 48 BA 8F E3 38 8E E3 38 8E E3  - mov rdx,E38E38E38E38E38F
-game.dll+F8E0D3: 4C 8B BC 24 80 00 00 00        - mov r15,[rsp+00000080]
-game.dll+F8E0DB: 0F 1F 44 00 00                 - nop dword ptr [rax+rax+00]
-game.dll+F8E0E0: 48 8B 4B 50                    - mov rcx,[rbx+50]
-// ---------- INJECTING HERE ----------
-game.dll+F8E0E4: 48 8D 04 F6                    - lea rax,[rsi+rsi*8]
-// ---------- DONE INJECTING  ----------
-game.dll+F8E0E8: 8B FE                          - mov edi,esi
-game.dll+F8E0EA: 4C 69 DF 90 02 00 00           - imul r11,rdi,00000290
-game.dll+F8E0F1: 4C 03 5B 48                    - add r11,[rbx+48]
-game.dll+F8E0F5: 41 80 BB 7F 02 00 00 00        - cmp byte ptr [r11+0000027F],00
-game.dll+F8E0FD: 0F 84 F7 01 00 00              - je game.dll+F8E2FA
-game.dll+F8E103: 80 7C 81 21 00                 - cmp byte ptr [rcx+rax*4+21],00
-game.dll+F8E108: 0F 85 EC 01 00 00              - jne game.dll+F8E2FA
-game.dll+F8E10E: 80 7C 81 23 00                 - cmp byte ptr [rcx+rax*4+23],00
-game.dll+F8E113: 0F 84 E1 01 00 00              - je game.dll+F8E2FA
-game.dll+F8E119: 48 8B 43 38                    - mov rax,[rbx+38]
-}
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>113920</ID>
-          <Description>"instant complete all missions RButton Old                          (by ZoDDel)"</Description>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>{ Game   : helldivers2.exe
-  Version: 
-  Date   : 2024-04-05
-  Author : ZoDDeL
-
-  This script does blah blah blah
-}
-
-[ENABLE]
-
-aobscanmodule(missionA,game.dll,45 8B 4A 18 48 8D 8E 20 01 00 00 41 8B D5) // should be unique
-alloc(missionA_newmem,$1000)
-
-label(missionA_code)
-label(missionA_return)
-
-missionA_newmem:
-  push rax
-  push rcx
-  push rdx
-  push r8
-  push r9
-  push r10
-  push r11
-  sub rsp,28
-  mov rcx,2  // checks for mouse 2
-  call GetAsyncKeyState
-  add rsp,28
-  pop r11
-  pop r10
-  pop r9
-  pop r8
-  pop rdx
-  pop rcx
-  //cmp ax,8001  // having problems with this so instead i check for not 0
-  cmp ax,0
-  pop rax
-  jne missionA_complete
-  jmp missionA_code
-
-missionA_complete:
-  mov [r10+18],#1
-  jmp missionA_code
-
-
-missionA_code:
-  mov r9d,[r10+18]
-  lea rcx,[rsi+00000120]
-  mov edx,r13d
-  jmp missionA_return
-
-missionA:
-  jmp far missionA_newmem
-missionA_return:
-
-
-aobscanmodule(missionB,game.dll,41 8B 47 38 83 E8 02 83 F8 01 8B 83 14 08 00 00) // should be unique
-alloc(missionB_newmem,$1000)
-
-label(missionB_code)
-label(missionB_return)
-
-missionB_newmem:
-  push rax
-  push rcx
-  push rdx
-  push r8
-  push r9
-  push r10
-  push r11
-  sub rsp,28
-  mov rcx,2  // checks for mouse 2
-  call GetAsyncKeyState
-  add rsp,28
-  pop r11
-  pop r10
-  pop r9
-  pop r8
-  pop rdx
-  pop rcx
-  //cmp ax,8001  // having problems with this so instead i check for not 0
-  cmp ax,0
-  pop rax
-  jne missionB_complete
-  jmp missionB_code
-
-missionB_complete:
-  mov [r15+38],#2
-  jmp missionB_code
-
-
-missionB_code:
-  mov eax,[r15+38]
-  sub eax,02
-  cmp eax,01
-  mov eax,[rbx+00000814]
-  jmp missionB_return
-
-missionB:
-  jmp far missionB_newmem
-  nop 2
-missionB_return:
-
-
-
-[DISABLE]
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
           <ID>113959</ID>
           <Description>"instant complete all missions RButton                                 (by ZoDDel)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
@@ -1643,7 +1459,7 @@ missionB_return:
 }
 
 [ENABLE]
-
+aobscanmodule(aob_GetAsyncKeyState,USER32.dll,E9 ? ? ? ? 57 48 83 EC 20)
 aobscanmodule(missionA,game.dll,45 8B 4A 18 48 8D 8E 20 01 00 00 41 8B D5) // should be unique
 registersymbol(missionA)
 alloc(missionA_newmem,$1000)
@@ -1661,7 +1477,7 @@ missionA_newmem:
   push r11
   sub rsp,28
   mov rcx,2  // checks for mouse 2
-  call User32.GetAsyncKeyState
+  call aob_GetAsyncKeyState
   add rsp,28
   pop r11
   pop r10
@@ -1708,7 +1524,7 @@ missionB_newmem:
   push r11
   sub rsp,28
   mov rcx,2  // checks for mouse 2
-  call User32.GetAsyncKeyState
+  call aob_GetAsyncKeyState
   add rsp,28
   pop r11
   pop r10
@@ -1739,7 +1555,7 @@ missionB:
   nop 2
 missionB_return:
 
-aobscanmodule(completeHiveBase,game.dll,48 8D 04 F6 8B FE 4C 69 DF 90 02 00 00 4C 03 5B 48) // should be unique
+aobscanmodule(completeHiveBase,game.dll,4C 69 DE ? ? ? ? 48 6B C6) // should be unique
 alloc(completeHiveBase_newmem,$1000)
 
 label(completeHiveBase_code)
@@ -1748,16 +1564,16 @@ label(completeHiveBase_return)
 completeHiveBase_newmem:
 
 completeHiveBase_code:
-  lea rax,[rsi+rsi*8]  // +F8E0E4
-  mov edi,esi
-  imul r11,rdi,00000290
-  add r11,[rbx+48]
-  mov byte ptr [rcx+rax*4+21],01 // +F8E103 cmp byte ptr [rcx+rax*4+21],00
+  imul r11, rsi, 2A8
+  imul rax, rsi, 34
+  add r11, [rbx+48]
+  add rax, [rbx+50]
+  mov byte ptr [rax+31], #1
   jmp completeHiveBase_return
 
 completeHiveBase:
   jmp far completeHiveBase_newmem
-  nop 3
+  nop 5
 completeHiveBase_return:
 registersymbol(completeHiveBase)
 
@@ -1771,7 +1587,7 @@ missionB:
 db 41 8B 47 38 83 E8 02 83 F8 01 8B 83 14 08 00 00
 
 completeHiveBase:
-  db 48 8D 04 F6 8B FE 4C 69 DF 90 02 00 00 4C 03 5B 48
+  db 4C 69 DE A8 02 00 00 48 6B C6 34 4C 03 5B 48 48 03 43 50
 
 unregistersymbol(missionA)
 unregistersymbol(missionB)
@@ -2921,29 +2737,30 @@ unregistersymbol(aobSprintWrite)
 // EXE Compile Date  : August 02, 2024 11:21 AM
 // Script Date       : August 06, 2024 09:38 AM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 4B 8D 0C 40 48 03 C9 45 8B 7C CC ? 41 FF CF)
+aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 49 8B 52)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
 label(return_Syringes)
 
 newmem_Syringes:
-  lea rcx,[r8+r8*2]
-  add rcx,rcx
-  mov r15d,[r12+rcx*8+18]
-  cmp r15d,#1
+  lea rax, [rdx+rdx*2]
+  mov rdx, [r10+58]
+  add rax, rax
+  mov r12d, [rdx+rax*8+18]
+  cmp r12d, #1
   je short @f
-    dec r15d
+    dec r12d
   @@:
   jmp return_Syringes
 
 aob_Syringes:
   jmp far newmem_Syringes
-  nop
+  nop 5
 return_Syringes:
 
 [DISABLE]
 aob_Syringes:
-  db 48 8D 0C 40 48 03 C9 45 89 7C CC 18 41 8B 45 08
+  db 48 8D 04 52 49 8B 52 58 48 03 C0 44 8B 64 C2 18 41 FF
 
 unregistersymbol(aob_Syringes)
 dealloc(newmem_Syringes)
@@ -3420,7 +3237,7 @@ game.dll+64BC79: 76 06                    - jna game.dll+64BC81
 }
 
 [ENABLE]
-
+aobscanmodule(aob_GetAsyncKeyState,USER32.dll,E9 ? ? ? ? 57 48 83 EC 20)
 aobscanmodule(missionA,game.dll,45 8B 4A 18 48 8D 8E 20 01 00 00 41 8B D5) // should be unique
 registersymbol(missionA)
 alloc(missionA_newmem,$1000)
@@ -3438,7 +3255,7 @@ missionA_newmem:
   push r11
   sub rsp,28
   mov rcx,2  // checks for mouse 2
-  call User32.GetAsyncKeyState
+  call aob_GetAsyncKeyState
   add rsp,28
   pop r11
   pop r10
@@ -3485,7 +3302,7 @@ missionB_newmem:
   push r11
   sub rsp,28
   mov rcx,2  // checks for mouse 2
-  call User32.GetAsyncKeyState
+  call aob_GetAsyncKeyState
   add rsp,28
   pop r11
   pop r10
@@ -3516,7 +3333,7 @@ missionB:
   nop 2
 missionB_return:
 
-aobscanmodule(completeHiveBase,game.dll,48 8D 04 F6 8B FE 4C 69 DF 90 02 00 00 4C 03 5B 48) // should be unique
+aobscanmodule(completeHiveBase,game.dll,4C 69 DE ? ? ? ? 48 6B C6) // should be unique
 alloc(completeHiveBase_newmem,$1000)
 
 label(completeHiveBase_code)
@@ -3525,16 +3342,16 @@ label(completeHiveBase_return)
 completeHiveBase_newmem:
 
 completeHiveBase_code:
-  lea rax,[rsi+rsi*8]  // +F8E0E4
-  mov edi,esi
-  imul r11,rdi,00000290
-  add r11,[rbx+48]
-  mov byte ptr [rcx+rax*4+21],01 // +F8E103 cmp byte ptr [rcx+rax*4+21],00
+  imul r11, rsi, 2A8
+  imul rax, rsi, 34
+  add r11, [rbx+48]
+  add rax, [rbx+50]
+  mov byte ptr [rax+31], #1
   jmp completeHiveBase_return
 
 completeHiveBase:
   jmp far completeHiveBase_newmem
-  nop 3
+  nop 5
 completeHiveBase_return:
 registersymbol(completeHiveBase)
 
@@ -3548,7 +3365,7 @@ missionB:
 db 41 8B 47 38 83 E8 02 83 F8 01 8B 83 14 08 00 00
 
 completeHiveBase:
-  db 48 8D 04 F6 8B FE 4C 69 DF 90 02 00 00 4C 03 5B 48
+  db 4C 69 DE A8 02 00 00 48 6B C6 34 4C 03 5B 48 48 03 43 50
 
 unregistersymbol(missionA)
 unregistersymbol(missionB)
@@ -4071,29 +3888,30 @@ unregistersymbol(aobSprintWrite)
 // EXE Compile Date  : August 02, 2024 11:21 AM
 // Script Date       : August 06, 2024 09:38 AM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 4B 8D 0C 40 48 03 C9 45 8B 7C CC ? 41 FF CF)
+aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 49 8B 52)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
 label(return_Syringes)
 
 newmem_Syringes:
-  lea rcx,[r8+r8*2]
-  add rcx,rcx
-  mov r15d,[r12+rcx*8+18]
-  cmp r15d,#1
+  lea rax, [rdx+rdx*2]
+  mov rdx, [r10+58]
+  add rax, rax
+  mov r12d, [rdx+rax*8+18]
+  cmp r12d, #1
   je short @f
-    dec r15d
+    dec r12d
   @@:
   jmp return_Syringes
 
 aob_Syringes:
   jmp far newmem_Syringes
-  nop
+  nop 5
 return_Syringes:
 
 [DISABLE]
 aob_Syringes:
-  db 48 8D 0C 40 48 03 C9 45 89 7C CC 18 41 8B 45 08
+  db 48 8D 04 52 49 8B 52 58 48 03 C0 44 8B 64 C2 18 41 FF
 
 unregistersymbol(aob_Syringes)
 dealloc(newmem_Syringes)
@@ -6327,7 +6145,7 @@ aobUnlock3:
     </SymbolEntry>
     <SymbolEntry>
       <Name>AvatarClimbAddr</Name>
-      <Address>23AE122AB5C</Address>
+      <Address>1C5DA7C40E2</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
