@@ -4567,37 +4567,37 @@ dmg_newmem:
 
 
   //  // whitelisted weapons that get super damage
-  cmp [rcx+00], #78 // R-63CS Diligence Counter Sniper
+  cmp [rcx+00], #81 // R-63CS Diligence Counter Sniper
     je dmg_RegularSniper
-  cmp [rcx+00], #107 // SG-225SP Breaker Spray&amp;Pray
+  cmp [rcx+00], #110 // SG-225SP Breaker Spray&amp;Pray
     je dmg_Shotgun
-  cmp [rcx+00], #106 // SG-22 Bushwack
+  cmp [rcx+00], #96 // SG-22 Bushwack
     je dmg_Shotgun
-  cmp [rcx+00], #93 // SG-8 Punisher
+  cmp [rcx+00], #96 // SG-8 Punisher
     je dmg_Shotgun
-  cmp [rcx+00], #45 // P-113 Verdict
+  cmp [rcx+00], #47 // P-113 Verdict
     je dmg_Pistol
-  cmp [rcx+00], #47 // P-4 Senator revolver
+  cmp [rcx+00], #49 // P-4 Senator revolver
     je dmg_Pistol
-  cmp [rcx+00], #29 // Knight
+  cmp [rcx+00], #31 // Knight
     je dmg_Pistol
-  cmp [rcx+00], #54 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
+  cmp [rcx+00], #56 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
     je dmg_Machinegun
-  cmp [rcx+00], #128 // anti material rifle
+  cmp [rcx+00], #131 // anti material rifle
     je dmg_Sniper
-  cmp [rcx+00], #121 // ARC-3 Arc Thrower
+  cmp [rcx+00], #124 // ARC-3 Arc Thrower
     je dmg_Arc
-  cmp [rcx+00], #123 // ARC-12 Blitzer
+  cmp [rcx+00], #126 // ARC-12 Blitzer
     je dmg_Arc
-  cmp [rcx+00], #316 // LAS-98
+  cmp [rcx+00], #324 // LAS-98
     je dmg_Arc
-  cmp [rcx+00], #269 // Hellpod impact damage
+  cmp [rcx+00], #273 // Hellpod impact damage
     je dmg_Oneshot
-  cmp [rcx+00], #270 // Hellpod impact fire damage
+  cmp [rcx+00], #274 // Hellpod impact fire damage
     je dmg_Oneshot
-  cmp [rcx+00], #339 // Melee
+  cmp [rcx+00], #347 // Melee
     je dmg_Melee
-  cmp [rcx+00], #340 // Melee with Muscle Enhancement Booster
+  cmp [rcx+00], #348 // Melee with Muscle Enhancement Booster
     je dmg_Melee
   cmp [rcx+00], #395 // K-2 Throwing knife
     je dmg_Oneshot
@@ -4867,6 +4867,8 @@ dealloc(dmg_newmem)
   This script does blah blah blah
 }
 
+//If your ID doesn´t work or is missing check it here (https://docs.google.com/spreadsheets/d/1Kc0RSe5YgQ2cgd7oTSqcHY_FtFjlYK7Lv93bFvujtbg/edit?gid=0#gid=0)
+
 [ENABLE]
 
 
@@ -4887,164 +4889,168 @@ dmg_newmem:
 
   //Assault rifles
 
-  cmp [rcx+00], #54 // AR-23 Liberator
+  cmp [rcx+00], #56 // AR-23 Liberator
     je dmg_code
-  cmp [rcx+00], #51 // AR-23P Liberator Penetrator
+  cmp [rcx+00], #53 // AR-23P Liberator Penetrator
     je dmg_code
-  cmp [rcx+00], #52 // AR-23C Liberator Concussive
+  cmp [rcx+00], #55 // AR-23C Liberator Concussive
     je dmg_code
-  cmp [rcx+00], #54 // AR-23A Liberator Carabine
+  cmp [rcx+00], #56 // AR-23A Liberator Carabine
     je dmg_code
-  cmp [rcx+00], #75 // AR-61 Tenderizer
+  cmp [rcx+00], #77 // AR-61 Tenderizer
     je dmg_code
-  cmp [rcx+00], #74 //BR-14 Adjudicator
+  cmp [rcx+00], #76 //BR-14 Adjudicator
     je dmg_code
 
   //Sniper rifle
 
-  cmp [rcx+00], #128 // Anti material rifle
+  cmp [rcx+00], #131 // Anti material rifle
     je dmg_code
-  cmp [rcx+00], #77 // R-63 Diligence
+  cmp [rcx+00], #80 // R-63 Diligence
     je dmg_code
-  cmp [rcx+00], #78 // R-63CS Diligence Counter Sniper
+  cmp [rcx+00], #81 // R-63CS Diligence Counter Sniper
     je dmg_code
   //cmp [rcx+00], #? // SR-01 Justice
   //  je dmg_code
-  //cmp [rcx+00], #74 // AR-20L Justice
+  //cmp [rcx+00], #76 // AR-20L Justice
   //  je dmg_code
 
   //Submachine guns
 
-  cmp [rcx+00], #29 // MP-98 Knight
+  cmp [rcx+00], #31 // MP-98 Knight
     je dmg_code
   //cmp [rcx+00], #? // SMG-006 Suppressor
   //  je dmg_code
-  cmp [rcx+00], #37 // SMG-37 Defender
+  cmp [rcx+00], #39 // SMG-37 Defender
     je dmg_code
-  cmp [rcx+00], #44 // SMG-72 Pummeler
+  cmp [rcx+00], #46 // SMG-72 Pummeler
     je dmg_code
 
   //Shotgun
 
-  cmp [rcx+00], #93 // SG-8 Punisher
+  cmp [rcx+00], #96 // SG-8 Punisher
     je dmg_code
-  cmp [rcx+00], #105 // SG-8S Slugger
+  cmp [rcx+00], #108 // SG-8S Slugger
     je dmg_code
-  cmp [rcx+00], #108 // SG-225 Breaker
+  cmp [rcx+00], #111 // SG-225 Breaker
     je dmg_code
-  cmp [rcx+00], #107 // SG-225SP Breaker Spray&amp;Pray
+  cmp [rcx+00], #110 // SG-225SP Breaker Spray&amp;Pray
     je dmg_code
-  cmp [rcx+00], #111 // SG-225IE Breaker Incendiary
+  cmp [rcx+00], #114 // SG-225IE Breaker Incendiary
     je dmg_code
-  cmp [rcx+00], #110 // SG-225NS Breaker Nailspitter
+  cmp [rcx+00], #113 // SG-225NS Breaker Nailspitter
     je dmg_code
-  cmp [rcx+00], #94 // SG-451 Cookout incindiary shotgun
+  cmp [rcx+00], #97 // SG-451 Cookout incindiary shotgun
     je dmg_code
   //cmp [rcx+00], #? // SG-33LA Concussive
   //  je dmg_code
 
   //Explosive
 
-  cmp [rcx+00], #130 // CB-9 explosive crossbow Projectile
+  cmp [rcx+00], #133 // CB-9 explosive crossbow Projectile
     je dmg_code
-  cmp [rcx+00], #131 // CB-9 explosive crossbow Explosion
+  cmp [rcx+00], #134 // CB-9 explosive crossbow Explosion
     je dmg_code
-  cmp [rcx+00], #88 // JAR-5 Dominator
+  cmp [rcx+00], #91 // JAR-5 Dominator
     je dmg_code
-  cmp [rcx+00], #84 // R-36 Eruptor Projectile
+  cmp [rcx+00], #87 // R-36 Eruptor Projectile
     je dmg_code
-  cmp [rcx+00], #215 // R-36 Eruptor Explosion
+  cmp [rcx+00], #220 // R-36 Eruptor Explosion
     je dmg_code
 
   //Energy
 
-  cmp [rcx+00], #22 // SG-8P Punisher Plasma Projectile
+  cmp [rcx+00], #24 // SG-8P Punisher Plasma Projectile
     je dmg_code
-  cmp [rcx+00], #194 // SG-8P Punisher Plasma Explosion
+  cmp [rcx+00], #197 // SG-8P Punisher Plasma Explosion
     je dmg_code
-  cmp [rcx+00], #123 // ARC-12 Blitzer
+  cmp [rcx+00], #126 // ARC-12 Blitzer
     je dmg_code
-  cmp [rcx+00], #311 // LAS-5 Scythe
+  cmp [rcx+00], #319 // LAS-5 Scythe
     je dmg_code
-  cmp [rcx+00], #21 // LAS-16 Sickle
+  cmp [rcx+00], #23 // LAS-16 Sickle
     je dmg_code
-  cmp [rcx+00], #22 // PLAS-1 Scorcher Projectile
+  cmp [rcx+00], #24 // PLAS-1 Scorcher Projectile
     je dmg_code
-  cmp [rcx+00], #192 // PLAS-1 Scorcher Explosion
+  cmp [rcx+00], #195 // PLAS-1 Scorcher Explosion
     je dmg_code
-  cmp [rcx+00], #23 // PLAS-101 Purifier bullet
+  cmp [rcx+00], #25 // PLAS-101 Purifier bullet
     je dmg_code
-  cmp [rcx+00], #195 // PLAS-101 Purifier explosion
+  cmp [rcx+00], #198 // PLAS-101 Purifier explosion
     je dmg_code
 
   //Pistol
 
-  cmp [rcx+00], #106 // SG-22 Bushwack
+  cmp [rcx+00], #96 // SG-22 Bushwack
     je dmg_code
   //cmp [rcx+00], #? // Peacemaker suppressed
   //  je dmg_code
-  cmp [rcx+00], #30 // P-2 Peacemaker
+  cmp [rcx+00], #32 // P-2 Peacemaker
     je dmg_code
-  cmp [rcx+00], #28 // P-19 Redeemer
+  cmp [rcx+00], #30 // P-19 Redeemer
     je dmg_code
-  cmp [rcx+00], #140 // GP-31 grenade pistol Projectile
+  cmp [rcx+00], #143 // GP-31 grenade pistol Projectile
     je dmg_code
-  cmp [rcx+00], #231 // GP-31 grenade pistol Explosion
+  cmp [rcx+00], #235 // GP-31 grenade pistol Explosion
     je dmg_code
-  cmp [rcx+00], #310 // LAS-7 Dagger
+  cmp [rcx+00], #318 // LAS-7 Dagger
     je dmg_code
-  cmp [rcx+00], #45 // P-113 Verdict
+  cmp [rcx+00], #47 // P-113 Verdict
     je dmg_code
-  cmp [rcx+00], #47 // P-4 Senator
+  cmp [rcx+00], #49 // P-4 Senator
     je dmg_code
   cmp [rcx+00], #11 // P-72 Crisper
     je dmg_code
 
   //Grenades
 
-  cmp [rcx+00], #212 // G-6 Frag
+  cmp [rcx+00], #287 // G-4 Gas Grenade Impact
     je dmg_code
-  cmp [rcx+00], #224 // G-12 High Explosive
+  cmp [rcx+00], #342 // G-4 Gas Grenade Gas
     je dmg_code
-  cmp [rcx+00], #213 // G-10 Incendiary Impact
+  cmp [rcx+00], #215 // G-6 Frag
     je dmg_code
-  cmp [rcx+00], #323 // G-10 Incendiary Fire
+  cmp [rcx+00], #228 // G-12 High Explosive
     je dmg_code
-  cmp [rcx+00], #224 // G-16 Impact
+  cmp [rcx+00], #217 // G-10 Incendiary Impact
     je dmg_code
-  cmp [rcx+00], #213 // G-13 Incendiary Impact
+  cmp [rcx+00], #331 // G-10 Incendiary Fire
     je dmg_code
-  cmp [rcx+00], #323 // G-13 Incendiary Fire
+  cmp [rcx+00], #228 // G-16 Impact
     je dmg_code
-  cmp [rcx+00], #178 // G-23 Stun
+  cmp [rcx+00], #217 // G-13 Incendiary Impact
+    je dmg_code
+  cmp [rcx+00], #331 // G-13 Incendiary Fire
+    je dmg_code
+  cmp [rcx+00], #180 // G-23 Stun
     je dmg_code
   //cmp [rcx+00], #? // G-3 Smoke
   //  je dmg_code
-  cmp [rcx+00], #324 // G-123 Thermite (burn)
+  cmp [rcx+00], #332 // G-123 Thermite (burn)
     je dmg_code
   cmp [rcx+00], #395 // K-2 Throwing knife
     je dmg_code
 
   //EXOs
 
-  cmp [rcx+00], #68 // EXO-45 Gatling
+  cmp [rcx+00], #70 // EXO-45 Gatling
     je dmg_code
-  cmp [rcx+00], #153 // EXO-45 rocket Projectile
+  cmp [rcx+00], #156 // EXO-45 rocket Projectile
     je dmg_code
-  cmp [rcx+00], #245 // EXO-45 rocket Explosion
+  cmp [rcx+00], #249 // EXO-45 rocket Explosion
     je dmg_code
-  cmp [rcx+00], #135 // Emancipator exo gun Projectile
+  cmp [rcx+00], #138 // Emancipator exo gun Projectile
     je dmg_code
-  cmp [rcx+00], #228 // Emancipator exo gun Explosion
+  cmp [rcx+00], #232 // Emancipator exo gun Explosion
     je dmg_code
 
   //Machine guns
 
-  cmp [rcx+00], #68 // MG-43
+  cmp [rcx+00], #70 // MG-43
     je dmg_code
-  cmp [rcx+00], #54 // M-105 Stalwart
+  cmp [rcx+00], #56 // M-105 Stalwart
     je dmg_code
-  cmp [rcx+00], #127 // MG-206 HMG
+  cmp [rcx+00], #130 // MG-206 HMG
     je dmg_code
 
   //Flame thrower
@@ -5053,78 +5059,79 @@ dmg_newmem:
     je dmg_code
   cmp [rcx+00], #10 // FLAM-66 Torcher
     je dmg_code
-  cmp [rcx+00], #323 // Flamethrower ground fire
+  cmp [rcx+00], #331 // Flamethrower ground fire
+    je dmg_code
+
+  //Gas
+
+  cmp [rcx+00], #12 // TX-41 Sterilizer
     je dmg_code
 
   //Rocket launchers
 
-  cmp [rcx+00], #141 // EAT-17 Projectile
+  cmp [rcx+00], #144 // EAT-17 Projectile
     je dmg_code
-  cmp [rcx+00], #237 // EAT-17 Explosion
+  cmp [rcx+00], #241 // EAT-17 Explosion
     je dmg_code
-  cmp [rcx+00], #142 // recoil-less rifle Projectile
+  cmp [rcx+00], #146 // recoil-less rifle Projectile
     je dmg_code
-  cmp [rcx+00], #235 // recoil-less rifle Hit
+  cmp [rcx+00], #239 // recoil-less rifle Hit
     je dmg_code
-  cmp [rcx+00], #236 // recoil-less rifle Explosion
+  cmp [rcx+00], #240 // recoil-less rifle Explosion
     je dmg_code
-  cmp [rcx+00], #133 // Autocannon Projectile
+  cmp [rcx+00], #136 // Autocannon Projectile
     je dmg_code
-  cmp [rcx+00], #226 // Autocannon Explosion
+  cmp [rcx+00], #231 // Autocannon Explosion
     je dmg_code
-  cmp [rcx+00], #151 // MLS-4X Commando Projectile
+  cmp [rcx+00], #154 // MLS-4X Commando Projectile
     je dmg_code
-  cmp [rcx+00], #243 // MLS-4X Commando Explosion
+  cmp [rcx+00], #247 // MLS-4X Commando Explosion
     je dmg_code
-  cmp [rcx+00], #158 // RL-77 airburst rocket launcher Projectile
+  cmp [rcx+00], #239 // RL-77 airburst rocket launcher Projectile
     je dmg_code
-  cmp [rcx+00], #212 // RL-77 airburst rocket launcher MiniCluster
+  cmp [rcx+00], #215 // RL-77 airburst rocket launcher MiniCluster
     je dmg_code
-  cmp [rcx+00], #251 // RL-77 airburst rocket launcher Explosion
+  cmp [rcx+00], #216 // RL-77 airburst rocket launcher Explosion
     je dmg_code
-  cmp [rcx+00], #25 // RS-422 railgun Safe
+  cmp [rcx+00], #27 // RS-422 railgun Safe
     je dmg_code
-  cmp [rcx+00], #26 // RS-422 railgun Unsafe
+  cmp [rcx+00], #28 // RS-422 railgun Unsafe
     je dmg_code
-  cmp [rcx+00], #155 // Spear Projectile
+  cmp [rcx+00], #160 // Stinger Projectile
     je dmg_code
-  cmp [rcx+00], #247 // Spear Explosion
+  cmp [rcx+00], #253 // Stinger Explosion
     je dmg_code
-  cmp [rcx+00], #157 // Stinger Projectile
+  cmp [rcx+00], #158 // FAF-14 Spear 1 shell
     je dmg_code
-  cmp [rcx+00], #249 // Stinger Explosion
+  cmp [rcx+00], #251 // FAF-14 Spear 2 Explosion
     je dmg_code
-  cmp [rcx+00], #155 // FAF-14 Spear 1 shell
+  cmp [rcx+00], #14 // GL-21 Projectile
     je dmg_code
-  cmp [rcx+00], #247 // FAF-14 Spear 2 Explosion
+  cmp [rcx+00], #235 // GL-21 explosion
     je dmg_code
-  cmp [rcx+00], #12 // GL-21 Projectile
+  cmp [rcx+00], #180 // Stun grenade launcher
     je dmg_code
-  cmp [rcx+00], #231 // GL-21 explosion
+  cmp [rcx+00], #217 // Incendiary grenade launcher
     je dmg_code
-  cmp [rcx+00], #178 // Stun grenade launcher
+  cmp [rcx+00], #242 // LAS-99 quasar Projectile
     je dmg_code
-  cmp [rcx+00], #213 // Incendiary grenade launcher
-    je dmg_code
-  cmp [rcx+00], #238 // LAS-99 quasar Projectile
-    je dmg_code
-  cmp [rcx+00], #239 // LAS-99 quasar Explosion
+  cmp [rcx+00], #243 // LAS-99 quasar Explosion
     je dmg_code
 
   //Laser
 
-  cmp [rcx+00], #316 // LAS-98
+  cmp [rcx+00], #324 // LAS-98
     je dmg_code
-  cmp [rcx+00], #121 // ARC-3 Arc Thrower
-    je dmg_code
-  cmp [rcx+00], #121 // Arc Thrower Mk2
+  cmp [rcx+00], #124 // ARC-3 Arc Thrower
     je dmg_code
 
   //Guard dogs
 
-  cmp [rcx+00], #312 //LAS-5 "Guard Dog" Rover
+  cmp [rcx+00], #320 // LAS-5 "Guard Dog" Rover
     je dmg_code
-  cmp [rcx+00], #54 //Rifle "Guard Dog" Rover
+  cmp [rcx+00], #56 // Rifle "Guard Dog" Rover
+    je dmg_code
+  cmp [rcx+00], #13 // AX/TX-13 Guard Dog "Dog Breath"
     je dmg_code
 
 
@@ -5132,112 +5139,112 @@ dmg_newmem:
 
   //cmp [rcx+00], #? // HMG Emplacement
   //  je dmg_code
-  cmp [rcx+00], #132 // tesla tower
+  //cmp [rcx+00], #? // tesla tower
+  //  je dmg_code
+  cmp [rcx+00], #70 // Gatling Turret
     je dmg_code
-  cmp [rcx+00], #68 // Gatling Turret
+  cmp [rcx+00], #148 // Mortar turret Projectile
     je dmg_code
-  cmp [rcx+00], #145 // Mortar turret Projectile
+  cmp [rcx+00], #238 // Mortar turret Explosion
     je dmg_code
-  cmp [rcx+00], #234 // Mortar turret Explosion
+  cmp [rcx+00], #139 // Autocannon Sentry Projectile
     je dmg_code
-  cmp [rcx+00], #136 // Autocannon Sentry Projectile
+  cmp [rcx+00], #234 // Autocannon sentry Explosion
     je dmg_code
-  cmp [rcx+00], #230 // Autocannon sentry Explosion
+  cmp [rcx+00], #149 // Rocket sentry turret Projectile
     je dmg_code
-  cmp [rcx+00], #146 // Rocket sentry turret Projectile
-    je dmg_code
-  cmp [rcx+00], #250 // Rocket sentry turret Explosion
+  cmp [rcx+00], #254 // Rocket sentry turret Explosion
     je dmg_code
 
   //Orbital Canons
 
-  cmp [rcx+00], #138 // Orbital gatling barrage Projectile
+  cmp [rcx+00], #141 // Orbital gatling barrage Projectile
     je dmg_code
-  cmp [rcx+00], #225 // Orbital gatling barrage Explosion
+  cmp [rcx+00], #229 // Orbital gatling barrage Explosion
     je dmg_code
-  cmp [rcx+00], #240 // Orbital airburst Strike Projectile
+  cmp [rcx+00], #244 // Orbital airburst Strike Projectile
     je dmg_code
-  cmp [rcx+00], #118 // Orbital airburst Strike Shrapnel
+  cmp [rcx+00], #121 // Orbital airburst Strike Shrapnel
     je dmg_code
-  cmp [rcx+00], #165 // Orbital 120MM HE barrage Projectile
+  cmp [rcx+00], #168 // Orbital 120MM HE barrage Projectile
     je dmg_code
-  cmp [rcx+00], #281 // Orbital 120MM HE barrage Explosion
+  cmp [rcx+00], #285 // Orbital 120MM HE barrage Explosion
     je dmg_code
-  cmp [rcx+00], #166 // Orbital 380MM HE barrage Projectile
+  cmp [rcx+00], #169 // Orbital 380MM HE barrage Projectile
     je dmg_code
-  cmp [rcx+00], #280 // Orbital 380MM HE barrage Explosion
+  cmp [rcx+00], #284 // Orbital 380MM HE barrage Explosion
     je dmg_code
-  cmp [rcx+00], #166 // Orbital walking impact
+  cmp [rcx+00], #169 // Orbital walking impact
     je dmg_code
-  cmp [rcx+00], #319 // Orbital Laser
+  cmp [rcx+00], #327 // Orbital Laser
     je dmg_code
-  cmp [rcx+00], #169 // Orbital railcannon Projectile
+  cmp [rcx+00], #172 // Orbital railcannon Projectile
     je dmg_code
-  cmp [rcx+00], #279 // Orbital railcannon Explosion
+  cmp [rcx+00], #283 // Orbital railcannon Explosion
     je dmg_code
 
   //Hangar
 
-  cmp [rcx+00], #138 // Eagle strafing run Projectile
+  cmp [rcx+00], #141 // Eagle strafing run Projectile
     je dmg_code
-  cmp [rcx+00], #225 // Eagle strafing run Explosion
+  cmp [rcx+00], #229 // Eagle strafing run Explosion
     je dmg_code
-  cmp [rcx+00], #148 // Eagle Airstrike Projectile
+  cmp [rcx+00], #151 // Eagle Airstrike Projectile
     je dmg_code
-  cmp [rcx+00], #265 // Eagle Airstrike Explosion
+  cmp [rcx+00], #269 // Eagle Airstrike Explosion
     je dmg_code
-  cmp [rcx+00], #240 // Eagle Clusterbomb Explosion
+  cmp [rcx+00], #244 // Eagle Clusterbomb Explosion
     je dmg_code
-  cmp [rcx+00], #148 // Napalm SEAF Impact
+  cmp [rcx+00], #151 // Napalm SEAF Impact
     je dmg_code
-  cmp [rcx+00], #242 // Napalm SEAF Explosion
+  cmp [rcx+00], #246 // Napalm SEAF Explosion
     je dmg_code
-  cmp [rcx+00], #323 // Napalm SEAF burn
+  cmp [rcx+00], #331 // Napalm SEAF burn
     je dmg_code
-  cmp [rcx+00], #329 // Napalm SEAF heavy burn
+  cmp [rcx+00], #337 // Napalm SEAF heavy burn
     je dmg_code
   //cmp [rcx+00], #? // Eagle smoke
   //  je dmg_code
-  cmp [rcx+00], #158 // Eagle 110MM rocket Projectile
+  cmp [rcx+00], #161 // Eagle 110MM rocket Projectile
     je dmg_code
-  cmp [rcx+00], #252 // Eagle 110MM rocket Explosion
+  cmp [rcx+00], #256 // Eagle 110MM rocket Explosion
     je dmg_code
-  cmp [rcx+00], #160 // 500KG bomb Projectile
+  cmp [rcx+00], #163 // 500KG bomb Projectile
     je dmg_code
-  cmp [rcx+00], #286 // 500KG Bomb Explosion
+  cmp [rcx+00], #291 // 500KG Bomb Explosion
     je dmg_code
-  cmp [rcx+00], #286 // Carpet bomb
+  cmp [rcx+00], #291 // Carpet bomb
     je dmg_code
 
   //Bridge
 
-  cmp [rcx+00], #164 // Orbital precison strike Projectile
+  cmp [rcx+00], #169 // Orbital precison strike Projectile
     je dmg_code
-  cmp [rcx+00], #281 // Orbital precison strike Explosion
+  cmp [rcx+00], #285 // Orbital precison strike Explosion
     je dmg_code
-  cmp [rcx+00], #282 // Orbital Gas Impact
+  cmp [rcx+00], #286 // Orbital Gas Impact
     je dmg_code
-  cmp [rcx+00], #334 // Orbital Gas
+  cmp [rcx+00], #342 // Orbital Gas
     je dmg_code
-  cmp [rcx+00], #165 // Orbital ems Projectile
+  cmp [rcx+00], #168 // Orbital ems Projectile
     je dmg_code
-  cmp [rcx+00], #223 // Orbital ems Explosion
+  cmp [rcx+00], #227 // Orbital ems Explosion
     je dmg_code
-  cmp [rcx+00], #284 // Orbital ems Stun Explosion
+  cmp [rcx+00], #289 // Orbital ems Stun Explosion
     je dmg_code
   //cmp [rcx+00], #? // Orbital smoke
   //  je dmg_code
 
   //Mines
 
-  cmp [rcx+00], #254 // Anti personnel mines
+  cmp [rcx+00], #258 // Anti personnel mines
     je dmg_code
-  cmp [rcx+00], #256 // Anti tank mines
+  cmp [rcx+00], #260 // Anti tank mines
     je dmg_code
-  cmp [rcx+00], #255 // Incendiary mines Explosion
+  cmp [rcx+00], #259 // Incendiary mines Explosion
     je dmg_code
 
-  cmp [rcx+00], #300 // Hellbomb / SEAF Mini-Nuke
+  cmp [rcx+00], #305 // Hellbomb / SEAF Mini-Nuke
     je dmg_code
 
 
@@ -6145,7 +6152,7 @@ aobUnlock3:
     </SymbolEntry>
     <SymbolEntry>
       <Name>AvatarClimbAddr</Name>
-      <Address>1C5DA7C40E2</Address>
+      <Address>24CDE9540E2</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
