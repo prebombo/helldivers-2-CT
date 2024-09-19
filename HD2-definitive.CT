@@ -151,18 +151,22 @@ game.dll+4A6E46: 4F 8D 0C 64        - lea r9,[r12+r12*2]
             </CheatEntry>
             <CheatEntry>
               <ID>14</ID>
-              <Description>"Inf Stamina                                                                    (by gir489)"</Description>
+              <Description>"Inf Stamina                                                                    (by gir489+cfemen)"</Description>
               <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript Async="1">// original found by gir489
-[ENABLE]
-aobscanmodule(aob_Stamina,game.dll,F3 41 0F 11 08 8B 48 10 E8 ?? ?? ?? ?? 41 8B 47 48)
+              <AssemblerScript Async="1">[ENABLE]
 
+aobscanmodule(aobSprintWrite,game.dll,F3 41 0F 11 08 8B 48 10 E8 ** ** ** ** 41 8B 47 48 0F 28 B4 24 50 08 00 00) // should be unique
 
-aob_Stamina:
-db F3 41 0F 11 30
-
+aobSprintWrite:
+  nop 5
+registersymbol(aobSprintWrite)
 
 [DISABLE]
+
+aobSprintWrite:
+  db F3 41 0F 11 08
+
+unregistersymbol(aobSprintWrite)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -210,16 +214,16 @@ dealloc(newmem_Syringes)
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 
-aobscanmodule(aobSyrige,game.dll,45 89 7C CC 18) // should be unique
+aobscanmodule(aobSyrige,game.dll,41 FF CC 3B F1 74 52 45 8B 42 30) // should be unique
 
 aobSyrige:
-  db 90 90 90 90 90
+  db 90 90 90
 registersymbol(aobSyrige)
 
 [DISABLE]
 
 aobSyrige:
-  db 45 89 7C CC 18
+  db 41 FF CC
 unregistersymbol(aobSyrige)
 </AssemblerScript>
             </CheatEntry>
@@ -308,6 +312,29 @@ game.dll+61FEB9: C7 44 24 20 00 00 00 00     - mov [rsp+20],00000000
 game.dll+61FEC1: 44 8B CE                    - mov r9d,esi
 game.dll+61FEC4: 8B D7                       - mov edx,edi
 }
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117460</ID>
+              <Description>"Inf grenade                                                                    (by cfemen)"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(aobNades,game.dll,41 FF 0C 06 48 8B 45 40 4C 8B 45 58 4D 03 C6 4A 8B 0C E8 8B 49 10) // should be unique
+
+aobNades:
+  nop 4
+
+registersymbol(aobNades)
+
+[DISABLE]
+
+aobNades:
+  db 41 FF 0C 06
+
+unregistersymbol(aobNades)
+
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -575,90 +602,46 @@ nop 3
             </CheatEntry>
             <CheatEntry>
               <ID>47</ID>
-              <Description>"Inf Shield                                                                        (by ???)"</Description>
+              <Description>"Inf Shield                                                                        (by cfemen)"</Description>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
-aobscanmodule(aobShield,game.dll,F3 41 0F 5C CC F3 0F 11 4C F5 08 0F 28 D1) // should be unique
+aobscanmodule(aobShield,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1) // should be unique
 aobShield:
   subss xmm1,xmm1
   db 90
 registersymbol(aobShield)
 [DISABLE]
 aobShield:
-  subss xmm1,xmm12
+  subss xmm1,xmm14
 unregistersymbol(aobShield)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
               <ID>28</ID>
-              <Description>"Inf Stratagems                                                                (by gir489)"</Description>
+              <Description>"Inf Stratagems                                                                (by cfemen)"</Description>
               <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
-// Author            : gir489
-// Executable Version: 1.8.19279.0
-// MD5 Signature     : 94CE72E11EB1E8E8CA9D1201B779444F
-// EXE Compile Date  : May 08, 2024 11:48 AM
-// Script Date       : May 15, 2024 09:25 PM
-[ENABLE]
-aobscanmodule(aob_Stragemens,game.dll, 0F 84 ? ? ? ? 48 8B 05 ? ? ? ? 4C 8D 4C 24 ? 44 8B 84 37)
-registersymbol(aob_Stragemens)
+              <AssemblerScript Async="1">{ Game   : helldivers2.exe
+  Version:
+  Date   : 2024-03-21
+  Author : cfemen
 
-aob_Stragemens:
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(aobStratacmp,game.dll,0F 86 BF 01 00 00 0F) // should be unique
+
+aobStratacmp:
   db 90 E9
+registersymbol(aobStratacmp)
 
 [DISABLE]
-aob_Stragemens:
-  db 0F 84
 
-unregistersymbol(aob_Stragemens)
+aobStratacmp:
+  db 0F 86
 
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+925828
-
-game.dll+9257D4: F2 41 0F 10 45 00        - movsd xmm0,[r13+00]
-game.dll+9257DA: 45 8B 45 08              - mov r8d,[r13+08]
-game.dll+9257DE: F2 0F 11 44 24 30        - movsd [rsp+30],xmm0
-game.dll+9257E4: 44 89 44 24 38           - mov [rsp+38],r8d
-game.dll+9257E9: 41 8B 96 00 59 0A 00     - mov edx,[r14+000A5900]
-game.dll+9257F0: 85 D2                    - test edx,edx
-game.dll+9257F2: 0F 84 16 01 00 00        - je game.dll+92590E
-game.dll+9257F8: 49 8B CE                 - mov rcx,r14
-game.dll+9257FB: 0F 1F 44 00 00           - nop dword ptr [rax+rax+00]
-game.dll+925800: 48 39 19                 - cmp [rcx],rbx
-game.dll+925803: 74 12                    - je game.dll+925817
-game.dll+925805: FF C0                    - inc eax
-game.dll+925807: 48 81 C1 C8 52 00 00     - add rcx,000052C8
-game.dll+92580E: 3B C2                    - cmp eax,edx
-game.dll+925810: 72 EE                    - jb game.dll+925800
-game.dll+925812: E9 F7 00 00 00           - jmp game.dll+92590E
-game.dll+925817: 48 69 F0 C8 52 00 00     - imul rsi,rax,000052C8
-game.dll+92581E: 49 6B FC 78              - imul rdi,r12,78
-game.dll+925822: 49 03 F6                 - add rsi,r14
-game.dll+925825: 45 84 C9                 - test r9b,r9b
-// ---------- INJECTING HERE ----------
-game.dll+925828: 0F 84 B8 00 00 00        - je game.dll+9258E6
-// ---------- DONE INJECTING  ----------
-game.dll+92582E: 48 8B 05 EB 60 F8 00     - mov rax,[game.dll+18AB920]
-game.dll+925835: 4C 8D 4C 24 30           - lea r9,[rsp+30]
-game.dll+92583A: 44 8B 84 37 D0 01 00 00  - mov r8d,[rdi+rsi+000001D0]
-game.dll+925842: 48 8B D3                 - mov rdx,rbx
-game.dll+925845: C6 44 24 20 00           - mov byte ptr [rsp+20],00
-game.dll+92584A: 48 8B 48 18              - mov rcx,[rax+18]
-game.dll+92584E: 48 89 8C 37 30 02 00 00  - mov [rdi+rsi+00000230],rcx
-game.dll+925856: F2 0F 10 44 24 30        - movsd xmm0,[rsp+30]
-game.dll+92585C: 8B 44 24 38              - mov eax,[rsp+38]
-game.dll+925860: 48 8B 0D 91 67 F8 00     - mov rcx,[game.dll+18ABFF8]
-game.dll+925867: F2 0F 11 44 24 40        - movsd [rsp+40],xmm0
-game.dll+92586D: 89 44 24 48              - mov [rsp+48],eax
-game.dll+925871: E8 9A 26 DD FF           - call game.dll+6F7F10
-game.dll+925876: 8B 94 37 D0 01 00 00     - mov edx,[rdi+rsi+000001D0]
-game.dll+92587D: 4C 8D 44 24 40           - lea r8,[rsp+40]
-game.dll+925882: 0F 28 F0                 - movaps xmm6,xmm0
-game.dll+925885: E8 E6 25 B4 FF           - call game.dll+467E70
-game.dll+92588A: 48 8B 05 8F 60 F8 00     - mov rax,[game.dll+18AB920]
-game.dll+925891: F3 0F 58 C6              - addss xmm0,xmm6
-game.dll+925895: F3 41 0F 59 C0           - mulss xmm0,xmm8
-}
+unregistersymbol(aobStratacmp)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -760,7 +743,7 @@ unregistersymbol(aobRecoil)
         </CheatEntry>
         <CheatEntry>
           <ID>53</ID>
-          <Description>"No Sway                                                                             (by gir489)"</Description>
+          <Description>"No Sway                                                                             (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -771,7 +754,7 @@ unregistersymbol(aobRecoil)
 }
 
 [ENABLE]
-aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB ? 0F 28 C2 E8 ? ? ? ? F3 44 0F 10 4D) // should be unique
+aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB 08 0F 28 C2 E8 ?? ?? ?? ?? F3 0F 10 75 88 F3 0F )
 
 aobCalcSway:
   nop 4
@@ -862,11 +845,11 @@ game.dll+2CC80A: C7 40 04 FF FF FF FF  - mov [rax+04],FFFFFFFF
           <Description>"Show All Map Icons                                                            (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_CheckIsBlipSeen,game.dll,43 0F B6 44 8A ? F2 44 0F 11 65) // ________:0000000180F81923                 movzx   eax, byte ptr [r10+r9*4+23h]
+aobscanmodule(aob_CheckIsBlipSeen,game.dll,41 0F B6 41 ? F2 44 0F 11 65)
 aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BE ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BF)
-aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ? ? ? ? 48 8B 44 24 ? 80 78 ? ? 0F 84 ? ? ? ? F3 0F 5C 7D) // ________:0000000180F806F7                 jnz     loc_180F807B0
-aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ? ? ? ? 4C 8B 44 24 ? F3 43 0F 10 4C A6) //________:0000000180F805BA                 jz      loc_180F8066F
-aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8) //________:0000000180F824B0                 jnz     loc_180F8261B
+aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ? ? ? ? 80 7B ? ? 0F 84 ? ? ? ? F3 44 0F 5C 45)
+aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ? ? ? ? 48 8B 54 24 ? F3 43 0F 10 4C A5)
+aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8)
 registersymbol(aob_CheckIsBlipSeen)
 registersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 registersymbol(aob_GetMinorInterestBlipIcon)
@@ -874,12 +857,11 @@ registersymbol(aob_CheckIfAlienHivesAreObstructed)
 registersymbol(aob_CheckMissionBlip)
 
 aob_CheckIsBlipSeen:
-mov eax,00000001
-nop
+  mov eax,00000001
 
 aob_CheckIfAlienHivesAreObstructed:
-clc
-nop 7
+  clc
+  nop 7
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 90 E9
@@ -892,10 +874,10 @@ aob_CheckMissionBlip:
 
 [DISABLE]
 aob_CheckIsBlipSeen:
-  db 43 0F B6 44 8A 23
+  db 41 0F B6 41 33
 
 aob_CheckIfAlienHivesAreObstructed:
-  db 41 80 BE 0C BC 07 00 00
+  db 41 80 BE 14 C3 05 00 00
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 0F 85
@@ -911,246 +893,6 @@ unregistersymbol(aob_CheckIfAlienHivesAreObstructed)
 unregistersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 unregistersymbol(aob_GetMinorInterestBlipIcon)
 unregistersymbol(aob_CheckMissionBlip)
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F81923
-
-game.dll+F818AD: 48 8D 05 A8 5E 90 00        - lea rax,[game.dll+188775C]
-game.dll+F818B4: 48 C1 E1 05                 - shl rcx,05
-game.dll+F818B8: 80 3C 01 00                 - cmp byte ptr [rcx+rax],00
-game.dll+F818BC: 0F 85 CD 04 00 00           - jne game.dll+F81D8F
-game.dll+F818C2: 41 80 BE 14 CC 07 00 00     - cmp byte ptr [r14+0007CC14],00
-game.dll+F818CA: 0F 85 BF 04 00 00           - jne game.dll+F81D8F
-game.dll+F818D0: 41 80 BE 3C BA 07 00 00     - cmp byte ptr [r14+0007BA3C],00
-game.dll+F818D8: 0F 85 B1 04 00 00           - jne game.dll+F81D8F
-game.dll+F818DE: 41 80 BF 7F 02 00 00 00     - cmp byte ptr [r15+0000027F],00
-game.dll+F818E6: F3 41 0F 10 96 58 01 00 00  - movss xmm2,[r14+00000158]
-game.dll+F818EF: 41 8B 47 08                 - mov eax,[r15+08]
-game.dll+F818F3: 0F 28 DA                    - movaps xmm3,xmm2
-game.dll+F818F6: F2 45 0F 10 27              - movsd xmm12,[r15]
-game.dll+F818FB: 0F 28 E2                    - movaps xmm4,xmm2
-game.dll+F818FE: F3 41 0F 59 9E 40 01 00 00  - mulss xmm3,[r14+00000140]
-game.dll+F81907: 41 0F 28 CC                 - movaps xmm1,xmm12
-game.dll+F8190B: 89 45 90                    - mov [rbp-70],eax
-game.dll+F8190E: F3 41 0F 5C 8E 30 01 00 00  - subss xmm1,[r14+00000130]
-game.dll+F81917: F3 41 0F 59 A6 44 01 00 00  - mulss xmm4,[r14+00000144]
-game.dll+F81920: 89 45 E0                    - mov [rbp-20],eax
-// ---------- INJECTING HERE ----------
-game.dll+F81923: 43 0F B6 44 8A 23           - movzx eax,byte ptr [r10+r9*4+23]
-// ---------- DONE INJECTING  ----------
-game.dll+F81929: F2 44 0F 11 65 D8           - movsd [rbp-28],xmm12
-game.dll+F8192F: F3 44 0F 10 75 DC           - movss xmm14,[rbp-24]
-game.dll+F81935: 41 0F 28 C6                 - movaps xmm0,xmm14
-game.dll+F81939: F3 0F 59 CA                 - mulss xmm1,xmm2
-game.dll+F8193D: 88 44 24 40                 - mov [rsp+40],al
-game.dll+F81941: F3 41 0F 5C 86 34 01 00 00  - subss xmm0,[r14+00000134]
-game.dll+F8194A: F3 0F 58 CB                 - addss xmm1,xmm3
-game.dll+F8194E: F3 0F 59 C2                 - mulss xmm0,xmm2
-game.dll+F81952: F3 0F 11 4D A0              - movss [rbp-60],xmm1
-game.dll+F81957: F3 0F 58 C4                 - addss xmm0,xmm4
-game.dll+F8195B: F3 0F 11 45 A4              - movss [rbp-5C],xmm0
-game.dll+F81960: 48 8B 5D A0                 - mov rbx,[rbp-60]
-game.dll+F81964: 48 89 5D F0                 - mov [rbp-10],rbx
-game.dll+F81968: 0F 84 52 02 00 00           - je game.dll+F81BC0
-game.dll+F8196E: 41 83 FC 20                 - cmp r12d,20
-game.dll+F81972: 0F 83 48 02 00 00           - jae game.dll+F81BC0
-game.dll+F81978: 41 8B 4D 08                 - mov ecx,[r13+08]
-game.dll+F8197C: E8 AF 82 B1 FF              - call game.dll+A99C30
-game.dll+F81981: 48 8B 0D 00 75 92 00        - mov rcx,[game.dll+18A8E88]
-game.dll+F81988: 45 33 C0                    - xor r8d,r8d
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+E2BF17
-
-game.dll+E2BEBC: 45 3B C2                    - cmp r8d,r10d
-game.dll+E2BEBF: 72 DF                       - jb game.dll+E2BEA0
-game.dll+E2BEC1: 45 33 C9                    - xor r9d,r9d
-game.dll+E2BEC4: 41 39 01                    - cmp [r9],eax
-game.dll+E2BEC7: 75 06                       - jne game.dll+E2BECF
-game.dll+E2BEC9: 41 8B 41 04                 - mov eax,[r9+04]
-game.dll+E2BECD: EB 05                       - jmp game.dll+E2BED4
-game.dll+E2BECF: B8 FF FF FF FF              - mov eax,FFFFFFFF
-game.dll+E2BED4: 44 8B 64 24 70              - mov r12d,[rsp+70]
-game.dll+E2BED9: 48 8B 75 98                 - mov rsi,[rbp-68]
-game.dll+E2BEDD: 48 8B 54 24 58              - mov rdx,[rsp+58]
-game.dll+E2BEE2: 8B C8                       - mov ecx,eax
-game.dll+E2BEE4: 48 69 C1 90 02 00 00        - imul rax,rcx,00000290
-game.dll+E2BEEB: 42 0F B6 8C 38 9C 2B 09 00  - movzx ecx,byte ptr [rax+r15+00092B9C]
-game.dll+E2BEF4: 48 8D 05 91 1E 83 00        - lea rax,[game.dll+165DD8C]
-game.dll+E2BEFB: 48 C1 E1 05                 - shl rcx,05
-game.dll+E2BEFF: 80 3C 01 00                 - cmp byte ptr [rcx+rax],00
-game.dll+E2BF03: 0F 85 BA 04 00 00           - jne game.dll+E2C3C3
-game.dll+E2BF09: 41 80 BE 14 CC 07 00 00     - cmp byte ptr [r14+0007CC14],00
-game.dll+E2BF11: 0F 85 AC 04 00 00           - jne game.dll+E2C3C3
-// ---------- INJECTING HERE ----------
-game.dll+E2BF17: 41 80 BE 3C BA 07 00 00     - cmp byte ptr [r14+0007BA3C],00
-// ---------- DONE INJECTING  ----------
-game.dll+E2BF1F: 0F 85 9E 04 00 00           - jne game.dll+E2C3C3
-game.dll+E2BF25: 80 BE 7F 02 00 00 00        - cmp byte ptr [rsi+0000027F],00
-game.dll+E2BF2C: F3 41 0F 10 96 58 01 00 00  - movss xmm2,[r14+00000158]
-game.dll+E2BF35: 8B 46 08                    - mov eax,[rsi+08]
-game.dll+E2BF38: 0F 28 DA                    - movaps xmm3,xmm2
-game.dll+E2BF3B: F2 44 0F 10 2E              - movsd xmm13,[rsi]
-game.dll+E2BF40: 0F 28 E2                    - movaps xmm4,xmm2
-game.dll+E2BF43: F3 41 0F 59 9E 40 01 00 00  - mulss xmm3,[r14+00000140]
-game.dll+E2BF4C: 41 0F 28 CD                 - movaps xmm1,xmm13
-game.dll+E2BF50: 89 45 88                    - mov [rbp-78],eax
-game.dll+E2BF53: F3 41 0F 5C 8E 30 01 00 00  - subss xmm1,[r14+00000130]
-game.dll+E2BF5C: F3 41 0F 59 A6 44 01 00 00  - mulss xmm4,[r14+00000144]
-game.dll+E2BF65: 89 45 E0                    - mov [rbp-20],eax
-aob_CheckIsBlipSeen: B8 01 00 00 00              - mov eax,00000001
-game.dll+E2BF6D: 90                          - nop
-game.dll+E2BF6E: F2 44 0F 11 6D D8           - movsd [rbp-28],xmm13
-game.dll+E2BF74: F3 44 0F 10 75 DC           - movss xmm14,[rbp-24]
-game.dll+E2BF7A: 41 0F 28 C6                 - movaps xmm0,xmm14
-game.dll+E2BF7E: F3 0F 59 CA                 - mulss xmm1,xmm2
-game.dll+E2BF82: 88 44 24 50                 - mov [rsp+50],al
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F806F7
-
-game.dll+F8069D: 8B 05 E5 DC 0F 00        - mov eax,[game.dll+107E388]
-game.dll+F806A3: 48 8B CE                 - mov rcx,rsi
-game.dll+F806A6: F2 0F 11 45 C0           - movsd [rbp-40],xmm0
-game.dll+F806AB: 89 45 C8                 - mov [rbp-38],eax
-game.dll+F806AE: E8 8D 71 DA FF           - call game.dll+D27840
-game.dll+F806B3: 0F 28 CF                 - movaps xmm1,xmm7
-game.dll+F806B6: 48 8B CE                 - mov rcx,rsi
-game.dll+F806B9: E8 72 6D DA FF           - call game.dll+D27430
-game.dll+F806BE: F3 0F 10 15 EA D8 18 00  - movss xmm2,[game.dll+110DFB0]
-game.dll+F806C6: BA C6 79 BB D7           - mov edx,D7BB79C6
-game.dll+F806CB: 48 8B CE                 - mov rcx,rsi
-game.dll+F806CE: E8 FD 62 DA FF           - call game.dll+D269D0
-game.dll+F806D3: 4D 8D 86 D8 01 00 00     - lea r8,[r14+000001D8]
-game.dll+F806DA: BA 12 64 2A 11           - mov edx,112A6412
-game.dll+F806DF: 48 8B CE                 - mov rcx,rsi
-game.dll+F806E2: E8 59 5F DA FF           - call game.dll+D26640
-game.dll+F806E7: 48 8B D3                 - mov rdx,rbx
-game.dll+F806EA: 48 8B CE                 - mov rcx,rsi
-game.dll+F806ED: E8 0E 86 DA FF           - call game.dll+D28D00
-game.dll+F806F2: 43 80 3C BC 00           - cmp byte ptr [r12+r15*4],00
-// ---------- INJECTING HERE ----------
-game.dll+F806F7: 0F 85 B3 00 00 00        - jne game.dll+F807B0
-// ---------- DONE INJECTING  ----------
-game.dll+F806FD: 48 8B 45 80              - mov rax,[rbp-80]
-game.dll+F80701: 80 78 29 00              - cmp byte ptr [rax+29],00
-game.dll+F80705: 0F 84 F6 00 00 00        - je game.dll+F80801
-game.dll+F8070B: F3 44 0F 5C 45 B0        - subss xmm8,[rbp-50]
-game.dll+F80711: F3 0F 10 44 24 70        - movss xmm0,[rsp+70]
-game.dll+F80717: F3 41 0F 5C F7           - subss xmm6,xmm15
-game.dll+F8071C: F3 0F 5C C7              - subss xmm0,xmm7
-game.dll+F80720: F3 45 0F 59 C0           - mulss xmm8,xmm8
-game.dll+F80725: F3 0F 59 F6              - mulss xmm6,xmm6
-game.dll+F80729: F3 0F 59 C0              - mulss xmm0,xmm0
-game.dll+F8072D: F3 41 0F 58 F0           - addss xmm6,xmm8
-game.dll+F80732: F3 0F 58 F0              - addss xmm6,xmm0
-game.dll+F80736: 44 0F 2F CE              - comiss xmm9,xmm6
-game.dll+F8073A: 73 6E                    - jae game.dll+F807AA
-game.dll+F8073C: 48 8B 05 75 87 92 00     - mov rax,[game.dll+18A8EB8]
-game.dll+F80743: 83 78 38 00              - cmp dword ptr [rax+38],00
-game.dll+F80747: 76 09                    - jna game.dll+F80752
-game.dll+F80749: 80 B8 D3 0A 00 00 00     - cmp byte ptr [rax+00000AD3],00
-game.dll+F80750: 75 58                    - jne game.dll+F807AA
-game.dll+F80752: 41 80 BE 1D 68 07 00 00  - cmp byte ptr [r14+0007681D],00
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F805BA
-
-game.dll+F80569: 48 81 C2 48 E0 49 00        - add rdx,0049E048
-game.dll+F80570: 8B 0A                       - mov ecx,[rdx]
-game.dll+F80572: 81 F9 FF 3F 00 00           - cmp ecx,00003FFF
-game.dll+F80578: 74 04                       - je game.dll+F8057E
-game.dll+F8057A: 3B C8                       - cmp ecx,eax
-game.dll+F8057C: 74 7C                       - je game.dll+F805FA
-game.dll+F8057E: 41 FF C0                    - inc r8d
-game.dll+F80581: 48 83 C2 60                 - add rdx,60
-game.dll+F80585: 45 3B C1                    - cmp r8d,r9d
-game.dll+F80588: 72 E6                       - jb game.dll+F80570
-game.dll+F8058A: 33 C0                       - xor eax,eax
-game.dll+F8058C: 49 69 CD A8 01 00 00        - imul rcx,r13,000001A8
-game.dll+F80593: 49 8D B6 30 C9 05 00        - lea rsi,[r14+0005C930]
-game.dll+F8059A: 48 8B D3                    - mov rdx,rbx
-game.dll+F8059D: 48 03 F1                    - add rsi,rcx
-game.dll+F805A0: 48 89 4C 24 48              - mov [rsp+48],rcx
-game.dll+F805A5: 42 88 84 31 D4 CA 05 00     - mov [rcx+r14+0005CAD4],al
-game.dll+F805AD: 48 8B CE                    - mov rcx,rsi
-game.dll+F805B0: E8 4B 83 DA FF              - call game.dll+D28900
-game.dll+F805B5: 43 80 3C BC 00              - cmp byte ptr [r12+r15*4],00
-// ---------- INJECTING HERE ----------
-game.dll+F805BA: 0F 84 AF 00 00 00           - je game.dll+F8066F
-// ---------- DONE INJECTING  ----------
-game.dll+F805C0: 4C 8B 45 80                 - mov r8,[rbp-80]
-game.dll+F805C4: F3 43 0F 10 4C BC 10        - movss xmm1,[r12+r15*4+10]
-game.dll+F805CB: F3 43 0F 10 54 BC 14        - movss xmm2,[r12+r15*4+14]
-game.dll+F805D2: 41 80 78 20 00              - cmp byte ptr [r8+20],00
-game.dll+F805D7: 74 3B                       - je game.dll+F80614
-game.dll+F805D9: F3 41 0F 10 86 58 01 00 00  - movss xmm0,[r14+00000158]
-game.dll+F805E2: F3 0F 59 C8                 - mulss xmm1,xmm0
-game.dll+F805E6: F3 0F 59 D0                 - mulss xmm2,xmm0
-game.dll+F805EA: F3 0F 11 4D 98              - movss [rbp-68],xmm1
-game.dll+F805EF: F3 0F 11 55 9C              - movss [rbp-64],xmm2
-game.dll+F805F4: 48 8B 5D 98                 - mov rbx,[rbp-68]
-game.dll+F805F8: EB 28                       - jmp game.dll+F80622
-game.dll+F805FA: 0F 28 D7                    - movaps xmm2,xmm7
-game.dll+F805FD: 48 8D 54 24 48              - lea rdx,[rsp+48]
-game.dll+F80602: 49 8B CE                    - mov rcx,r14
-game.dll+F80605: E8 66 7A 00 00              - call game.dll+F88070
-game.dll+F8060A: 48 8B 5C 24 48              - mov rbx,[rsp+48]
-game.dll+F8060F: E9 78 FF FF FF              - jmp game.dll+F8058C
-game.dll+F80614: F3 0F 11 4D A0              - movss [rbp-60],xmm1
-game.dll+F80619: F3 0F 11 55 A4              - movss [rbp-5C],xmm2
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F824B0
-
-game.dll+F8244A: F3 41 0F 59 A7 44 01 00 00        - mulss xmm4,[r15+00000144]
-game.dll+F82453: 89 45 38                          - mov [rbp+38],eax
-game.dll+F82456: 8B 44 24 40                       - mov eax,[rsp+40]
-game.dll+F8245A: F2 0F 11 7D 30                    - movsd [rbp+30],xmm7
-game.dll+F8245F: F3 0F 10 75 34                    - movss xmm6,[rbp+34]
-game.dll+F82464: 0F 28 C6                          - movaps xmm0,xmm6
-game.dll+F82467: F3 0F 59 CA                       - mulss xmm1,xmm2
-game.dll+F8246B: F3 41 0F 5C 87 34 01 00 00        - subss xmm0,[r15+00000134]
-game.dll+F82474: 4C 69 F8 48 03 00 00              - imul r15,rax,00000348
-game.dll+F8247B: F3 0F 58 CB                       - addss xmm1,xmm3
-game.dll+F8247F: F3 0F 59 C2                       - mulss xmm0,xmm2
-game.dll+F82483: 48 8B 45 E0                       - mov rax,[rbp-20]
-game.dll+F82487: F3 0F 58 C4                       - addss xmm0,xmm4
-game.dll+F8248B: F3 0F 11 4D 10                    - movss [rbp+10],xmm1
-game.dll+F82490: 43 C6 84 07 5C 60 01 00 00        - mov byte ptr [r15+r8+0001605C],00
-game.dll+F82499: 83 7C 38 74 01                    - cmp dword ptr [rax+rdi+74],01
-game.dll+F8249E: F3 0F 11 45 14                    - movss [rbp+14],xmm0
-game.dll+F824A3: 48 8B 75 10                       - mov rsi,[rbp+10]
-game.dll+F824A7: 48 89 75 20                       - mov [rbp+20],rsi
-game.dll+F824AB: 48 89 74 24 70                    - mov [rsp+70],rsi
-// ---------- INJECTING HERE ----------
-game.dll+F824B0: 0F 85 65 01 00 00                 - jne game.dll+F8261B
-// ---------- DONE INJECTING  ----------
-game.dll+F824B6: 49 8D B8 B8 5E 01 00              - lea rdi,[r8+00015EB8]
-game.dll+F824BD: 41 0F 28 CD                       - movaps xmm1,xmm13
-game.dll+F824C1: 49 03 FF                          - add rdi,r15
-game.dll+F824C4: 49 8B D8                          - mov rbx,r8
-game.dll+F824C7: 48 8B CF                          - mov rcx,rdi
-game.dll+F824CA: E8 61 4F DA FF                    - call game.dll+D27430
-game.dll+F824CF: 8B 54 24 40                       - mov edx,[rsp+40]
-game.dll+F824D3: 4C 8D A3 18 5D 01 00              - lea r12,[rbx+00015D18]
-game.dll+F824DA: F2 0F 10 15 9E BE 0F 00           - movsd xmm2,[game.dll+107E380]
-game.dll+F824E2: 4D 03 E7                          - add r12,r15
-game.dll+F824E5: 8B 05 9D BE 0F 00                 - mov eax,[game.dll+107E388]
-game.dll+F824EB: 49 8B CC                          - mov rcx,r12
-game.dll+F824EE: F2 0F 11 55 70                    - movsd [rbp+70],xmm2
-game.dll+F824F3: C7 84 93 98 91 01 00 00 00 00 00  - mov [rbx+rdx*4+00019198],00000000
-game.dll+F824FE: 48 8D 55 70                       - lea rdx,[rbp+70]
-game.dll+F82502: 89 45 78                          - mov [rbp+78],eax
-game.dll+F82505: E8 36 53 DA FF                    - call game.dll+D27840
-game.dll+F8250A: 4D 8B C6                          - mov r8,r14
-game.dll+F8250D: BA 7E B8 A8 3A                    - mov edx,3AA8B87E
-game.dll+F82512: 49 8B CC                          - mov rcx,r12
-}
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -2041,97 +1783,79 @@ dealloc(completeHiveBase_newmem)
         </CheatEntry>
         <CheatEntry>
           <ID>59</ID>
-          <Description>"Instant Shuttle                                                                     (by gir489+cfemen)"</Description>
+          <Description>"Instant Shuttle                                                                     (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>// Game Executable   : helldivers2.exe
-// Author            : cfemen + gir489
-// Executable Version: 1.8.20424.0
-// MD5 Signature     : 714FB37A355B892081B500B0148D8A2B
-// EXE Compile Date  : June 05, 2024 09:54 AM
-// Script Date       : June 14, 2024 06:58 AM
-[ENABLE]
-aobscanmodule(aob_ShuttleLandingTimerSet,game.dll,F3 0F 11 04 01)
-registersymbol(aob_ShuttleLandingTimerSet)
-alloc(newmem_ShuttleLandingTimerSet,1024)
-label(return_ShuttleLandingTimerSet)
-alloc(compare_float_check, 4)
+          <AssemblerScript>{ Game   : helldivers2.exe
+  Version:
+  Date   : 2024-06-13
+  Author : cfemen
 
-newmem_ShuttleLandingTimerSet:
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+
+aobscanmodule(aobWriteShuttleTimer,game.dll,F3 41 0F 5C C5 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
   subss xmm0,xmm13
   ucomiss xmm0, DWORD [compare_float_check]
   jbe short @f
     movss xmm0, DWORD [compare_float_check]
   @@:
+  //subss xmm0,xmm13
+  mov edx,6109F766
   movss [rcx+rax],xmm0
-  mov rax,[r12+60]
-  mov r8,[r12+78]
-  jmp return_ShuttleLandingTimerSet
-
-aob_ShuttleLandingTimerSet:
-  jmp newmem_ShuttleLandingTimerSet
-  nop
-return_ShuttleLandingTimerSet:
-
+  jmp return
 compare_float_check:
 dd (float)1.0
+aobWriteShuttleTimer:
+  jmp far newmem
+  nop
+return:
+registersymbol(aobWriteShuttleTimer)
 
 [DISABLE]
-aob_ShuttleLandingTimerSet:
-  db F3 0F 11 04 01 49 8B 44 24 60 4D 8B 44 24 78
 
-unregistersymbol(aob_ShuttleLandingTimerSet)
-dealloc(newmem_ShuttleLandingTimerSet)
+aobWriteShuttleTimer:
+  db F3 41 0F 5C C5 BA 66 F7 09 61 F3 0F 11 04 01
 
-unregistersymbol(aob_ShuttleLandingTimerSet)
-dealloc(newmem_ShuttleLandingTimerSet)
-dealloc(compare_float_check)
+unregistersymbol(aobWriteShuttleTimer)
+dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: game.dll+57BE64
+// ORIGINAL CODE - INJECTION POINT: game.dll+57BE5A
 
-game.dll+57BE2A: 74 0D                    - je game.dll+57BE39
-game.dll+57BE2C: 8B 02                    - mov eax,[rdx]
-game.dll+57BE2E: C1 E8 07                 - shr eax,07
-game.dll+57BE31: 24 01                    - and al,01
-game.dll+57BE33: 74 04                    - je game.dll+57BE39
-game.dll+57BE35: B3 01                    - mov bl,01
-game.dll+57BE37: EB 02                    - jmp game.dll+57BE3B
-game.dll+57BE39: 32 DB                    - xor bl,bl
-game.dll+57BE3B: FF C1                    - inc ecx
-game.dll+57BE3D: 48 83 C2 1C              - add rdx,1C
-game.dll+57BE41: 41 3B C8                 - cmp ecx,r8d
-game.dll+57BE44: 72 DD                    - jb game.dll+57BE23
-game.dll+57BE46: 84 DB                    - test bl,bl
-game.dll+57BE48: 75 3D                    - jne game.dll+57BE87
-game.dll+57BE4A: 49 8B 44 24 78           - mov rax,[r12+78]
-game.dll+57BE4F: 4B 8D 0C B6              - lea rcx,[r14+r14*4]
-game.dll+57BE53: 48 C1 E1 04              - shl rcx,04
-game.dll+57BE57: 0F 28 C6                 - movaps xmm0,xmm6
-game.dll+57BE5A: F3 41 0F 5C C5           - subss xmm0,xmm13
-game.dll+57BE5F: BA 66 F7 09 61           - mov edx,6109F766
+game.dll+57BE3B: FF C1           - inc ecx
+game.dll+57BE3D: 48 83 C2 1C     - add rdx,1C
+game.dll+57BE41: 41 3B C8        - cmp ecx,r8d
+game.dll+57BE44: 72 DD           - jb game.dll+57BE23
+game.dll+57BE46: 84 DB           - test bl,bl
+game.dll+57BE48: 75 3D           - jne game.dll+57BE87
+game.dll+57BE4A: 49 8B 44 24 78  - mov rax,[r12+78]
+game.dll+57BE4F: 4B 8D 0C B6     - lea rcx,[r14+r14*4]
+game.dll+57BE53: 48 C1 E1 04     - shl rcx,04
+game.dll+57BE57: 0F 28 C6        - movaps xmm0,xmm6
 // ---------- INJECTING HERE ----------
-game.dll+57BE64: F3 0F 11 04 01           - movss [rcx+rax],xmm0
+game.dll+57BE5A: F3 41 0F 5C C5  - subss xmm0,xmm13
 // ---------- DONE INJECTING  ----------
-game.dll+57BE69: 49 8B 44 24 60           - mov rax,[r12+60]
-game.dll+57BE6E: 4D 8B 44 24 78           - mov r8,[r12+78]
-game.dll+57BE73: 4C 03 C1                 - add r8,rcx
-game.dll+57BE76: 4A 8B 0C F0              - mov rcx,[rax+r14*8]
-game.dll+57BE7A: 8B 49 10                 - mov ecx,[rcx+10]
-game.dll+57BE7D: E8 2E 1E 56 00           - call game.dll+ADDCB0
-game.dll+57BE82: 49 8B D6                 - mov rdx,r14
-game.dll+57BE85: EB 47                    - jmp game.dll+57BECE
-game.dll+57BE87: F3 42 0F 10 44 3E 1C     - movss xmm0,[rsi+r15+1C]
-game.dll+57BE8E: 44 0F 2F D0              - comiss xmm10,xmm0
-game.dll+57BE92: 76 7F                    - jna game.dll+57BF13
-game.dll+57BE94: 49 8B 44 24 78           - mov rax,[r12+78]
-game.dll+57BE99: BA 4D 3D 07 B2           - mov edx,B2073D4D
-game.dll+57BE9E: C7 44 30 1C 00 00 A0 41  - mov [rax+rsi+1C],41A00000
-game.dll+57BEA6: 49 8B 44 24 60           - mov rax,[r12+60]
-game.dll+57BEAB: 4D 8B 44 24 78           - mov r8,[r12+78]
-game.dll+57BEB0: 49 83 C0 1C              - add r8,1C
-game.dll+57BEB4: 4C 03 C6                 - add r8,rsi
-game.dll+57BEB7: 4A 8B 0C F0              - mov rcx,[rax+r14*8]
-game.dll+57BEBB: 8B 49 10                 - mov ecx,[rcx+10]
+game.dll+57BE5F: BA 66 F7 09 61  - mov edx,6109F766
+game.dll+57BE64: F3 0F 11 04 01  - movss [rcx+rax],xmm0
+game.dll+57BE69: 49 8B 44 24 60  - mov rax,[r12+60]
+game.dll+57BE6E: 4D 8B 44 24 78  - mov r8,[r12+78]
+game.dll+57BE73: 4C 03 C1        - add r8,rcx
+game.dll+57BE76: 4A 8B 0C F0     - mov rcx,[rax+r14*8]
+game.dll+57BE7A: 8B 49 10        - mov ecx,[rcx+10]
+game.dll+57BE7D: E8 2E 1E 56 00  - call game.dll+ADDCB0
+game.dll+57BE82: 49 8B D6        - mov rdx,r14
+game.dll+57BE85: EB 47           - jmp game.dll+57BECE
 }
 </AssemblerScript>
         </CheatEntry>
@@ -3168,18 +2892,22 @@ game.dll+4A6E46: 4F 8D 0C 64        - lea r9,[r12+r12*2]
         </CheatEntry>
         <CheatEntry>
           <ID>113977</ID>
-          <Description>"Inf Stamina                                                                          (by gir489)"</Description>
+          <Description>"Inf Stamina                                                                          (by gir489+cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">// original found by gir489
-[ENABLE]
-aobscanmodule(aob_Stamina,game.dll,F3 41 0F 11 08 8B 48 10 E8 ?? ?? ?? ?? 41 8B 47 48)
+          <AssemblerScript Async="1">[ENABLE]
 
+aobscanmodule(aobSprintWrite,game.dll,F3 41 0F 11 08 8B 48 10 E8 ** ** ** ** 41 8B 47 48 0F 28 B4 24 50 08 00 00) // should be unique
 
-aob_Stamina:
-db F3 41 0F 11 30
-
+aobSprintWrite:
+  nop 5
+registersymbol(aobSprintWrite)
 
 [DISABLE]
+
+aobSprintWrite:
+  db F3 41 0F 11 08
+
+unregistersymbol(aobSprintWrite)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -3428,90 +3156,46 @@ unregistersymbol(aob_Autocannon)
         </CheatEntry>
         <CheatEntry>
           <ID>113983</ID>
-          <Description>"Inf Shield                                                                              (by ???)"</Description>
+          <Description>"Inf Shield                                                                              (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
-aobscanmodule(aobShield,game.dll,F3 41 0F 5C CC F3 0F 11 4C F5 08 0F 28 D1) // should be unique
+aobscanmodule(aobShield,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1) // should be unique
 aobShield:
   subss xmm1,xmm1
   db 90
 registersymbol(aobShield)
 [DISABLE]
 aobShield:
-  subss xmm1,xmm12
+  subss xmm1,xmm14
 unregistersymbol(aobShield)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
           <ID>113984</ID>
-          <Description>"Inf Stratagems                                                                      (by gir489)"</Description>
+          <Description>"Inf Stratagems                                                                      (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
-// Author            : gir489
-// Executable Version: 1.8.19279.0
-// MD5 Signature     : 94CE72E11EB1E8E8CA9D1201B779444F
-// EXE Compile Date  : May 08, 2024 11:48 AM
-// Script Date       : May 15, 2024 09:25 PM
-[ENABLE]
-aobscanmodule(aob_Stragemens,game.dll, 0F 84 ? ? ? ? 48 8B 05 ? ? ? ? 4C 8D 4C 24 ? 44 8B 84 37)
-registersymbol(aob_Stragemens)
+          <AssemblerScript Async="1">{ Game   : helldivers2.exe
+  Version:
+  Date   : 2024-03-21
+  Author : cfemen
 
-aob_Stragemens:
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(aobStratacmp,game.dll,0F 86 BF 01 00 00 0F) // should be unique
+
+aobStratacmp:
   db 90 E9
+registersymbol(aobStratacmp)
 
 [DISABLE]
-aob_Stragemens:
-  db 0F 84
 
-unregistersymbol(aob_Stragemens)
+aobStratacmp:
+  db 0F 86
 
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+925828
-
-game.dll+9257D4: F2 41 0F 10 45 00        - movsd xmm0,[r13+00]
-game.dll+9257DA: 45 8B 45 08              - mov r8d,[r13+08]
-game.dll+9257DE: F2 0F 11 44 24 30        - movsd [rsp+30],xmm0
-game.dll+9257E4: 44 89 44 24 38           - mov [rsp+38],r8d
-game.dll+9257E9: 41 8B 96 00 59 0A 00     - mov edx,[r14+000A5900]
-game.dll+9257F0: 85 D2                    - test edx,edx
-game.dll+9257F2: 0F 84 16 01 00 00        - je game.dll+92590E
-game.dll+9257F8: 49 8B CE                 - mov rcx,r14
-game.dll+9257FB: 0F 1F 44 00 00           - nop dword ptr [rax+rax+00]
-game.dll+925800: 48 39 19                 - cmp [rcx],rbx
-game.dll+925803: 74 12                    - je game.dll+925817
-game.dll+925805: FF C0                    - inc eax
-game.dll+925807: 48 81 C1 C8 52 00 00     - add rcx,000052C8
-game.dll+92580E: 3B C2                    - cmp eax,edx
-game.dll+925810: 72 EE                    - jb game.dll+925800
-game.dll+925812: E9 F7 00 00 00           - jmp game.dll+92590E
-game.dll+925817: 48 69 F0 C8 52 00 00     - imul rsi,rax,000052C8
-game.dll+92581E: 49 6B FC 78              - imul rdi,r12,78
-game.dll+925822: 49 03 F6                 - add rsi,r14
-game.dll+925825: 45 84 C9                 - test r9b,r9b
-// ---------- INJECTING HERE ----------
-game.dll+925828: 0F 84 B8 00 00 00        - je game.dll+9258E6
-// ---------- DONE INJECTING  ----------
-game.dll+92582E: 48 8B 05 EB 60 F8 00     - mov rax,[game.dll+18AB920]
-game.dll+925835: 4C 8D 4C 24 30           - lea r9,[rsp+30]
-game.dll+92583A: 44 8B 84 37 D0 01 00 00  - mov r8d,[rdi+rsi+000001D0]
-game.dll+925842: 48 8B D3                 - mov rdx,rbx
-game.dll+925845: C6 44 24 20 00           - mov byte ptr [rsp+20],00
-game.dll+92584A: 48 8B 48 18              - mov rcx,[rax+18]
-game.dll+92584E: 48 89 8C 37 30 02 00 00  - mov [rdi+rsi+00000230],rcx
-game.dll+925856: F2 0F 10 44 24 30        - movsd xmm0,[rsp+30]
-game.dll+92585C: 8B 44 24 38              - mov eax,[rsp+38]
-game.dll+925860: 48 8B 0D 91 67 F8 00     - mov rcx,[game.dll+18ABFF8]
-game.dll+925867: F2 0F 11 44 24 40        - movsd [rsp+40],xmm0
-game.dll+92586D: 89 44 24 48              - mov [rsp+48],eax
-game.dll+925871: E8 9A 26 DD FF           - call game.dll+6F7F10
-game.dll+925876: 8B 94 37 D0 01 00 00     - mov edx,[rdi+rsi+000001D0]
-game.dll+92587D: 4C 8D 44 24 40           - lea r8,[rsp+40]
-game.dll+925882: 0F 28 F0                 - movaps xmm6,xmm0
-game.dll+925885: E8 E6 25 B4 FF           - call game.dll+467E70
-game.dll+92588A: 48 8B 05 8F 60 F8 00     - mov rax,[game.dll+18AB920]
-game.dll+925891: F3 0F 58 C6              - addss xmm0,xmm6
-game.dll+925895: F3 41 0F 59 C0           - mulss xmm0,xmm8
-}
+unregistersymbol(aobStratacmp)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -3535,7 +3219,7 @@ unregistersymbol(aobRecoil)
         </CheatEntry>
         <CheatEntry>
           <ID>113972</ID>
-          <Description>"No Sway                                                                               (by gir489)"</Description>
+          <Description>"No Sway                                                                               (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -3546,7 +3230,7 @@ unregistersymbol(aobRecoil)
 }
 
 [ENABLE]
-aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB ? 0F 28 C2 E8 ? ? ? ? F3 44 0F 10 4D) // should be unique
+aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB 08 0F 28 C2 E8 ?? ?? ?? ?? F3 0F 10 75 88 F3 0F )
 
 aobCalcSway:
   nop 4
@@ -3565,11 +3249,11 @@ unregistersymbol(aobCalcSway)
           <Description>"Show All Map Icons                                                              (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_CheckIsBlipSeen,game.dll,43 0F B6 44 8A ? F2 44 0F 11 65) // ________:0000000180F81923                 movzx   eax, byte ptr [r10+r9*4+23h]
+aobscanmodule(aob_CheckIsBlipSeen,game.dll,41 0F B6 41 ? F2 44 0F 11 65)
 aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BE ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BF)
-aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ? ? ? ? 48 8B 44 24 ? 80 78 ? ? 0F 84 ? ? ? ? F3 0F 5C 7D) // ________:0000000180F806F7                 jnz     loc_180F807B0
-aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ? ? ? ? 4C 8B 44 24 ? F3 43 0F 10 4C A6) //________:0000000180F805BA                 jz      loc_180F8066F
-aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8) //________:0000000180F824B0                 jnz     loc_180F8261B
+aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ? ? ? ? 80 7B ? ? 0F 84 ? ? ? ? F3 44 0F 5C 45)
+aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ? ? ? ? 48 8B 54 24 ? F3 43 0F 10 4C A5)
+aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8)
 registersymbol(aob_CheckIsBlipSeen)
 registersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 registersymbol(aob_GetMinorInterestBlipIcon)
@@ -3577,12 +3261,11 @@ registersymbol(aob_CheckIfAlienHivesAreObstructed)
 registersymbol(aob_CheckMissionBlip)
 
 aob_CheckIsBlipSeen:
-mov eax,00000001
-nop
+  mov eax,00000001
 
 aob_CheckIfAlienHivesAreObstructed:
-clc
-nop 7
+  clc
+  nop 7
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 90 E9
@@ -3595,10 +3278,10 @@ aob_CheckMissionBlip:
 
 [DISABLE]
 aob_CheckIsBlipSeen:
-  db 43 0F B6 44 8A 23
+  db 41 0F B6 41 33
 
 aob_CheckIfAlienHivesAreObstructed:
-  db 41 80 BE 0C BC 07 00 00
+  db 41 80 BE 14 C3 05 00 00
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 0F 85
@@ -3614,246 +3297,6 @@ unregistersymbol(aob_CheckIfAlienHivesAreObstructed)
 unregistersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 unregistersymbol(aob_GetMinorInterestBlipIcon)
 unregistersymbol(aob_CheckMissionBlip)
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F81923
-
-game.dll+F818AD: 48 8D 05 A8 5E 90 00        - lea rax,[game.dll+188775C]
-game.dll+F818B4: 48 C1 E1 05                 - shl rcx,05
-game.dll+F818B8: 80 3C 01 00                 - cmp byte ptr [rcx+rax],00
-game.dll+F818BC: 0F 85 CD 04 00 00           - jne game.dll+F81D8F
-game.dll+F818C2: 41 80 BE 14 CC 07 00 00     - cmp byte ptr [r14+0007CC14],00
-game.dll+F818CA: 0F 85 BF 04 00 00           - jne game.dll+F81D8F
-game.dll+F818D0: 41 80 BE 3C BA 07 00 00     - cmp byte ptr [r14+0007BA3C],00
-game.dll+F818D8: 0F 85 B1 04 00 00           - jne game.dll+F81D8F
-game.dll+F818DE: 41 80 BF 7F 02 00 00 00     - cmp byte ptr [r15+0000027F],00
-game.dll+F818E6: F3 41 0F 10 96 58 01 00 00  - movss xmm2,[r14+00000158]
-game.dll+F818EF: 41 8B 47 08                 - mov eax,[r15+08]
-game.dll+F818F3: 0F 28 DA                    - movaps xmm3,xmm2
-game.dll+F818F6: F2 45 0F 10 27              - movsd xmm12,[r15]
-game.dll+F818FB: 0F 28 E2                    - movaps xmm4,xmm2
-game.dll+F818FE: F3 41 0F 59 9E 40 01 00 00  - mulss xmm3,[r14+00000140]
-game.dll+F81907: 41 0F 28 CC                 - movaps xmm1,xmm12
-game.dll+F8190B: 89 45 90                    - mov [rbp-70],eax
-game.dll+F8190E: F3 41 0F 5C 8E 30 01 00 00  - subss xmm1,[r14+00000130]
-game.dll+F81917: F3 41 0F 59 A6 44 01 00 00  - mulss xmm4,[r14+00000144]
-game.dll+F81920: 89 45 E0                    - mov [rbp-20],eax
-// ---------- INJECTING HERE ----------
-game.dll+F81923: 43 0F B6 44 8A 23           - movzx eax,byte ptr [r10+r9*4+23]
-// ---------- DONE INJECTING  ----------
-game.dll+F81929: F2 44 0F 11 65 D8           - movsd [rbp-28],xmm12
-game.dll+F8192F: F3 44 0F 10 75 DC           - movss xmm14,[rbp-24]
-game.dll+F81935: 41 0F 28 C6                 - movaps xmm0,xmm14
-game.dll+F81939: F3 0F 59 CA                 - mulss xmm1,xmm2
-game.dll+F8193D: 88 44 24 40                 - mov [rsp+40],al
-game.dll+F81941: F3 41 0F 5C 86 34 01 00 00  - subss xmm0,[r14+00000134]
-game.dll+F8194A: F3 0F 58 CB                 - addss xmm1,xmm3
-game.dll+F8194E: F3 0F 59 C2                 - mulss xmm0,xmm2
-game.dll+F81952: F3 0F 11 4D A0              - movss [rbp-60],xmm1
-game.dll+F81957: F3 0F 58 C4                 - addss xmm0,xmm4
-game.dll+F8195B: F3 0F 11 45 A4              - movss [rbp-5C],xmm0
-game.dll+F81960: 48 8B 5D A0                 - mov rbx,[rbp-60]
-game.dll+F81964: 48 89 5D F0                 - mov [rbp-10],rbx
-game.dll+F81968: 0F 84 52 02 00 00           - je game.dll+F81BC0
-game.dll+F8196E: 41 83 FC 20                 - cmp r12d,20
-game.dll+F81972: 0F 83 48 02 00 00           - jae game.dll+F81BC0
-game.dll+F81978: 41 8B 4D 08                 - mov ecx,[r13+08]
-game.dll+F8197C: E8 AF 82 B1 FF              - call game.dll+A99C30
-game.dll+F81981: 48 8B 0D 00 75 92 00        - mov rcx,[game.dll+18A8E88]
-game.dll+F81988: 45 33 C0                    - xor r8d,r8d
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+E2BF17
-
-game.dll+E2BEBC: 45 3B C2                    - cmp r8d,r10d
-game.dll+E2BEBF: 72 DF                       - jb game.dll+E2BEA0
-game.dll+E2BEC1: 45 33 C9                    - xor r9d,r9d
-game.dll+E2BEC4: 41 39 01                    - cmp [r9],eax
-game.dll+E2BEC7: 75 06                       - jne game.dll+E2BECF
-game.dll+E2BEC9: 41 8B 41 04                 - mov eax,[r9+04]
-game.dll+E2BECD: EB 05                       - jmp game.dll+E2BED4
-game.dll+E2BECF: B8 FF FF FF FF              - mov eax,FFFFFFFF
-game.dll+E2BED4: 44 8B 64 24 70              - mov r12d,[rsp+70]
-game.dll+E2BED9: 48 8B 75 98                 - mov rsi,[rbp-68]
-game.dll+E2BEDD: 48 8B 54 24 58              - mov rdx,[rsp+58]
-game.dll+E2BEE2: 8B C8                       - mov ecx,eax
-game.dll+E2BEE4: 48 69 C1 90 02 00 00        - imul rax,rcx,00000290
-game.dll+E2BEEB: 42 0F B6 8C 38 9C 2B 09 00  - movzx ecx,byte ptr [rax+r15+00092B9C]
-game.dll+E2BEF4: 48 8D 05 91 1E 83 00        - lea rax,[game.dll+165DD8C]
-game.dll+E2BEFB: 48 C1 E1 05                 - shl rcx,05
-game.dll+E2BEFF: 80 3C 01 00                 - cmp byte ptr [rcx+rax],00
-game.dll+E2BF03: 0F 85 BA 04 00 00           - jne game.dll+E2C3C3
-game.dll+E2BF09: 41 80 BE 14 CC 07 00 00     - cmp byte ptr [r14+0007CC14],00
-game.dll+E2BF11: 0F 85 AC 04 00 00           - jne game.dll+E2C3C3
-// ---------- INJECTING HERE ----------
-game.dll+E2BF17: 41 80 BE 3C BA 07 00 00     - cmp byte ptr [r14+0007BA3C],00
-// ---------- DONE INJECTING  ----------
-game.dll+E2BF1F: 0F 85 9E 04 00 00           - jne game.dll+E2C3C3
-game.dll+E2BF25: 80 BE 7F 02 00 00 00        - cmp byte ptr [rsi+0000027F],00
-game.dll+E2BF2C: F3 41 0F 10 96 58 01 00 00  - movss xmm2,[r14+00000158]
-game.dll+E2BF35: 8B 46 08                    - mov eax,[rsi+08]
-game.dll+E2BF38: 0F 28 DA                    - movaps xmm3,xmm2
-game.dll+E2BF3B: F2 44 0F 10 2E              - movsd xmm13,[rsi]
-game.dll+E2BF40: 0F 28 E2                    - movaps xmm4,xmm2
-game.dll+E2BF43: F3 41 0F 59 9E 40 01 00 00  - mulss xmm3,[r14+00000140]
-game.dll+E2BF4C: 41 0F 28 CD                 - movaps xmm1,xmm13
-game.dll+E2BF50: 89 45 88                    - mov [rbp-78],eax
-game.dll+E2BF53: F3 41 0F 5C 8E 30 01 00 00  - subss xmm1,[r14+00000130]
-game.dll+E2BF5C: F3 41 0F 59 A6 44 01 00 00  - mulss xmm4,[r14+00000144]
-game.dll+E2BF65: 89 45 E0                    - mov [rbp-20],eax
-aob_CheckIsBlipSeen: B8 01 00 00 00              - mov eax,00000001
-game.dll+E2BF6D: 90                          - nop
-game.dll+E2BF6E: F2 44 0F 11 6D D8           - movsd [rbp-28],xmm13
-game.dll+E2BF74: F3 44 0F 10 75 DC           - movss xmm14,[rbp-24]
-game.dll+E2BF7A: 41 0F 28 C6                 - movaps xmm0,xmm14
-game.dll+E2BF7E: F3 0F 59 CA                 - mulss xmm1,xmm2
-game.dll+E2BF82: 88 44 24 50                 - mov [rsp+50],al
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F806F7
-
-game.dll+F8069D: 8B 05 E5 DC 0F 00        - mov eax,[game.dll+107E388]
-game.dll+F806A3: 48 8B CE                 - mov rcx,rsi
-game.dll+F806A6: F2 0F 11 45 C0           - movsd [rbp-40],xmm0
-game.dll+F806AB: 89 45 C8                 - mov [rbp-38],eax
-game.dll+F806AE: E8 8D 71 DA FF           - call game.dll+D27840
-game.dll+F806B3: 0F 28 CF                 - movaps xmm1,xmm7
-game.dll+F806B6: 48 8B CE                 - mov rcx,rsi
-game.dll+F806B9: E8 72 6D DA FF           - call game.dll+D27430
-game.dll+F806BE: F3 0F 10 15 EA D8 18 00  - movss xmm2,[game.dll+110DFB0]
-game.dll+F806C6: BA C6 79 BB D7           - mov edx,D7BB79C6
-game.dll+F806CB: 48 8B CE                 - mov rcx,rsi
-game.dll+F806CE: E8 FD 62 DA FF           - call game.dll+D269D0
-game.dll+F806D3: 4D 8D 86 D8 01 00 00     - lea r8,[r14+000001D8]
-game.dll+F806DA: BA 12 64 2A 11           - mov edx,112A6412
-game.dll+F806DF: 48 8B CE                 - mov rcx,rsi
-game.dll+F806E2: E8 59 5F DA FF           - call game.dll+D26640
-game.dll+F806E7: 48 8B D3                 - mov rdx,rbx
-game.dll+F806EA: 48 8B CE                 - mov rcx,rsi
-game.dll+F806ED: E8 0E 86 DA FF           - call game.dll+D28D00
-game.dll+F806F2: 43 80 3C BC 00           - cmp byte ptr [r12+r15*4],00
-// ---------- INJECTING HERE ----------
-game.dll+F806F7: 0F 85 B3 00 00 00        - jne game.dll+F807B0
-// ---------- DONE INJECTING  ----------
-game.dll+F806FD: 48 8B 45 80              - mov rax,[rbp-80]
-game.dll+F80701: 80 78 29 00              - cmp byte ptr [rax+29],00
-game.dll+F80705: 0F 84 F6 00 00 00        - je game.dll+F80801
-game.dll+F8070B: F3 44 0F 5C 45 B0        - subss xmm8,[rbp-50]
-game.dll+F80711: F3 0F 10 44 24 70        - movss xmm0,[rsp+70]
-game.dll+F80717: F3 41 0F 5C F7           - subss xmm6,xmm15
-game.dll+F8071C: F3 0F 5C C7              - subss xmm0,xmm7
-game.dll+F80720: F3 45 0F 59 C0           - mulss xmm8,xmm8
-game.dll+F80725: F3 0F 59 F6              - mulss xmm6,xmm6
-game.dll+F80729: F3 0F 59 C0              - mulss xmm0,xmm0
-game.dll+F8072D: F3 41 0F 58 F0           - addss xmm6,xmm8
-game.dll+F80732: F3 0F 58 F0              - addss xmm6,xmm0
-game.dll+F80736: 44 0F 2F CE              - comiss xmm9,xmm6
-game.dll+F8073A: 73 6E                    - jae game.dll+F807AA
-game.dll+F8073C: 48 8B 05 75 87 92 00     - mov rax,[game.dll+18A8EB8]
-game.dll+F80743: 83 78 38 00              - cmp dword ptr [rax+38],00
-game.dll+F80747: 76 09                    - jna game.dll+F80752
-game.dll+F80749: 80 B8 D3 0A 00 00 00     - cmp byte ptr [rax+00000AD3],00
-game.dll+F80750: 75 58                    - jne game.dll+F807AA
-game.dll+F80752: 41 80 BE 1D 68 07 00 00  - cmp byte ptr [r14+0007681D],00
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F805BA
-
-game.dll+F80569: 48 81 C2 48 E0 49 00        - add rdx,0049E048
-game.dll+F80570: 8B 0A                       - mov ecx,[rdx]
-game.dll+F80572: 81 F9 FF 3F 00 00           - cmp ecx,00003FFF
-game.dll+F80578: 74 04                       - je game.dll+F8057E
-game.dll+F8057A: 3B C8                       - cmp ecx,eax
-game.dll+F8057C: 74 7C                       - je game.dll+F805FA
-game.dll+F8057E: 41 FF C0                    - inc r8d
-game.dll+F80581: 48 83 C2 60                 - add rdx,60
-game.dll+F80585: 45 3B C1                    - cmp r8d,r9d
-game.dll+F80588: 72 E6                       - jb game.dll+F80570
-game.dll+F8058A: 33 C0                       - xor eax,eax
-game.dll+F8058C: 49 69 CD A8 01 00 00        - imul rcx,r13,000001A8
-game.dll+F80593: 49 8D B6 30 C9 05 00        - lea rsi,[r14+0005C930]
-game.dll+F8059A: 48 8B D3                    - mov rdx,rbx
-game.dll+F8059D: 48 03 F1                    - add rsi,rcx
-game.dll+F805A0: 48 89 4C 24 48              - mov [rsp+48],rcx
-game.dll+F805A5: 42 88 84 31 D4 CA 05 00     - mov [rcx+r14+0005CAD4],al
-game.dll+F805AD: 48 8B CE                    - mov rcx,rsi
-game.dll+F805B0: E8 4B 83 DA FF              - call game.dll+D28900
-game.dll+F805B5: 43 80 3C BC 00              - cmp byte ptr [r12+r15*4],00
-// ---------- INJECTING HERE ----------
-game.dll+F805BA: 0F 84 AF 00 00 00           - je game.dll+F8066F
-// ---------- DONE INJECTING  ----------
-game.dll+F805C0: 4C 8B 45 80                 - mov r8,[rbp-80]
-game.dll+F805C4: F3 43 0F 10 4C BC 10        - movss xmm1,[r12+r15*4+10]
-game.dll+F805CB: F3 43 0F 10 54 BC 14        - movss xmm2,[r12+r15*4+14]
-game.dll+F805D2: 41 80 78 20 00              - cmp byte ptr [r8+20],00
-game.dll+F805D7: 74 3B                       - je game.dll+F80614
-game.dll+F805D9: F3 41 0F 10 86 58 01 00 00  - movss xmm0,[r14+00000158]
-game.dll+F805E2: F3 0F 59 C8                 - mulss xmm1,xmm0
-game.dll+F805E6: F3 0F 59 D0                 - mulss xmm2,xmm0
-game.dll+F805EA: F3 0F 11 4D 98              - movss [rbp-68],xmm1
-game.dll+F805EF: F3 0F 11 55 9C              - movss [rbp-64],xmm2
-game.dll+F805F4: 48 8B 5D 98                 - mov rbx,[rbp-68]
-game.dll+F805F8: EB 28                       - jmp game.dll+F80622
-game.dll+F805FA: 0F 28 D7                    - movaps xmm2,xmm7
-game.dll+F805FD: 48 8D 54 24 48              - lea rdx,[rsp+48]
-game.dll+F80602: 49 8B CE                    - mov rcx,r14
-game.dll+F80605: E8 66 7A 00 00              - call game.dll+F88070
-game.dll+F8060A: 48 8B 5C 24 48              - mov rbx,[rsp+48]
-game.dll+F8060F: E9 78 FF FF FF              - jmp game.dll+F8058C
-game.dll+F80614: F3 0F 11 4D A0              - movss [rbp-60],xmm1
-game.dll+F80619: F3 0F 11 55 A4              - movss [rbp-5C],xmm2
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F824B0
-
-game.dll+F8244A: F3 41 0F 59 A7 44 01 00 00        - mulss xmm4,[r15+00000144]
-game.dll+F82453: 89 45 38                          - mov [rbp+38],eax
-game.dll+F82456: 8B 44 24 40                       - mov eax,[rsp+40]
-game.dll+F8245A: F2 0F 11 7D 30                    - movsd [rbp+30],xmm7
-game.dll+F8245F: F3 0F 10 75 34                    - movss xmm6,[rbp+34]
-game.dll+F82464: 0F 28 C6                          - movaps xmm0,xmm6
-game.dll+F82467: F3 0F 59 CA                       - mulss xmm1,xmm2
-game.dll+F8246B: F3 41 0F 5C 87 34 01 00 00        - subss xmm0,[r15+00000134]
-game.dll+F82474: 4C 69 F8 48 03 00 00              - imul r15,rax,00000348
-game.dll+F8247B: F3 0F 58 CB                       - addss xmm1,xmm3
-game.dll+F8247F: F3 0F 59 C2                       - mulss xmm0,xmm2
-game.dll+F82483: 48 8B 45 E0                       - mov rax,[rbp-20]
-game.dll+F82487: F3 0F 58 C4                       - addss xmm0,xmm4
-game.dll+F8248B: F3 0F 11 4D 10                    - movss [rbp+10],xmm1
-game.dll+F82490: 43 C6 84 07 5C 60 01 00 00        - mov byte ptr [r15+r8+0001605C],00
-game.dll+F82499: 83 7C 38 74 01                    - cmp dword ptr [rax+rdi+74],01
-game.dll+F8249E: F3 0F 11 45 14                    - movss [rbp+14],xmm0
-game.dll+F824A3: 48 8B 75 10                       - mov rsi,[rbp+10]
-game.dll+F824A7: 48 89 75 20                       - mov [rbp+20],rsi
-game.dll+F824AB: 48 89 74 24 70                    - mov [rsp+70],rsi
-// ---------- INJECTING HERE ----------
-game.dll+F824B0: 0F 85 65 01 00 00                 - jne game.dll+F8261B
-// ---------- DONE INJECTING  ----------
-game.dll+F824B6: 49 8D B8 B8 5E 01 00              - lea rdi,[r8+00015EB8]
-game.dll+F824BD: 41 0F 28 CD                       - movaps xmm1,xmm13
-game.dll+F824C1: 49 03 FF                          - add rdi,r15
-game.dll+F824C4: 49 8B D8                          - mov rbx,r8
-game.dll+F824C7: 48 8B CF                          - mov rcx,rdi
-game.dll+F824CA: E8 61 4F DA FF                    - call game.dll+D27430
-game.dll+F824CF: 8B 54 24 40                       - mov edx,[rsp+40]
-game.dll+F824D3: 4C 8D A3 18 5D 01 00              - lea r12,[rbx+00015D18]
-game.dll+F824DA: F2 0F 10 15 9E BE 0F 00           - movsd xmm2,[game.dll+107E380]
-game.dll+F824E2: 4D 03 E7                          - add r12,r15
-game.dll+F824E5: 8B 05 9D BE 0F 00                 - mov eax,[game.dll+107E388]
-game.dll+F824EB: 49 8B CC                          - mov rcx,r12
-game.dll+F824EE: F2 0F 11 55 70                    - movsd [rbp+70],xmm2
-game.dll+F824F3: C7 84 93 98 91 01 00 00 00 00 00  - mov [rbx+rdx*4+00019198],00000000
-game.dll+F824FE: 48 8D 55 70                       - lea rdx,[rbp+70]
-game.dll+F82502: 89 45 78                          - mov [rbp+78],eax
-game.dll+F82505: E8 36 53 DA FF                    - call game.dll+D27840
-game.dll+F8250A: 4D 8B C6                          - mov r8,r14
-game.dll+F8250D: BA 7E B8 A8 3A                    - mov edx,3AA8B87E
-game.dll+F82512: 49 8B CC                          - mov rcx,r12
-}
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -4117,97 +3560,79 @@ dealloc(completeHiveBase_newmem)
         </CheatEntry>
         <CheatEntry>
           <ID>113964</ID>
-          <Description>"Instant Shuttle                                                                      (by gir489+cfemen)"</Description>
+          <Description>"Instant Shuttle                                                                      (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>// Game Executable   : helldivers2.exe
-// Author            : cfemen + gir489
-// Executable Version: 1.8.20424.0
-// MD5 Signature     : 714FB37A355B892081B500B0148D8A2B
-// EXE Compile Date  : June 05, 2024 09:54 AM
-// Script Date       : June 14, 2024 06:58 AM
-[ENABLE]
-aobscanmodule(aob_ShuttleLandingTimerSet,game.dll,F3 0F 11 04 01)
-registersymbol(aob_ShuttleLandingTimerSet)
-alloc(newmem_ShuttleLandingTimerSet,1024)
-label(return_ShuttleLandingTimerSet)
-alloc(compare_float_check, 4)
+          <AssemblerScript>{ Game   : helldivers2.exe
+  Version:
+  Date   : 2024-06-13
+  Author : cfemen
 
-newmem_ShuttleLandingTimerSet:
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+
+aobscanmodule(aobWriteShuttleTimer,game.dll,F3 41 0F 5C C5 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
   subss xmm0,xmm13
   ucomiss xmm0, DWORD [compare_float_check]
   jbe short @f
     movss xmm0, DWORD [compare_float_check]
   @@:
+  //subss xmm0,xmm13
+  mov edx,6109F766
   movss [rcx+rax],xmm0
-  mov rax,[r12+60]
-  mov r8,[r12+78]
-  jmp return_ShuttleLandingTimerSet
-
-aob_ShuttleLandingTimerSet:
-  jmp newmem_ShuttleLandingTimerSet
-  nop
-return_ShuttleLandingTimerSet:
-
+  jmp return
 compare_float_check:
 dd (float)1.0
+aobWriteShuttleTimer:
+  jmp far newmem
+  nop
+return:
+registersymbol(aobWriteShuttleTimer)
 
 [DISABLE]
-aob_ShuttleLandingTimerSet:
-  db F3 0F 11 04 01 49 8B 44 24 60 4D 8B 44 24 78
 
-unregistersymbol(aob_ShuttleLandingTimerSet)
-dealloc(newmem_ShuttleLandingTimerSet)
+aobWriteShuttleTimer:
+  db F3 41 0F 5C C5 BA 66 F7 09 61 F3 0F 11 04 01
 
-unregistersymbol(aob_ShuttleLandingTimerSet)
-dealloc(newmem_ShuttleLandingTimerSet)
-dealloc(compare_float_check)
+unregistersymbol(aobWriteShuttleTimer)
+dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: game.dll+57BE64
+// ORIGINAL CODE - INJECTION POINT: game.dll+57BE5A
 
-game.dll+57BE2A: 74 0D                    - je game.dll+57BE39
-game.dll+57BE2C: 8B 02                    - mov eax,[rdx]
-game.dll+57BE2E: C1 E8 07                 - shr eax,07
-game.dll+57BE31: 24 01                    - and al,01
-game.dll+57BE33: 74 04                    - je game.dll+57BE39
-game.dll+57BE35: B3 01                    - mov bl,01
-game.dll+57BE37: EB 02                    - jmp game.dll+57BE3B
-game.dll+57BE39: 32 DB                    - xor bl,bl
-game.dll+57BE3B: FF C1                    - inc ecx
-game.dll+57BE3D: 48 83 C2 1C              - add rdx,1C
-game.dll+57BE41: 41 3B C8                 - cmp ecx,r8d
-game.dll+57BE44: 72 DD                    - jb game.dll+57BE23
-game.dll+57BE46: 84 DB                    - test bl,bl
-game.dll+57BE48: 75 3D                    - jne game.dll+57BE87
-game.dll+57BE4A: 49 8B 44 24 78           - mov rax,[r12+78]
-game.dll+57BE4F: 4B 8D 0C B6              - lea rcx,[r14+r14*4]
-game.dll+57BE53: 48 C1 E1 04              - shl rcx,04
-game.dll+57BE57: 0F 28 C6                 - movaps xmm0,xmm6
-game.dll+57BE5A: F3 41 0F 5C C5           - subss xmm0,xmm13
-game.dll+57BE5F: BA 66 F7 09 61           - mov edx,6109F766
+game.dll+57BE3B: FF C1           - inc ecx
+game.dll+57BE3D: 48 83 C2 1C     - add rdx,1C
+game.dll+57BE41: 41 3B C8        - cmp ecx,r8d
+game.dll+57BE44: 72 DD           - jb game.dll+57BE23
+game.dll+57BE46: 84 DB           - test bl,bl
+game.dll+57BE48: 75 3D           - jne game.dll+57BE87
+game.dll+57BE4A: 49 8B 44 24 78  - mov rax,[r12+78]
+game.dll+57BE4F: 4B 8D 0C B6     - lea rcx,[r14+r14*4]
+game.dll+57BE53: 48 C1 E1 04     - shl rcx,04
+game.dll+57BE57: 0F 28 C6        - movaps xmm0,xmm6
 // ---------- INJECTING HERE ----------
-game.dll+57BE64: F3 0F 11 04 01           - movss [rcx+rax],xmm0
+game.dll+57BE5A: F3 41 0F 5C C5  - subss xmm0,xmm13
 // ---------- DONE INJECTING  ----------
-game.dll+57BE69: 49 8B 44 24 60           - mov rax,[r12+60]
-game.dll+57BE6E: 4D 8B 44 24 78           - mov r8,[r12+78]
-game.dll+57BE73: 4C 03 C1                 - add r8,rcx
-game.dll+57BE76: 4A 8B 0C F0              - mov rcx,[rax+r14*8]
-game.dll+57BE7A: 8B 49 10                 - mov ecx,[rcx+10]
-game.dll+57BE7D: E8 2E 1E 56 00           - call game.dll+ADDCB0
-game.dll+57BE82: 49 8B D6                 - mov rdx,r14
-game.dll+57BE85: EB 47                    - jmp game.dll+57BECE
-game.dll+57BE87: F3 42 0F 10 44 3E 1C     - movss xmm0,[rsi+r15+1C]
-game.dll+57BE8E: 44 0F 2F D0              - comiss xmm10,xmm0
-game.dll+57BE92: 76 7F                    - jna game.dll+57BF13
-game.dll+57BE94: 49 8B 44 24 78           - mov rax,[r12+78]
-game.dll+57BE99: BA 4D 3D 07 B2           - mov edx,B2073D4D
-game.dll+57BE9E: C7 44 30 1C 00 00 A0 41  - mov [rax+rsi+1C],41A00000
-game.dll+57BEA6: 49 8B 44 24 60           - mov rax,[r12+60]
-game.dll+57BEAB: 4D 8B 44 24 78           - mov r8,[r12+78]
-game.dll+57BEB0: 49 83 C0 1C              - add r8,1C
-game.dll+57BEB4: 4C 03 C6                 - add r8,rsi
-game.dll+57BEB7: 4A 8B 0C F0              - mov rcx,[rax+r14*8]
-game.dll+57BEBB: 8B 49 10                 - mov ecx,[rcx+10]
+game.dll+57BE5F: BA 66 F7 09 61  - mov edx,6109F766
+game.dll+57BE64: F3 0F 11 04 01  - movss [rcx+rax],xmm0
+game.dll+57BE69: 49 8B 44 24 60  - mov rax,[r12+60]
+game.dll+57BE6E: 4D 8B 44 24 78  - mov r8,[r12+78]
+game.dll+57BE73: 4C 03 C1        - add r8,rcx
+game.dll+57BE76: 4A 8B 0C F0     - mov rcx,[rax+r14*8]
+game.dll+57BE7A: 8B 49 10        - mov ecx,[rcx+10]
+game.dll+57BE7D: E8 2E 1E 56 00  - call game.dll+ADDCB0
+game.dll+57BE82: 49 8B D6        - mov rdx,r14
+game.dll+57BE85: EB 47           - jmp game.dll+57BECE
 }
 </AssemblerScript>
         </CheatEntry>
@@ -4617,18 +4042,22 @@ db 0
       <CheatEntries>
         <CheatEntry>
           <ID>113986</ID>
-          <Description>"Inf Stamina                                                                          (by gir489)"</Description>
+          <Description>"Inf Stamina                                                                          (by gir489+cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">// original found by gir489
-[ENABLE]
-aobscanmodule(aob_Stamina,game.dll,F3 41 0F 11 08 8B 48 10 E8 ?? ?? ?? ?? 41 8B 47 48)
+          <AssemblerScript Async="1">[ENABLE]
 
+aobscanmodule(aobSprintWrite,game.dll,F3 41 0F 11 08 8B 48 10 E8 ** ** ** ** 41 8B 47 48 0F 28 B4 24 50 08 00 00) // should be unique
 
-aob_Stamina:
-db F3 41 0F 11 30
-
+aobSprintWrite:
+  nop 5
+registersymbol(aobSprintWrite)
 
 [DISABLE]
+
+aobSprintWrite:
+  db F3 41 0F 11 08
+
+unregistersymbol(aobSprintWrite)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -4852,74 +4281,30 @@ aob_ShielDeezNutts:
         </CheatEntry>
         <CheatEntry>
           <ID>113991</ID>
-          <Description>"Inf Stratagems                                                                      (by gir489)"</Description>
+          <Description>"Inf Stratagems                                                                      (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
-// Author            : gir489
-// Executable Version: 1.8.19279.0
-// MD5 Signature     : 94CE72E11EB1E8E8CA9D1201B779444F
-// EXE Compile Date  : May 08, 2024 11:48 AM
-// Script Date       : May 15, 2024 09:25 PM
-[ENABLE]
-aobscanmodule(aob_Stragemens,game.dll, 0F 84 ? ? ? ? 48 8B 05 ? ? ? ? 4C 8D 4C 24 ? 44 8B 84 37)
-registersymbol(aob_Stragemens)
+          <AssemblerScript Async="1">{ Game   : helldivers2.exe
+  Version:
+  Date   : 2024-03-21
+  Author : cfemen
 
-aob_Stragemens:
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(aobStratacmp,game.dll,0F 86 BF 01 00 00 0F) // should be unique
+
+aobStratacmp:
   db 90 E9
+registersymbol(aobStratacmp)
 
 [DISABLE]
-aob_Stragemens:
-  db 0F 84
 
-unregistersymbol(aob_Stragemens)
+aobStratacmp:
+  db 0F 86
 
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+925828
-
-game.dll+9257D4: F2 41 0F 10 45 00        - movsd xmm0,[r13+00]
-game.dll+9257DA: 45 8B 45 08              - mov r8d,[r13+08]
-game.dll+9257DE: F2 0F 11 44 24 30        - movsd [rsp+30],xmm0
-game.dll+9257E4: 44 89 44 24 38           - mov [rsp+38],r8d
-game.dll+9257E9: 41 8B 96 00 59 0A 00     - mov edx,[r14+000A5900]
-game.dll+9257F0: 85 D2                    - test edx,edx
-game.dll+9257F2: 0F 84 16 01 00 00        - je game.dll+92590E
-game.dll+9257F8: 49 8B CE                 - mov rcx,r14
-game.dll+9257FB: 0F 1F 44 00 00           - nop dword ptr [rax+rax+00]
-game.dll+925800: 48 39 19                 - cmp [rcx],rbx
-game.dll+925803: 74 12                    - je game.dll+925817
-game.dll+925805: FF C0                    - inc eax
-game.dll+925807: 48 81 C1 C8 52 00 00     - add rcx,000052C8
-game.dll+92580E: 3B C2                    - cmp eax,edx
-game.dll+925810: 72 EE                    - jb game.dll+925800
-game.dll+925812: E9 F7 00 00 00           - jmp game.dll+92590E
-game.dll+925817: 48 69 F0 C8 52 00 00     - imul rsi,rax,000052C8
-game.dll+92581E: 49 6B FC 78              - imul rdi,r12,78
-game.dll+925822: 49 03 F6                 - add rsi,r14
-game.dll+925825: 45 84 C9                 - test r9b,r9b
-// ---------- INJECTING HERE ----------
-game.dll+925828: 0F 84 B8 00 00 00        - je game.dll+9258E6
-// ---------- DONE INJECTING  ----------
-game.dll+92582E: 48 8B 05 EB 60 F8 00     - mov rax,[game.dll+18AB920]
-game.dll+925835: 4C 8D 4C 24 30           - lea r9,[rsp+30]
-game.dll+92583A: 44 8B 84 37 D0 01 00 00  - mov r8d,[rdi+rsi+000001D0]
-game.dll+925842: 48 8B D3                 - mov rdx,rbx
-game.dll+925845: C6 44 24 20 00           - mov byte ptr [rsp+20],00
-game.dll+92584A: 48 8B 48 18              - mov rcx,[rax+18]
-game.dll+92584E: 48 89 8C 37 30 02 00 00  - mov [rdi+rsi+00000230],rcx
-game.dll+925856: F2 0F 10 44 24 30        - movsd xmm0,[rsp+30]
-game.dll+92585C: 8B 44 24 38              - mov eax,[rsp+38]
-game.dll+925860: 48 8B 0D 91 67 F8 00     - mov rcx,[game.dll+18ABFF8]
-game.dll+925867: F2 0F 11 44 24 40        - movsd [rsp+40],xmm0
-game.dll+92586D: 89 44 24 48              - mov [rsp+48],eax
-game.dll+925871: E8 9A 26 DD FF           - call game.dll+6F7F10
-game.dll+925876: 8B 94 37 D0 01 00 00     - mov edx,[rdi+rsi+000001D0]
-game.dll+92587D: 4C 8D 44 24 40           - lea r8,[rsp+40]
-game.dll+925882: 0F 28 F0                 - movaps xmm6,xmm0
-game.dll+925885: E8 E6 25 B4 FF           - call game.dll+467E70
-game.dll+92588A: 48 8B 05 8F 60 F8 00     - mov rax,[game.dll+18AB920]
-game.dll+925891: F3 0F 58 C6              - addss xmm0,xmm6
-game.dll+925895: F3 41 0F 59 C0           - mulss xmm0,xmm8
-}
+unregistersymbol(aobStratacmp)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -4943,7 +4328,7 @@ unregistersymbol(aobRecoil)
         </CheatEntry>
         <CheatEntry>
           <ID>113974</ID>
-          <Description>"No Sway                                                                               (by gir489)"</Description>
+          <Description>"No Sway                                                                               (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -4954,7 +4339,7 @@ unregistersymbol(aobRecoil)
 }
 
 [ENABLE]
-aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB ? 0F 28 C2 E8 ? ? ? ? F3 44 0F 10 4D) // should be unique
+aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB 08 0F 28 C2 E8 ?? ?? ?? ?? F3 0F 10 75 88 F3 0F )
 
 aobCalcSway:
   nop 4
@@ -4973,11 +4358,11 @@ unregistersymbol(aobCalcSway)
           <Description>"Show All Map Icons                                                              (by cfemen)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_CheckIsBlipSeen,game.dll,43 0F B6 44 8A ? F2 44 0F 11 65) // ________:0000000180F81923                 movzx   eax, byte ptr [r10+r9*4+23h]
+aobscanmodule(aob_CheckIsBlipSeen,game.dll,41 0F B6 41 ? F2 44 0F 11 65)
 aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BE ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BF)
-aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ? ? ? ? 48 8B 44 24 ? 80 78 ? ? 0F 84 ? ? ? ? F3 0F 5C 7D) // ________:0000000180F806F7                 jnz     loc_180F807B0
-aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ? ? ? ? 4C 8B 44 24 ? F3 43 0F 10 4C A6) //________:0000000180F805BA                 jz      loc_180F8066F
-aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8) //________:0000000180F824B0                 jnz     loc_180F8261B
+aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ? ? ? ? 80 7B ? ? 0F 84 ? ? ? ? F3 44 0F 5C 45)
+aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ? ? ? ? 48 8B 54 24 ? F3 43 0F 10 4C A5)
+aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8)
 registersymbol(aob_CheckIsBlipSeen)
 registersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 registersymbol(aob_GetMinorInterestBlipIcon)
@@ -4985,12 +4370,11 @@ registersymbol(aob_CheckIfAlienHivesAreObstructed)
 registersymbol(aob_CheckMissionBlip)
 
 aob_CheckIsBlipSeen:
-mov eax,00000001
-nop
+  mov eax,00000001
 
 aob_CheckIfAlienHivesAreObstructed:
-clc
-nop 7
+  clc
+  nop 7
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 90 E9
@@ -5003,10 +4387,10 @@ aob_CheckMissionBlip:
 
 [DISABLE]
 aob_CheckIsBlipSeen:
-  db 43 0F B6 44 8A 23
+  db 41 0F B6 41 33
 
 aob_CheckIfAlienHivesAreObstructed:
-  db 41 80 BE 0C BC 07 00 00
+  db 41 80 BE 14 C3 05 00 00
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 0F 85
@@ -5022,246 +4406,6 @@ unregistersymbol(aob_CheckIfAlienHivesAreObstructed)
 unregistersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 unregistersymbol(aob_GetMinorInterestBlipIcon)
 unregistersymbol(aob_CheckMissionBlip)
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F81923
-
-game.dll+F818AD: 48 8D 05 A8 5E 90 00        - lea rax,[game.dll+188775C]
-game.dll+F818B4: 48 C1 E1 05                 - shl rcx,05
-game.dll+F818B8: 80 3C 01 00                 - cmp byte ptr [rcx+rax],00
-game.dll+F818BC: 0F 85 CD 04 00 00           - jne game.dll+F81D8F
-game.dll+F818C2: 41 80 BE 14 CC 07 00 00     - cmp byte ptr [r14+0007CC14],00
-game.dll+F818CA: 0F 85 BF 04 00 00           - jne game.dll+F81D8F
-game.dll+F818D0: 41 80 BE 3C BA 07 00 00     - cmp byte ptr [r14+0007BA3C],00
-game.dll+F818D8: 0F 85 B1 04 00 00           - jne game.dll+F81D8F
-game.dll+F818DE: 41 80 BF 7F 02 00 00 00     - cmp byte ptr [r15+0000027F],00
-game.dll+F818E6: F3 41 0F 10 96 58 01 00 00  - movss xmm2,[r14+00000158]
-game.dll+F818EF: 41 8B 47 08                 - mov eax,[r15+08]
-game.dll+F818F3: 0F 28 DA                    - movaps xmm3,xmm2
-game.dll+F818F6: F2 45 0F 10 27              - movsd xmm12,[r15]
-game.dll+F818FB: 0F 28 E2                    - movaps xmm4,xmm2
-game.dll+F818FE: F3 41 0F 59 9E 40 01 00 00  - mulss xmm3,[r14+00000140]
-game.dll+F81907: 41 0F 28 CC                 - movaps xmm1,xmm12
-game.dll+F8190B: 89 45 90                    - mov [rbp-70],eax
-game.dll+F8190E: F3 41 0F 5C 8E 30 01 00 00  - subss xmm1,[r14+00000130]
-game.dll+F81917: F3 41 0F 59 A6 44 01 00 00  - mulss xmm4,[r14+00000144]
-game.dll+F81920: 89 45 E0                    - mov [rbp-20],eax
-// ---------- INJECTING HERE ----------
-game.dll+F81923: 43 0F B6 44 8A 23           - movzx eax,byte ptr [r10+r9*4+23]
-// ---------- DONE INJECTING  ----------
-game.dll+F81929: F2 44 0F 11 65 D8           - movsd [rbp-28],xmm12
-game.dll+F8192F: F3 44 0F 10 75 DC           - movss xmm14,[rbp-24]
-game.dll+F81935: 41 0F 28 C6                 - movaps xmm0,xmm14
-game.dll+F81939: F3 0F 59 CA                 - mulss xmm1,xmm2
-game.dll+F8193D: 88 44 24 40                 - mov [rsp+40],al
-game.dll+F81941: F3 41 0F 5C 86 34 01 00 00  - subss xmm0,[r14+00000134]
-game.dll+F8194A: F3 0F 58 CB                 - addss xmm1,xmm3
-game.dll+F8194E: F3 0F 59 C2                 - mulss xmm0,xmm2
-game.dll+F81952: F3 0F 11 4D A0              - movss [rbp-60],xmm1
-game.dll+F81957: F3 0F 58 C4                 - addss xmm0,xmm4
-game.dll+F8195B: F3 0F 11 45 A4              - movss [rbp-5C],xmm0
-game.dll+F81960: 48 8B 5D A0                 - mov rbx,[rbp-60]
-game.dll+F81964: 48 89 5D F0                 - mov [rbp-10],rbx
-game.dll+F81968: 0F 84 52 02 00 00           - je game.dll+F81BC0
-game.dll+F8196E: 41 83 FC 20                 - cmp r12d,20
-game.dll+F81972: 0F 83 48 02 00 00           - jae game.dll+F81BC0
-game.dll+F81978: 41 8B 4D 08                 - mov ecx,[r13+08]
-game.dll+F8197C: E8 AF 82 B1 FF              - call game.dll+A99C30
-game.dll+F81981: 48 8B 0D 00 75 92 00        - mov rcx,[game.dll+18A8E88]
-game.dll+F81988: 45 33 C0                    - xor r8d,r8d
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+E2BF17
-
-game.dll+E2BEBC: 45 3B C2                    - cmp r8d,r10d
-game.dll+E2BEBF: 72 DF                       - jb game.dll+E2BEA0
-game.dll+E2BEC1: 45 33 C9                    - xor r9d,r9d
-game.dll+E2BEC4: 41 39 01                    - cmp [r9],eax
-game.dll+E2BEC7: 75 06                       - jne game.dll+E2BECF
-game.dll+E2BEC9: 41 8B 41 04                 - mov eax,[r9+04]
-game.dll+E2BECD: EB 05                       - jmp game.dll+E2BED4
-game.dll+E2BECF: B8 FF FF FF FF              - mov eax,FFFFFFFF
-game.dll+E2BED4: 44 8B 64 24 70              - mov r12d,[rsp+70]
-game.dll+E2BED9: 48 8B 75 98                 - mov rsi,[rbp-68]
-game.dll+E2BEDD: 48 8B 54 24 58              - mov rdx,[rsp+58]
-game.dll+E2BEE2: 8B C8                       - mov ecx,eax
-game.dll+E2BEE4: 48 69 C1 90 02 00 00        - imul rax,rcx,00000290
-game.dll+E2BEEB: 42 0F B6 8C 38 9C 2B 09 00  - movzx ecx,byte ptr [rax+r15+00092B9C]
-game.dll+E2BEF4: 48 8D 05 91 1E 83 00        - lea rax,[game.dll+165DD8C]
-game.dll+E2BEFB: 48 C1 E1 05                 - shl rcx,05
-game.dll+E2BEFF: 80 3C 01 00                 - cmp byte ptr [rcx+rax],00
-game.dll+E2BF03: 0F 85 BA 04 00 00           - jne game.dll+E2C3C3
-game.dll+E2BF09: 41 80 BE 14 CC 07 00 00     - cmp byte ptr [r14+0007CC14],00
-game.dll+E2BF11: 0F 85 AC 04 00 00           - jne game.dll+E2C3C3
-// ---------- INJECTING HERE ----------
-game.dll+E2BF17: 41 80 BE 3C BA 07 00 00     - cmp byte ptr [r14+0007BA3C],00
-// ---------- DONE INJECTING  ----------
-game.dll+E2BF1F: 0F 85 9E 04 00 00           - jne game.dll+E2C3C3
-game.dll+E2BF25: 80 BE 7F 02 00 00 00        - cmp byte ptr [rsi+0000027F],00
-game.dll+E2BF2C: F3 41 0F 10 96 58 01 00 00  - movss xmm2,[r14+00000158]
-game.dll+E2BF35: 8B 46 08                    - mov eax,[rsi+08]
-game.dll+E2BF38: 0F 28 DA                    - movaps xmm3,xmm2
-game.dll+E2BF3B: F2 44 0F 10 2E              - movsd xmm13,[rsi]
-game.dll+E2BF40: 0F 28 E2                    - movaps xmm4,xmm2
-game.dll+E2BF43: F3 41 0F 59 9E 40 01 00 00  - mulss xmm3,[r14+00000140]
-game.dll+E2BF4C: 41 0F 28 CD                 - movaps xmm1,xmm13
-game.dll+E2BF50: 89 45 88                    - mov [rbp-78],eax
-game.dll+E2BF53: F3 41 0F 5C 8E 30 01 00 00  - subss xmm1,[r14+00000130]
-game.dll+E2BF5C: F3 41 0F 59 A6 44 01 00 00  - mulss xmm4,[r14+00000144]
-game.dll+E2BF65: 89 45 E0                    - mov [rbp-20],eax
-aob_CheckIsBlipSeen: B8 01 00 00 00              - mov eax,00000001
-game.dll+E2BF6D: 90                          - nop
-game.dll+E2BF6E: F2 44 0F 11 6D D8           - movsd [rbp-28],xmm13
-game.dll+E2BF74: F3 44 0F 10 75 DC           - movss xmm14,[rbp-24]
-game.dll+E2BF7A: 41 0F 28 C6                 - movaps xmm0,xmm14
-game.dll+E2BF7E: F3 0F 59 CA                 - mulss xmm1,xmm2
-game.dll+E2BF82: 88 44 24 50                 - mov [rsp+50],al
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F806F7
-
-game.dll+F8069D: 8B 05 E5 DC 0F 00        - mov eax,[game.dll+107E388]
-game.dll+F806A3: 48 8B CE                 - mov rcx,rsi
-game.dll+F806A6: F2 0F 11 45 C0           - movsd [rbp-40],xmm0
-game.dll+F806AB: 89 45 C8                 - mov [rbp-38],eax
-game.dll+F806AE: E8 8D 71 DA FF           - call game.dll+D27840
-game.dll+F806B3: 0F 28 CF                 - movaps xmm1,xmm7
-game.dll+F806B6: 48 8B CE                 - mov rcx,rsi
-game.dll+F806B9: E8 72 6D DA FF           - call game.dll+D27430
-game.dll+F806BE: F3 0F 10 15 EA D8 18 00  - movss xmm2,[game.dll+110DFB0]
-game.dll+F806C6: BA C6 79 BB D7           - mov edx,D7BB79C6
-game.dll+F806CB: 48 8B CE                 - mov rcx,rsi
-game.dll+F806CE: E8 FD 62 DA FF           - call game.dll+D269D0
-game.dll+F806D3: 4D 8D 86 D8 01 00 00     - lea r8,[r14+000001D8]
-game.dll+F806DA: BA 12 64 2A 11           - mov edx,112A6412
-game.dll+F806DF: 48 8B CE                 - mov rcx,rsi
-game.dll+F806E2: E8 59 5F DA FF           - call game.dll+D26640
-game.dll+F806E7: 48 8B D3                 - mov rdx,rbx
-game.dll+F806EA: 48 8B CE                 - mov rcx,rsi
-game.dll+F806ED: E8 0E 86 DA FF           - call game.dll+D28D00
-game.dll+F806F2: 43 80 3C BC 00           - cmp byte ptr [r12+r15*4],00
-// ---------- INJECTING HERE ----------
-game.dll+F806F7: 0F 85 B3 00 00 00        - jne game.dll+F807B0
-// ---------- DONE INJECTING  ----------
-game.dll+F806FD: 48 8B 45 80              - mov rax,[rbp-80]
-game.dll+F80701: 80 78 29 00              - cmp byte ptr [rax+29],00
-game.dll+F80705: 0F 84 F6 00 00 00        - je game.dll+F80801
-game.dll+F8070B: F3 44 0F 5C 45 B0        - subss xmm8,[rbp-50]
-game.dll+F80711: F3 0F 10 44 24 70        - movss xmm0,[rsp+70]
-game.dll+F80717: F3 41 0F 5C F7           - subss xmm6,xmm15
-game.dll+F8071C: F3 0F 5C C7              - subss xmm0,xmm7
-game.dll+F80720: F3 45 0F 59 C0           - mulss xmm8,xmm8
-game.dll+F80725: F3 0F 59 F6              - mulss xmm6,xmm6
-game.dll+F80729: F3 0F 59 C0              - mulss xmm0,xmm0
-game.dll+F8072D: F3 41 0F 58 F0           - addss xmm6,xmm8
-game.dll+F80732: F3 0F 58 F0              - addss xmm6,xmm0
-game.dll+F80736: 44 0F 2F CE              - comiss xmm9,xmm6
-game.dll+F8073A: 73 6E                    - jae game.dll+F807AA
-game.dll+F8073C: 48 8B 05 75 87 92 00     - mov rax,[game.dll+18A8EB8]
-game.dll+F80743: 83 78 38 00              - cmp dword ptr [rax+38],00
-game.dll+F80747: 76 09                    - jna game.dll+F80752
-game.dll+F80749: 80 B8 D3 0A 00 00 00     - cmp byte ptr [rax+00000AD3],00
-game.dll+F80750: 75 58                    - jne game.dll+F807AA
-game.dll+F80752: 41 80 BE 1D 68 07 00 00  - cmp byte ptr [r14+0007681D],00
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F805BA
-
-game.dll+F80569: 48 81 C2 48 E0 49 00        - add rdx,0049E048
-game.dll+F80570: 8B 0A                       - mov ecx,[rdx]
-game.dll+F80572: 81 F9 FF 3F 00 00           - cmp ecx,00003FFF
-game.dll+F80578: 74 04                       - je game.dll+F8057E
-game.dll+F8057A: 3B C8                       - cmp ecx,eax
-game.dll+F8057C: 74 7C                       - je game.dll+F805FA
-game.dll+F8057E: 41 FF C0                    - inc r8d
-game.dll+F80581: 48 83 C2 60                 - add rdx,60
-game.dll+F80585: 45 3B C1                    - cmp r8d,r9d
-game.dll+F80588: 72 E6                       - jb game.dll+F80570
-game.dll+F8058A: 33 C0                       - xor eax,eax
-game.dll+F8058C: 49 69 CD A8 01 00 00        - imul rcx,r13,000001A8
-game.dll+F80593: 49 8D B6 30 C9 05 00        - lea rsi,[r14+0005C930]
-game.dll+F8059A: 48 8B D3                    - mov rdx,rbx
-game.dll+F8059D: 48 03 F1                    - add rsi,rcx
-game.dll+F805A0: 48 89 4C 24 48              - mov [rsp+48],rcx
-game.dll+F805A5: 42 88 84 31 D4 CA 05 00     - mov [rcx+r14+0005CAD4],al
-game.dll+F805AD: 48 8B CE                    - mov rcx,rsi
-game.dll+F805B0: E8 4B 83 DA FF              - call game.dll+D28900
-game.dll+F805B5: 43 80 3C BC 00              - cmp byte ptr [r12+r15*4],00
-// ---------- INJECTING HERE ----------
-game.dll+F805BA: 0F 84 AF 00 00 00           - je game.dll+F8066F
-// ---------- DONE INJECTING  ----------
-game.dll+F805C0: 4C 8B 45 80                 - mov r8,[rbp-80]
-game.dll+F805C4: F3 43 0F 10 4C BC 10        - movss xmm1,[r12+r15*4+10]
-game.dll+F805CB: F3 43 0F 10 54 BC 14        - movss xmm2,[r12+r15*4+14]
-game.dll+F805D2: 41 80 78 20 00              - cmp byte ptr [r8+20],00
-game.dll+F805D7: 74 3B                       - je game.dll+F80614
-game.dll+F805D9: F3 41 0F 10 86 58 01 00 00  - movss xmm0,[r14+00000158]
-game.dll+F805E2: F3 0F 59 C8                 - mulss xmm1,xmm0
-game.dll+F805E6: F3 0F 59 D0                 - mulss xmm2,xmm0
-game.dll+F805EA: F3 0F 11 4D 98              - movss [rbp-68],xmm1
-game.dll+F805EF: F3 0F 11 55 9C              - movss [rbp-64],xmm2
-game.dll+F805F4: 48 8B 5D 98                 - mov rbx,[rbp-68]
-game.dll+F805F8: EB 28                       - jmp game.dll+F80622
-game.dll+F805FA: 0F 28 D7                    - movaps xmm2,xmm7
-game.dll+F805FD: 48 8D 54 24 48              - lea rdx,[rsp+48]
-game.dll+F80602: 49 8B CE                    - mov rcx,r14
-game.dll+F80605: E8 66 7A 00 00              - call game.dll+F88070
-game.dll+F8060A: 48 8B 5C 24 48              - mov rbx,[rsp+48]
-game.dll+F8060F: E9 78 FF FF FF              - jmp game.dll+F8058C
-game.dll+F80614: F3 0F 11 4D A0              - movss [rbp-60],xmm1
-game.dll+F80619: F3 0F 11 55 A4              - movss [rbp-5C],xmm2
-}
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+F824B0
-
-game.dll+F8244A: F3 41 0F 59 A7 44 01 00 00        - mulss xmm4,[r15+00000144]
-game.dll+F82453: 89 45 38                          - mov [rbp+38],eax
-game.dll+F82456: 8B 44 24 40                       - mov eax,[rsp+40]
-game.dll+F8245A: F2 0F 11 7D 30                    - movsd [rbp+30],xmm7
-game.dll+F8245F: F3 0F 10 75 34                    - movss xmm6,[rbp+34]
-game.dll+F82464: 0F 28 C6                          - movaps xmm0,xmm6
-game.dll+F82467: F3 0F 59 CA                       - mulss xmm1,xmm2
-game.dll+F8246B: F3 41 0F 5C 87 34 01 00 00        - subss xmm0,[r15+00000134]
-game.dll+F82474: 4C 69 F8 48 03 00 00              - imul r15,rax,00000348
-game.dll+F8247B: F3 0F 58 CB                       - addss xmm1,xmm3
-game.dll+F8247F: F3 0F 59 C2                       - mulss xmm0,xmm2
-game.dll+F82483: 48 8B 45 E0                       - mov rax,[rbp-20]
-game.dll+F82487: F3 0F 58 C4                       - addss xmm0,xmm4
-game.dll+F8248B: F3 0F 11 4D 10                    - movss [rbp+10],xmm1
-game.dll+F82490: 43 C6 84 07 5C 60 01 00 00        - mov byte ptr [r15+r8+0001605C],00
-game.dll+F82499: 83 7C 38 74 01                    - cmp dword ptr [rax+rdi+74],01
-game.dll+F8249E: F3 0F 11 45 14                    - movss [rbp+14],xmm0
-game.dll+F824A3: 48 8B 75 10                       - mov rsi,[rbp+10]
-game.dll+F824A7: 48 89 75 20                       - mov [rbp+20],rsi
-game.dll+F824AB: 48 89 74 24 70                    - mov [rsp+70],rsi
-// ---------- INJECTING HERE ----------
-game.dll+F824B0: 0F 85 65 01 00 00                 - jne game.dll+F8261B
-// ---------- DONE INJECTING  ----------
-game.dll+F824B6: 49 8D B8 B8 5E 01 00              - lea rdi,[r8+00015EB8]
-game.dll+F824BD: 41 0F 28 CD                       - movaps xmm1,xmm13
-game.dll+F824C1: 49 03 FF                          - add rdi,r15
-game.dll+F824C4: 49 8B D8                          - mov rbx,r8
-game.dll+F824C7: 48 8B CF                          - mov rcx,rdi
-game.dll+F824CA: E8 61 4F DA FF                    - call game.dll+D27430
-game.dll+F824CF: 8B 54 24 40                       - mov edx,[rsp+40]
-game.dll+F824D3: 4C 8D A3 18 5D 01 00              - lea r12,[rbx+00015D18]
-game.dll+F824DA: F2 0F 10 15 9E BE 0F 00           - movsd xmm2,[game.dll+107E380]
-game.dll+F824E2: 4D 03 E7                          - add r12,r15
-game.dll+F824E5: 8B 05 9D BE 0F 00                 - mov eax,[game.dll+107E388]
-game.dll+F824EB: 49 8B CC                          - mov rcx,r12
-game.dll+F824EE: F2 0F 11 55 70                    - movsd [rbp+70],xmm2
-game.dll+F824F3: C7 84 93 98 91 01 00 00 00 00 00  - mov [rbx+rdx*4+00019198],00000000
-game.dll+F824FE: 48 8D 55 70                       - lea rdx,[rbp+70]
-game.dll+F82502: 89 45 78                          - mov [rbp+78],eax
-game.dll+F82505: E8 36 53 DA FF                    - call game.dll+D27840
-game.dll+F8250A: 4D 8B C6                          - mov r8,r14
-game.dll+F8250D: BA 7E B8 A8 3A                    - mov edx,3AA8B87E
-game.dll+F82512: 49 8B CC                          - mov rcx,r12
-}
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
