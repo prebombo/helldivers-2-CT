@@ -17,3 +17,4 @@ Inf Stims<br>
 Inf last stim<br>
 Added inf grenades<br>
 Deleted old scripts<br>
+*Updated ZoDDels weapons IDs*
