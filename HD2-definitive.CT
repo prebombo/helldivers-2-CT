@@ -172,6 +172,7 @@ unregistersymbol(aobSprintWrite)
             <CheatEntry>
               <ID>113868</ID>
               <Description>"Inf last stim                                                                    (by gir489)"</Description>
+              <Color>0080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -215,17 +216,21 @@ dealloc(newmem_Syringes)
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 
-aobscanmodule(aobSyrige,game.dll,41 FF CC 3B F1 74 52 45 8B 42 30) // should be unique
+aobscanmodule(aobSyrige,game.dll,45 89 74 CF 18) // should be unique
 
 aobSyrige:
-  db 90 90 90
+  db 90 90 90 90 90
+
 registersymbol(aobSyrige)
 
 [DISABLE]
 
 aobSyrige:
-  db 41 FF CC
+  db 45 89 74 CF 18
+
 unregistersymbol(aobSyrige)
+
+
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -669,6 +674,7 @@ unregistersymbol(aobTimeSub)
             <CheatEntry>
               <ID>113865</ID>
               <Description>"Infinite Autocannon Backpack                                        (by ???)"</Description>
+              <Color>0080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_Autocannon,game.dll,2B CE BA 52 97 88 69)
@@ -1358,6 +1364,51 @@ game.dll+64BC70: F3 41 0F 59 DD           - mulss xmm3,xmm13
 game.dll+64BC75: 44 0F 2F CB              - comiss xmm9,xmm3
 game.dll+64BC79: 76 06                    - jna game.dll+64BC81
 }
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117462</ID>
+          <Description>"Speedhack                                                                           (by cfemen)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(aobMovement,game.dll,F3 41 0F 59 56 0C F3 41 0F 59 56 10 0F 28 E2) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  push rbx
+   mov rbx,F2F926ABF2F926AB // local hash for the missions
+   cmp qword ptr[rax],rbx
+   jne short @f
+    mov rbx,fSpeed
+    mulss xmm2,[rbx]
+   @@:
+  pop rbx
+  mulss xmm2,[r14+0C]
+  mulss xmm2,[r14+10]
+  movaps xmm4,xmm2
+  jmp return
+
+aobMovement:
+  jmp far newmem
+  nop
+return:
+registersymbol(aobMovement)
+
+[DISABLE]
+
+aobMovement:
+  db F3 41 0F 59 56 0C F3 41 0F 59 56 10 0F 28 E2
+
+unregistersymbol(aobMovement)
+dealloc(newmem)
+
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -2484,83 +2535,6 @@ db 0
             </CheatEntry>
           </CheatEntries>
         </CheatEntry>
-        <CheatEntry>
-          <ID>117446</ID>
-          <Description>"Temp Unlock Armor, Weapons, Strategems                        (by gir489)"</Description>
-          <Color>00FFFF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">// Author: gir489
-[ENABLE]
-aobscanmodule(aob_armor,game.dll,48 83 EC 08 44 8B 49 04)
-
-aob_armor:
-  db B0 01 C3
-
-aobscanmodule(aob_equipment,game.dll,83 B9 1C ? ? ? ? 76 ? 85 D2 74 ? 44 8B 89 ? ? ? ? 45 33 C0 45 85 C9 74 ? 48 8D 81 ? ? ? ? 39 50 ? 74 ? 41 FF C0 48 83 C0 ? 45 3B C1 72 ? 32 C0 C3 8B 00 48 69 C8)
-
-aob_equipment:
-  db B0 01 C3
-
-aobscanmodule(aob_stratagems,game.dll,48 89 5C 24 08 48 8B D9 85)
-
-aob_stratagems:
-  db B0 01 C3
-
-registersymbol(aob_armor)
-registersymbol(aob_equipment)
-registersymbol(aob_stratagems)
-
-[DISABLE]
-
-aob_armor:
-  db 48 83 EC
-
-
-aob_equipment:
-  db 83 B9 1C
-
-
-aob_stratagems:
-  db 48 89 5C
-
-unregistersymbol(aob_armor)
-unregistersymbol(aob_equipment)
-unregistersymbol(aob_stratagems)
-
-
-
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117447</ID>
-          <Description>"Temp Unlock Armor, Weapons, Strategems                        (by cfemen)"</Description>
-          <Color>00FFFF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
-
-aobscanmodule(aobUnlock1,game.dll,48 89 5C 24 08 48 8B D9 85 D2 75 09)
-registersymbol(aobUnlock1)
-
-aobscanmodule(aobUnlock2,game.dll,83 B9 1C 96 1F 00 07 76 2B 85 D2 74 27 44 8B 89 68 53 00 00 45 33 C0 45 85 C9 74 18 48 8D 81 70 DB 04 00 39 50 04 74 0F 41 FF C0 48 83 C0 18 45 3B C1 72 EF 32 C0 C3 8B 00 48 69 C8 E8 00 00 00) // should be unique
-registersymbol(aobUnlock2)
-
-aobscanmodule(aobUnlock3,game.dll,48 83 EC 08 44 8B 49 04 45 33 C0 8B 01)
-
-aobUnlock1:
-  db b0 01 c3
-
-aobUnlock2:
-  db b0 01 c3
-
-aobUnlock3:
-  db b0 01 c3
-
-
-[DISABLE]
-
-
-</AssemblerScript>
-        </CheatEntry>
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
@@ -2570,6 +2544,27 @@ aobUnlock3:
       <Color>0000FF</Color>
       <GroupHeader>1</GroupHeader>
       <CheatEntries>
+        <CheatEntry>
+          <ID>117461</ID>
+          <Description>"Inf Time                                                                                (by cfemen)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+aobscanmodule(aobTimeSub,game.dll,F3 0F 5C C7 F3 41 0F 5F C7 F3 43 0F 11 84 FC ?? ?? 03 00) // should be unique
+
+aobTimeSub:
+  nop 4
+registersymbol(aobTimeSub)
+
+[DISABLE]
+
+aobTimeSub:
+  subss xmm0,xmm7
+
+unregistersymbol(aobTimeSub)
+
+</AssemblerScript>
+        </CheatEntry>
         <CheatEntry>
           <ID>113976</ID>
           <Description>"Inf Health                                                                             (by cfemen)"</Description>
@@ -2729,6 +2724,7 @@ unregistersymbol(aobSprintWrite)
         <CheatEntry>
           <ID>113978</ID>
           <Description>"Inf last Stim                                                                         (by gir489)"</Description>
+          <Color>0080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -2956,6 +2952,7 @@ nop 3
         <CheatEntry>
           <ID>117453</ID>
           <Description>"Infinite Autocannon Backpack                                              (by ???)"</Description>
+          <Color>0080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_Autocannon,game.dll,2B CE BA 52 97 88 69)
@@ -3880,6 +3877,7 @@ unregistersymbol(aobSprintWrite)
         <CheatEntry>
           <ID>113987</ID>
           <Description>"Inf last Stim                                                                         (by gir489)"</Description>
+          <Color>0080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -5945,7 +5943,8 @@ unregistersymbol(aob_FinnikScript)
     </CheatEntry>
     <CheatEntry>
       <ID>117454</ID>
-      <Description>"Higher spread ratio                                                                (by sakuno)"</Description>
+      <Description>"Higher spread ratio (outdated)                                              (by sakuno)"</Description>
+      <Color>0080FF</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript Async="1">[ENABLE]
 //Patch 1.001.002  arc_settings.dl_bin
@@ -6002,7 +6001,8 @@ arc_ARC_3-C: //Target Scan Window Size
     </CheatEntry>
     <CheatEntry>
       <ID>117459</ID>
-      <Description>"Mortar_Proj_Mod                                                                   (by sakuno)"</Description>
+      <Description>"Mortar_Proj_Mod (outdated)                                                 (by sakuno)"</Description>
+      <Color>0080FF</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
 {
@@ -6149,10 +6149,6 @@ aobUnlock3:
     <SymbolEntry>
       <Name>pFirerate</Name>
       <Address>1C4C6540020</Address>
-    </SymbolEntry>
-    <SymbolEntry>
-      <Name>AvatarClimbAddr</Name>
-      <Address>24CDE9540E2</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
