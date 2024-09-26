@@ -21,3 +21,5 @@ Deleted old scripts<br>
 ------24/09------<br>
 Inf Backpack (autocannon)<br>
 Shield custom cd<br>
+Inf last stim<br>
+Changed script colors to represent their authors<br>
