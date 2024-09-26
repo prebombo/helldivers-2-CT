@@ -16,6 +16,7 @@
             <CheatEntry>
               <ID>117437</ID>
               <Description>"Inf Health                                                                       (by cfemen)"</Description>
+              <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -172,39 +173,38 @@ unregistersymbol(aobSprintWrite)
             <CheatEntry>
               <ID>113868</ID>
               <Description>"Inf last stim                                                                    (by gir489)"</Description>
-              <Color>0080FF</Color>
+              <Color>0000FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
-// Executable Version: 1.8.21849.0
-// MD5 Signature     : 781649FF615C49952775A0ED06AD982F
-// EXE Compile Date  : August 02, 2024 11:21 AM
-// Script Date       : August 06, 2024 09:38 AM
+// Executable Version: 1.8.22927.0
+// MD5 Signature     : 34B03C63A9B3946A71A77D7719475948
+// EXE Compile Date  : September 19, 2024 11:09 AM
+// Script Date       : September 24, 2024 06:58 PM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 49 8B 52)
+aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 48 03 C0 45 8B 74 C7)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
 label(return_Syringes)
 
 newmem_Syringes:
-  lea rax, [rdx+rdx*2]
-  mov rdx, [r10+58]
-  add rax, rax
-  mov r12d, [rdx+rax*8+18]
+  lea rax,[rdx+rdx*2]
+  add rax,rax
+  mov r14d,[r15+rax*8+18]
   cmp r12d, #1
   je short @f
-    dec r12d
+    dec r14d
   @@:
   jmp return_Syringes
 
 aob_Syringes:
   jmp far newmem_Syringes
-  nop 5
+  nop
 return_Syringes:
 
 [DISABLE]
 aob_Syringes:
-  db 48 8D 04 52 49 8B 52 58 48 03 C0 44 8B 64 C2 18 41 FF
+  db 48 8D 04 52 48 03 C0 45 8B 74 C7 18 41 FF CE
 
 unregistersymbol(aob_Syringes)
 dealloc(newmem_Syringes)
@@ -213,6 +213,7 @@ dealloc(newmem_Syringes)
             <CheatEntry>
               <ID>117438</ID>
               <Description>"Inf stims                                                                         (by cfemen)"</Description>
+              <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 
@@ -236,6 +237,7 @@ unregistersymbol(aobSyrige)
             <CheatEntry>
               <ID>113873</ID>
               <Description>"Inf last grenade                                                              (by gir489)"</Description>
+              <Color>0000FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -323,6 +325,7 @@ game.dll+61FEC4: 8B D7                       - mov edx,edi
             <CheatEntry>
               <ID>117460</ID>
               <Description>"Inf grenade                                                                    (by cfemen)"</Description>
+              <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 
@@ -388,6 +391,7 @@ legit_ammo_return:
             <CheatEntry>
               <ID>43</ID>
               <Description>"Inf Mags                                                                        (by cfemen)"</Description>
+              <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 
@@ -450,6 +454,7 @@ nrV3_return:
             <CheatEntry>
               <ID>113969</ID>
               <Description>"No ammo consume                                                       (by cfemen)"</Description>
+              <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 
@@ -470,6 +475,7 @@ unregistersymbol(aobReload)
             <CheatEntry>
               <ID>57</ID>
               <Description>"No ammo consume                                                       (by gir489)"</Description>
+              <Color>0000FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -555,6 +561,7 @@ game.dll+4194A5: CC                       - int 3
             <CheatEntry>
               <ID>117441</ID>
               <Description>"No bullets consume                                                       (by gir489)"</Description>
+              <Color>0000FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">// Game Executable : helldivers2.exe
 // Author : gir489
@@ -609,6 +616,7 @@ nop 3
             <CheatEntry>
               <ID>47</ID>
               <Description>"Inf Shield                                                                        (by cfemen)"</Description>
+              <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 aobscanmodule(aobShield,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1) // should be unique
@@ -625,6 +633,7 @@ unregistersymbol(aobShield)
             <CheatEntry>
               <ID>28</ID>
               <Description>"Inf Stratagems                                                                (by cfemen)"</Description>
+              <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version:
@@ -653,6 +662,7 @@ unregistersymbol(aobStratacmp)
             <CheatEntry>
               <ID>50</ID>
               <Description>"Inf Time                                                                          (by cfemen)"</Description>
+              <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 
@@ -691,6 +701,7 @@ unregistersymbol(aob_Autocannon)
         <CheatEntry>
           <ID>52</ID>
           <Description>"Climb All                                                                             (by sakuno)"</Description>
+          <Color>C080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 {
@@ -728,6 +739,7 @@ unregistersymbol(AvatarClimbAddr)
         <CheatEntry>
           <ID>117455</ID>
           <Description>"No Recoil                                                                            (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 
@@ -747,6 +759,7 @@ unregistersymbol(aobRecoil)
         <CheatEntry>
           <ID>53</ID>
           <Description>"No Sway                                                                             (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -774,6 +787,7 @@ unregistersymbol(aobCalcSway)
         <CheatEntry>
           <ID>204</ID>
           <Description>"Open Vaults w/ Left Door Only                                          (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -846,6 +860,7 @@ game.dll+2CC80A: C7 40 04 FF FF FF FF  - mov [rax+04],FFFFFFFF
         <CheatEntry>
           <ID>113878</ID>
           <Description>"Show All Map Icons                                                            (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_CheckIsBlipSeen,game.dll,41 0F B6 41 ? F2 44 0F 11 65)
@@ -902,6 +917,7 @@ unregistersymbol(aob_CheckMissionBlip)
           <ID>236</ID>
           <Description>"super damage mod V2 (with multipliers)                            (by ZoDDel)"</Description>
           <Options moHideChildren="1"/>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -1257,6 +1273,7 @@ game.dll+C3DBB6: 8B 41 0C                    - mov eax,[rcx+0C]
         <CheatEntry>
           <ID>189</ID>
           <Description>"speedhack  x3 player / x2 rescue citizen / x0 enemies         (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version: 
@@ -1365,6 +1382,7 @@ game.dll+64BC79: 76 06                    - jna game.dll+64BC81
         <CheatEntry>
           <ID>117462</ID>
           <Description>"Speedhack                                                                           (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 
@@ -1408,8 +1426,107 @@ dealloc(newmem)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
+          <ID>117463</ID>
+          <Description>"Speedhack                                                                           (by gir489)"</Description>
+          <Color>0000FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Game Executable   : helldivers2.exe
+// Author            : gir489
+// Executable Version: 1.8.17123.0
+// MD5 Signature     : 319505530078A72820710D8A1FC6C069
+// EXE Compile Date  : March 06, 2024 01:32 PM
+// Script Date       : March 08, 2024 02:07 PM
+[ENABLE]
+aobscanmodule(aob_RunSpeed,game.dll,F3 41 0F 59 56 0C F3)
+registersymbol(aob_RunSpeed)
+registersymbol(runspeed_mult)
+alloc(newmem_RunSpeed,1024)
+alloc(runspeed_mult,4)
+label(return_RunSpeed)
+
+newmem_RunSpeed:
+  push rbx
+  mov rbx,F2F926ABF2F926AB
+  cmp [rax],rbx
+  jne short @f
+   mov ebx, [runspeed_mult]
+   mov [r14+0C], ebx
+@@:
+  pop rbx
+  mulss xmm2,[r14+0C]
+  mulss xmm2,[r14+10]
+  movaps xmm4,xmm2
+  jmp return_RunSpeed
+
+aob_RunSpeed:
+  jmp far newmem_RunSpeed
+  nop
+return_RunSpeed:
+
+runspeed_mult:
+dd (float)1.25
+
+[DISABLE]
+aob_RunSpeed:
+  db F3 41 0F 59 56 0C F3 41 0F 59 56 10 0F 28 E2
+
+unregistersymbol(aob_RunSpeed)
+dealloc(newmem_RunSpeed)
+dealloc(RunSpeedMult)
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+54902E
+
+game.dll+548FCA: EB 08                       - jmp game.dll+548FD4
+game.dll+548FCC: 41 0F 28 CC                 - movaps xmm1,xmm12
+game.dll+548FD0: F3 0F 5D CA                 - minss xmm1,xmm2
+game.dll+548FD4: 48 8B 44 24 68              - mov rax,[rsp+68]
+game.dll+548FD9: F3 44 0F 10 1D 7A BB A9 00  - movss xmm11,[game.dll+FE4B5C]
+game.dll+548FE2: 41 0F 28 C4                 - movaps xmm0,xmm12
+game.dll+548FE6: 4C 8B 6C 24 50              - mov r13,[rsp+50]
+game.dll+548FEB: F3 0F 5C C1                 - subss xmm0,xmm1
+game.dll+548FEF: 4C 8B 7C 24 40              - mov r15,[rsp+40]
+game.dll+548FF4: 4C 8B 65 88                 - mov r12,[rbp-78]
+game.dll+548FF8: 44 0F 2F D8                 - comiss xmm11,xmm0
+game.dll+548FFC: 77 09                       - ja game.dll+549007
+game.dll+548FFE: 45 0F 28 DC                 - movaps xmm11,xmm12
+game.dll+549002: F3 44 0F 5D D8              - minss xmm11,xmm0
+game.dll+549007: F3 41 0F 10 56 04           - movss xmm2,[r14+04]
+game.dll+54900D: F3 41 0F 59 16              - mulss xmm2,[r14]
+game.dll+549012: F3 41 0F 10 6E 14           - movss xmm5,[r14+14]
+game.dll+549018: F2 0F 10 05 90 BA A9 00     - movsd xmm0,[game.dll+FE4AB0]
+game.dll+549020: F3 41 0F 59 56 08           - mulss xmm2,[r14+08]
+game.dll+549026: F3 0F 10 98 B8 0C 00 00     - movss xmm3,[rax+00000CB8]
+// ---------- INJECTING HERE ----------
+game.dll+54902E: F3 41 0F 59 56 0C           - mulss xmm2,[r14+0C]
+// ---------- DONE INJECTING  ----------
+game.dll+549034: F3 41 0F 59 56 10           - mulss xmm2,[r14+10]
+game.dll+54903A: 0F 28 E2                    - movaps xmm4,xmm2
+game.dll+54903D: F3 0F 5C E5                 - subss xmm4,xmm5
+game.dll+549041: 0F 5A CC                    - cvtps2pd xmm1,xmm4
+game.dll+549044: 0F 54 0D D5 EF A9 00        - andps xmm1,[game.dll+FE8020]
+game.dll+54904B: 66 0F 2F C1                 - comisd xmm0,xmm1
+game.dll+54904F: 77 21                       - ja game.dll+549072
+game.dll+549051: F3 41 0F 59 DD              - mulss xmm3,xmm13
+game.dll+549056: 44 0F 2F C3                 - comiss xmm8,xmm3
+game.dll+54905A: 76 06                       - jna game.dll+549062
+game.dll+54905C: 41 0F 28 D0                 - movaps xmm2,xmm8
+game.dll+549060: EB 08                       - jmp game.dll+54906A
+game.dll+549062: 41 0F 28 D4                 - movaps xmm2,xmm12
+game.dll+549066: F3 0F 5D D3                 - minss xmm2,xmm3
+game.dll+54906A: F3 0F 59 D4                 - mulss xmm2,xmm4
+game.dll+54906E: F3 0F 58 D5                 - addss xmm2,xmm5
+game.dll+549072: F3 41 0F 11 56 14           - movss [r14+14],xmm2
+game.dll+549078: 43 80 BC 3C AD 58 00 00 00  - cmp byte ptr [r12+r15+000058AD],00
+game.dll+549081: F3 44 0F 59 DA              - mulss xmm11,xmm2
+game.dll+549086: 75 04                       - jne game.dll+54908C
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
           <ID>113904</ID>
           <Description>"killcount mod                                                                      (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -1456,6 +1573,7 @@ killcountMod_return:
         <CheatEntry>
           <ID>113910</ID>
           <Description>"evac high value asset mod                                                  (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -1496,6 +1614,7 @@ evacHVA_return:
         <CheatEntry>
           <ID>113959</ID>
           <Description>"instant complete all missions RButton                                 (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version:
@@ -1647,6 +1766,7 @@ dealloc(completeHiveBase_newmem)
         <CheatEntry>
           <ID>59</ID>
           <Description>"Instant Shuttle                                                                     (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -1725,6 +1845,7 @@ game.dll+57BE85: EB 47           - jmp game.dll+57BECE
         <CheatEntry>
           <ID>113957</ID>
           <Description>"No Laser Overheat                                                               (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -1797,6 +1918,7 @@ game.dll+41F548: 74 2B                    - je game.dll+41F575
         <CheatEntry>
           <ID>42</ID>
           <Description>"Instant Railgun/Arc Ready                                                   (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -1883,6 +2005,7 @@ game.dll+58FE03: 80 7C 24 40 00           - cmp byte ptr [rsp+40],00
         <CheatEntry>
           <ID>113960</ID>
           <Description>"Energy Shield Mod (edit your cd)                                        (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -1921,7 +2044,7 @@ aob_ShielDeezNutts:
           <ID>72</ID>
           <Description>"OnClick Armory Weapon Editor                                          (by cfemen)"</Description>
           <Options moHideChildren="1"/>
-          <Color>FF00FF</Color>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version: 
@@ -2407,7 +2530,7 @@ game.dll+D04F58: 85 D2                       - test edx,edx
           <ID>117443</ID>
           <Description>"Add x? Resources(Samples) On Pickup                                (by cfemen)"</Description>
           <Options moHideChildren="1"/>
-          <Color>FF00FF</Color>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version: 
@@ -2537,12 +2660,13 @@ db 0
       <ID>113939</ID>
       <Description>"Solo Farming (please play alone), show my children to edit the samples"</Description>
       <Options moAlwaysHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
-      <Color>0000FF</Color>
+      <Color>00FF00</Color>
       <GroupHeader>1</GroupHeader>
       <CheatEntries>
         <CheatEntry>
           <ID>117461</ID>
           <Description>"Inf Time                                                                                (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 
@@ -2564,6 +2688,7 @@ unregistersymbol(aobTimeSub)
         <CheatEntry>
           <ID>113976</ID>
           <Description>"Inf Health                                                                             (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -2720,39 +2845,38 @@ unregistersymbol(aobSprintWrite)
         <CheatEntry>
           <ID>113978</ID>
           <Description>"Inf last Stim                                                                         (by gir489)"</Description>
-          <Color>0080FF</Color>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
-// Executable Version: 1.8.21849.0
-// MD5 Signature     : 781649FF615C49952775A0ED06AD982F
-// EXE Compile Date  : August 02, 2024 11:21 AM
-// Script Date       : August 06, 2024 09:38 AM
+// Executable Version: 1.8.22927.0
+// MD5 Signature     : 34B03C63A9B3946A71A77D7719475948
+// EXE Compile Date  : September 19, 2024 11:09 AM
+// Script Date       : September 24, 2024 06:58 PM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 49 8B 52)
+aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 48 03 C0 45 8B 74 C7)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
 label(return_Syringes)
 
 newmem_Syringes:
-  lea rax, [rdx+rdx*2]
-  mov rdx, [r10+58]
-  add rax, rax
-  mov r12d, [rdx+rax*8+18]
+  lea rax,[rdx+rdx*2]
+  add rax,rax
+  mov r14d,[r15+rax*8+18]
   cmp r12d, #1
   je short @f
-    dec r12d
+    dec r14d
   @@:
   jmp return_Syringes
 
 aob_Syringes:
   jmp far newmem_Syringes
-  nop 5
+  nop
 return_Syringes:
 
 [DISABLE]
 aob_Syringes:
-  db 48 8D 04 52 49 8B 52 58 48 03 C0 44 8B 64 C2 18 41 FF
+  db 48 8D 04 52 48 03 C0 45 8B 74 C7 18 41 FF CE
 
 unregistersymbol(aob_Syringes)
 dealloc(newmem_Syringes)
@@ -2761,6 +2885,7 @@ dealloc(newmem_Syringes)
         <CheatEntry>
           <ID>113979</ID>
           <Description>"Inf grenade                                                                          (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -2803,6 +2928,7 @@ legit_grenades_return:
         <CheatEntry>
           <ID>113980</ID>
           <Description>"Inf last Mag                                                                         (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -2845,6 +2971,7 @@ legit_ammo_return:
         <CheatEntry>
           <ID>117433</ID>
           <Description>"No ammo consume                                                             (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -2963,6 +3090,7 @@ unregistersymbol(aob_Autocannon)
         <CheatEntry>
           <ID>113983</ID>
           <Description>"Inf Shield                                                                              (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 aobscanmodule(aobShield,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1) // should be unique
@@ -2979,6 +3107,7 @@ unregistersymbol(aobShield)
         <CheatEntry>
           <ID>113984</ID>
           <Description>"Inf Stratagems                                                                      (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version:
@@ -3007,6 +3136,7 @@ unregistersymbol(aobStratacmp)
         <CheatEntry>
           <ID>113971</ID>
           <Description>"No Recoil                                                                              (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 
@@ -3026,6 +3156,7 @@ unregistersymbol(aobRecoil)
         <CheatEntry>
           <ID>113972</ID>
           <Description>"No Sway                                                                               (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -3053,6 +3184,7 @@ unregistersymbol(aobCalcSway)
         <CheatEntry>
           <ID>113931</ID>
           <Description>"Show All Map Icons                                                              (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_CheckIsBlipSeen,game.dll,41 0F B6 41 ? F2 44 0F 11 65)
@@ -3108,6 +3240,7 @@ unregistersymbol(aob_CheckMissionBlip)
         <CheatEntry>
           <ID>113938</ID>
           <Description>"speedhack  x7 player / x2 rescue citizen / x0 enemies          (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version: 
@@ -3216,6 +3349,7 @@ game.dll+64BC79: 76 06                    - jna game.dll+64BC81
         <CheatEntry>
           <ID>117431</ID>
           <Description>"instant complete all missions RButton                                 (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version:
@@ -3367,6 +3501,7 @@ dealloc(completeHiveBase_newmem)
         <CheatEntry>
           <ID>113964</ID>
           <Description>"Instant Shuttle                                                                      (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -3445,6 +3580,7 @@ game.dll+57BE85: EB 47           - jmp game.dll+57BECE
         <CheatEntry>
           <ID>113967</ID>
           <Description>"Instant Railgun/Arc Ready                                                    (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -3531,6 +3667,7 @@ game.dll+58FE03: 80 7C 24 40 00           - cmp byte ptr [rsp+40],00
         <CheatEntry>
           <ID>113994</ID>
           <Description>"No Laser Overheat                                                                (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -3603,6 +3740,7 @@ game.dll+41F548: 74 2B                    - je game.dll+41F575
         <CheatEntry>
           <ID>113930</ID>
           <Description>"Open Vaults w/ Left Door Only                                             (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -3675,6 +3813,7 @@ game.dll+2CC80A: C7 40 04 FF FF FF FF  - mov [rax+04],FFFFFFFF
         <CheatEntry>
           <ID>117457</ID>
           <Description>"Climb All                                                                                (by sakuno)"</Description>
+          <Color>C080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 {
@@ -3713,7 +3852,7 @@ unregistersymbol(AvatarClimbAddr)
           <ID>31</ID>
           <Description>"Add x? Resources(Samples) On Pickup                                 (by cfemen)"</Description>
           <Options moHideChildren="1"/>
-          <Color>FF8000</Color>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version: 
@@ -3869,39 +4008,38 @@ unregistersymbol(aobSprintWrite)
         <CheatEntry>
           <ID>113987</ID>
           <Description>"Inf last Stim                                                                         (by gir489)"</Description>
-          <Color>0080FF</Color>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
-// Executable Version: 1.8.21849.0
-// MD5 Signature     : 781649FF615C49952775A0ED06AD982F
-// EXE Compile Date  : August 02, 2024 11:21 AM
-// Script Date       : August 06, 2024 09:38 AM
+// Executable Version: 1.8.22927.0
+// MD5 Signature     : 34B03C63A9B3946A71A77D7719475948
+// EXE Compile Date  : September 19, 2024 11:09 AM
+// Script Date       : September 24, 2024 06:58 PM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 49 8B 52)
+aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 48 03 C0 45 8B 74 C7)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
 label(return_Syringes)
 
 newmem_Syringes:
-  lea rax, [rdx+rdx*2]
-  mov rdx, [r10+58]
-  add rax, rax
-  mov r12d, [rdx+rax*8+18]
+  lea rax,[rdx+rdx*2]
+  add rax,rax
+  mov r14d,[r15+rax*8+18]
   cmp r12d, #1
   je short @f
-    dec r12d
+    dec r14d
   @@:
   jmp return_Syringes
 
 aob_Syringes:
   jmp far newmem_Syringes
-  nop 5
+  nop
 return_Syringes:
 
 [DISABLE]
 aob_Syringes:
-  db 48 8D 04 52 49 8B 52 58 48 03 C0 44 8B 64 C2 18 41 FF
+  db 48 8D 04 52 48 03 C0 45 8B 74 C7 18 41 FF CE
 
 unregistersymbol(aob_Syringes)
 dealloc(newmem_Syringes)
@@ -3910,6 +4048,7 @@ dealloc(newmem_Syringes)
         <CheatEntry>
           <ID>113988</ID>
           <Description>"Inf grenade                                                                          (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -3952,6 +4091,7 @@ legit_grenades_return:
         <CheatEntry>
           <ID>113989</ID>
           <Description>"Inf last Mag                                                                         (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -3994,6 +4134,7 @@ legit_ammo_return:
         <CheatEntry>
           <ID>117434</ID>
           <Description>"Inf last Bullet                                                                        (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -4053,6 +4194,7 @@ nop 3
         <CheatEntry>
           <ID>113961</ID>
           <Description>"Energy Shield Mod (edit your cd)                                         (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -4090,6 +4232,7 @@ aob_ShielDeezNutts:
         <CheatEntry>
           <ID>113991</ID>
           <Description>"Inf Stratagems                                                                      (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version:
@@ -4118,6 +4261,7 @@ unregistersymbol(aobStratacmp)
         <CheatEntry>
           <ID>113973</ID>
           <Description>"No Recoil                                                                              (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 
@@ -4137,6 +4281,7 @@ unregistersymbol(aobRecoil)
         <CheatEntry>
           <ID>113974</ID>
           <Description>"No Sway                                                                               (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
@@ -4164,6 +4309,7 @@ unregistersymbol(aobCalcSway)
         <CheatEntry>
           <ID>113945</ID>
           <Description>"Show All Map Icons                                                              (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_CheckIsBlipSeen,game.dll,41 0F B6 41 ? F2 44 0F 11 65)
@@ -4219,6 +4365,7 @@ unregistersymbol(aob_CheckMissionBlip)
         <CheatEntry>
           <ID>113952</ID>
           <Description>"Speed Modifier                                                                     (by ZoDDel)"</Description>
+          <Color>FFFF00</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version: 
@@ -4327,6 +4474,7 @@ game.dll+64BC79: 76 06                    - jna game.dll+64BC81
         <CheatEntry>
           <ID>113966</ID>
           <Description>"Instant Railgun/Arc Ready                                                    (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -4413,6 +4561,7 @@ game.dll+58FE03: 80 7C 24 40 00           - cmp byte ptr [rsp+40],00
         <CheatEntry>
           <ID>113993</ID>
           <Description>"No Laser Overheat                                                                (by gir489)"</Description>
+          <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -4484,7 +4633,8 @@ game.dll+41F548: 74 2B                    - je game.dll+41F575
         </CheatEntry>
         <CheatEntry>
           <ID>117458</ID>
-          <Description>"Climb All                                                                                (by sakuno)"</Description>
+          <Description>"Climb All                                                                              (by sakuno)"</Description>
+          <Color>C080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 {
@@ -5366,7 +5516,7 @@ dealloc(dmg_newmem)
       <ID>138</ID>
       <Description>"OnClick Armory Weapon Editor                                            (by cfemen)"</Description>
       <Options moHideChildren="1"/>
-      <Color>FF8000</Color>
+      <Color>C0C0C0</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -5815,6 +5965,7 @@ game.dll+E1E0A9: FF C7                    - inc edi
     <CheatEntry>
       <ID>117440</ID>
       <Description>"No ammo consume/inf mecha                                              (by gir489)"</Description>
+      <Color>0000FF</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -5900,6 +6051,7 @@ game.dll+4194A5: CC                       - int 3
     <CheatEntry>
       <ID>117432</ID>
       <Description>"No bullets consume                                                               (by gir489)"</Description>
+      <Color>0000FF</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript Async="1">// Game Executable : helldivers2.exe
 // Author : gir489
