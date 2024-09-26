@@ -674,19 +674,15 @@ unregistersymbol(aobTimeSub)
             <CheatEntry>
               <ID>113865</ID>
               <Description>"Infinite Autocannon Backpack                                        (by ???)"</Description>
-              <Color>0080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_Autocannon,game.dll,2B CE BA 52 97 88 69)
+aobscanmodule(aob_Autocannon,game.dll,2B C8 BA)
 registersymbol(aob_Autocannon)
-
 aob_Autocannon:
 nop 2
-
 [DISABLE]
 aob_Autocannon:
-  db 2B CE
-
+  db 2B C8
 unregistersymbol(aob_Autocannon)
 </AssemblerScript>
             </CheatEntry>
@@ -1895,30 +1891,30 @@ game.dll+58FE03: 80 7C 24 40 00           - cmp byte ptr [rsp+40],00
 // EXE Compile Date  : June 05, 2024 09:54 AM
 // Script Date       : June 14, 2024 09:00 PM
 [ENABLE]
-aobscanmodule(aob_ShielDeezNutts,game.dll,F3 41 0F 5C CC F3 0F 11 4C F5 08)
+aobscanmodule(aob_ShielDeezNutts,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1)
 registersymbol(aob_ShielDeezNutts)
-alloc(ShieldDeezNutts,1024,game.dll)
+alloc(ShieldDeezNutts,1024)
 label(ShieldDeezNutts_return)
-
 ShieldDeezNutts:
-  subss xmm1,xmm12
+  subss xmm1,xmm14
   comiss xmm1, dword ptr [compare_shield]
-  jbe ShieldDeezNutts_return
+  jbe short @f
   movss xmm1, dword ptr [compare_shield]
+@@:
+  movss [r14+r15+8],xmm1
+  movaps xmm2, xmm1
   jmp ShieldDeezNutts_return
 compare_shield:
-dd (float)5.0  // maximum shield cooldown duration in seconds
-
+dd (float)4.0  // maximum shield cooldown duration in seconds
 aob_ShielDeezNutts:
   jmp far ShieldDeezNutts
+  nop
 ShieldDeezNutts_return:
-
 [DISABLE]
 dealloc(ShieldDeezNutts)
 unregistersymbol(aob_ShielDeezNutts)
-
 aob_ShielDeezNutts:
-  db F3 41 0F 5C CC F3 0F 11 4C F5 08 0F 28 D1
+  db F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -2952,19 +2948,15 @@ nop 3
         <CheatEntry>
           <ID>117453</ID>
           <Description>"Infinite Autocannon Backpack                                              (by ???)"</Description>
-          <Color>0080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_Autocannon,game.dll,2B CE BA 52 97 88 69)
+aobscanmodule(aob_Autocannon,game.dll,2B C8 BA)
 registersymbol(aob_Autocannon)
-
 aob_Autocannon:
 nop 2
-
 [DISABLE]
 aob_Autocannon:
-  db 2B CE
-
+  db 2B C8
 unregistersymbol(aob_Autocannon)
 </AssemblerScript>
         </CheatEntry>
@@ -4069,30 +4061,30 @@ nop 3
 // EXE Compile Date  : June 05, 2024 09:54 AM
 // Script Date       : June 14, 2024 09:00 PM
 [ENABLE]
-aobscanmodule(aob_ShielDeezNutts,game.dll,F3 41 0F 5C CC F3 0F 11 4C F5 08)
+aobscanmodule(aob_ShielDeezNutts,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1)
 registersymbol(aob_ShielDeezNutts)
-alloc(ShieldDeezNutts,1024,game.dll)
+alloc(ShieldDeezNutts,1024)
 label(ShieldDeezNutts_return)
-
 ShieldDeezNutts:
-  subss xmm1,xmm12
+  subss xmm1,xmm14
   comiss xmm1, dword ptr [compare_shield]
-  jbe ShieldDeezNutts_return
+  jbe short @f
   movss xmm1, dword ptr [compare_shield]
+@@:
+  movss [r14+r15+8],xmm1
+  movaps xmm2, xmm1
   jmp ShieldDeezNutts_return
 compare_shield:
-dd (float)5.0  // maximum shield cooldown duration in seconds
-
+dd (float)4.0  // maximum shield cooldown duration in seconds
 aob_ShielDeezNutts:
   jmp far ShieldDeezNutts
+  nop
 ShieldDeezNutts_return:
-
 [DISABLE]
 dealloc(ShieldDeezNutts)
 unregistersymbol(aob_ShielDeezNutts)
-
 aob_ShielDeezNutts:
-  db F3 41 0F 5C CC F3 0F 11 4C F5 08 0F 28 D1
+  db F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
