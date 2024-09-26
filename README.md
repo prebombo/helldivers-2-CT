@@ -19,5 +19,5 @@ Added inf grenades<br>
 Deleted old scripts<br>
 *Updated ZoDDels weapons IDs*<br>
 ------24/09------<br>
-Inf Backpack (autocannon)
-Shield custom cd
+Inf Backpack (autocannon)<br>
+Shield custom cd<br>
