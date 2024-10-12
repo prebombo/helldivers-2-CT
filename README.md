@@ -23,3 +23,6 @@ Inf Backpack (autocannon)<br>
 Shield custom cd<br>
 Inf last stim<br>
 Changed script colors to represent their authors<br>
+------12/10------<br>
+Inf last Stim<br>
+Higher spread ratio
