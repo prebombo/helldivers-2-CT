@@ -25,4 +25,5 @@ Inf last stim<br>
 Changed script colors to represent their authors<br>
 ------12/10------<br>
 Inf last Stim<br>
-Higher spread ratio
+Higher spread ratio<br>
+(New)100% electricity conduction<br>
