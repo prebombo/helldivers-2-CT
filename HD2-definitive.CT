@@ -182,32 +182,34 @@ unregistersymbol(aobSprintWrite)
 // EXE Compile Date  : September 19, 2024 11:09 AM
 // Script Date       : September 24, 2024 06:58 PM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 48 03 C0 45 8B 74 C7)
-registersymbol(aob_Syringes)
-alloc(newmem_Syringes,1024)
-label(return_Syringes)
+aobscanmodule(syringe,game.dll,48 8D 14 49 8B CF 48 03 D2 8B 74 D0 18) // should be unique
+alloc(newmem,$1000,syringe)
+label(code)
+label(return)
 
-newmem_Syringes:
-  lea rax,[rdx+rdx*2]
-  add rax,rax
-  mov r14d,[r15+rax*8+18]
-  cmp r12d, #1
-  je short @f
-    dec r14d
-  @@:
-  jmp return_Syringes
+newmem:
+  lea rdx,[rcx+rcx2]
+  mov ecx,edi
+  add rdx,rdx
+  cmp [rax+rdx8+18],#1
+  jae code
+  mov [rax+rdx8+18],#1
 
-aob_Syringes:
-  jmp far newmem_Syringes
-  nop
-return_Syringes:
+code:
+  mov esi,[rax+rdx8+18]
+  jmp return
+
+syringe:
+  jmp newmem
+  nop 8
+return:
+registersymbol(syringe)
 
 [DISABLE]
-aob_Syringes:
-  db 48 8D 04 52 48 03 C0 45 8B 74 C7 18 41 FF CE
-
-unregistersymbol(aob_Syringes)
-dealloc(newmem_Syringes)
+syringe:
+  db 48 8D 14 49 8B CF 48 03 D2 8B 74 D0 18
+unregistersymbol(syringe)
+dealloc(newmem)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -4010,32 +4012,34 @@ unregistersymbol(aobSprintWrite)
 // EXE Compile Date  : September 19, 2024 11:09 AM
 // Script Date       : September 24, 2024 06:58 PM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 48 8D 04 52 48 03 C0 45 8B 74 C7)
-registersymbol(aob_Syringes)
-alloc(newmem_Syringes,1024)
-label(return_Syringes)
+aobscanmodule(syringe,game.dll,48 8D 14 49 8B CF 48 03 D2 8B 74 D0 18) // should be unique
+alloc(newmem,$1000,syringe)
+label(code)
+label(return)
 
-newmem_Syringes:
-  lea rax,[rdx+rdx*2]
-  add rax,rax
-  mov r14d,[r15+rax*8+18]
-  cmp r12d, #1
-  je short @f
-    dec r14d
-  @@:
-  jmp return_Syringes
+newmem:
+  lea rdx,[rcx+rcx2]
+  mov ecx,edi
+  add rdx,rdx
+  cmp [rax+rdx8+18],#1
+  jae code
+  mov [rax+rdx8+18],#1
 
-aob_Syringes:
-  jmp far newmem_Syringes
-  nop
-return_Syringes:
+code:
+  mov esi,[rax+rdx8+18]
+  jmp return
+
+syringe:
+  jmp newmem
+  nop 8
+return:
+registersymbol(syringe)
 
 [DISABLE]
-aob_Syringes:
-  db 48 8D 04 52 48 03 C0 45 8B 74 C7 18 41 FF CE
-
-unregistersymbol(aob_Syringes)
-dealloc(newmem_Syringes)
+syringe:
+  db 48 8D 14 49 8B CF 48 03 D2 8B 74 D0 18
+unregistersymbol(syringe)
+dealloc(newmem)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -6079,9 +6083,474 @@ unregistersymbol(aob_FinnikScript)
       </Hotkeys>
     </CheatEntry>
     <CheatEntry>
-      <ID>117454</ID>
-      <Description>"Higher spread ratio (outdated)                                              (by sakuno)"</Description>
-      <Color>0080FF</Color>
+      <ID>117467</ID>
+      <Description>"Higher spread ratio                                                                (by sakuno+Meausisi)"</Description>
+      <Options moHideChildren="1"/>
+      <Color>FF8000</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>117466</ID>
+          <Description>"ARC-12 Blitzer                                                                      (by Meausisi)"</Description>
+          <Color>FF8000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+{
+  Game    : helldivers2.exe
+  Version : 1.001.101
+  Date    : 2024-10-11
+  Original Author : (CFEMEN's Discord) Sakuno
+  Modifications by  : MIAUSISI
+
+  &gt; ARC WEAPONS MODIFICATIONS:
+  --------------------------
+  - Script modifies ARC-12 Blitzer RAY properties:
+    - Speed
+    - Distance
+    - Distance at Max Angle Spread
+    - Distance at Max Angle Spread First Shot
+    - Max Angle Spread
+    - Max Angle Spread First Shot
+    - Max Chain Length
+    - Max Chain Split
+  - Script modifies ARC-12 Blitzer DAMAGE properties:
+    - Standard damage
+    - Squishy damage
+    - AP 1
+    - AP 2
+    - AP 3
+    - AP 4
+    - Demolition
+    - Stagger
+    - Momentum
+    - Elemental Damage Type
+    - Status Effect Type
+    - Status Effect Duration
+}
+{$lua}
+-- Assigns weapon addresses to fixed variables
+registerSymbol("blitzer_settings", '["game.dll"+ 0201F3D8] + 01AC')
+registerSymbol("blitzer_damage",   '["game.dll"+ 0201F648] + 251C')
+
+{$asm}
+//! ========================================================
+//! ===================== B L I T Z E R ====================
+//! ========================================================
+
+//! ===================== RAY SETTINGS =====================
+blitzer_settings + 004: // Speed
+  dd (float)550 //300
+blitzer_settings + 008: // Distance
+  dd (float)90 //25
+blitzer_settings + 00C: //distance_at_max_angle_spread
+  dd (float)90 //10
+blitzer_settings + 010: //distance_at_max_angle_spread_first_shot
+  dd (float)90 //10
+blitzer_settings + 014: //max_angle_spread
+  dd (float)270 //10
+blitzer_settings + 018: //max_angle_spread_first_shot
+  dd (float)6 //10
+blitzer_settings + 01C: //max_chain_length
+  dd #50
+blitzer_settings + 020: //max_chain_split
+  dd #10
+
+//! =================== DAMAGE SETTINGS ====================
+blitzer_damage + 004:
+  dd #120
+blitzer_damage + 008:
+  dd #120
+blitzer_damage + 00C:
+  dd #7
+blitzer_damage + 010:
+  dd #7
+blitzer_damage + 014:
+  dd #7
+blitzer_damage + 018:
+  dd #7
+blitzer_damage + 01C:
+  dd #20
+blitzer_damage + 020:
+  dd #55
+blitzer_damage + 024:
+  dd #35
+blitzer_damage + 028:
+  dd #2
+blitzer_damage + 02C:
+  dd #37
+blitzer_damage + 030:
+  dd (float)20
+
+[DISABLE]
+
+blitzer_settings + 004:
+  dd (float)300
+blitzer_settings + 008:
+  dd (float)25
+blitzer_settings + 00C:
+  dd (float)10
+blitzer_settings + 010:
+  dd (float)10
+blitzer_settings + 014:
+  dd (float)10
+blitzer_settings + 018:
+  dd (float)10
+blitzer_settings + 01C:
+  dd #1
+blitzer_settings + 020:
+  dd #0
+
+blitzer_damage + 004:
+  dd #50
+blitzer_damage + 008:
+  dd #35
+blitzer_damage + 00C:
+  dd #3
+blitzer_damage + 010:
+  dd #3
+blitzer_damage + 014:
+  dd #3
+blitzer_damage + 018:
+  dd #0
+blitzer_damage + 01C:
+  dd #10
+blitzer_damage + 020:
+  dd #30
+blitzer_damage + 024:
+  dd #25
+blitzer_damage + 028:
+  dd #2
+blitzer_damage + 02C:
+  dd #37
+blitzer_damage + 030:
+  dd (float)0.7
+
+unregisterSymbol("blitzer_settings")
+unregisterSymbol("blitzer_damage")
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>16</Key>
+                <Key>39</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+              <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117469</ID>
+          <Description>"ARC-3 Arc Thrower                                                               (by Meausisi)"</Description>
+          <Color>FF8000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+{
+  Game    : helldivers2.exe
+  Version : 1.001.101
+  Date    : 2024-10-11
+  Original Author : (CFEMEN's Discord) Sakuno
+  Modifications by  : MIAUSISI
+
+  &gt; ARC WEAPONS MODIFICATIONS:
+  --------------------------
+  - Script modifies ARC-12 Blitzer RAY properties:
+    - Speed
+    - Distance
+    - Distance at Max Angle Spread
+    - Distance at Max Angle Spread First Shot
+    - Max Angle Spread
+    - Max Angle Spread First Shot
+    - Max Chain Length
+    - Max Chain Split
+  - Script modifies ARC-12 Blitzer DAMAGE properties:
+    - Standard damage
+    - Squishy damage
+    - AP 1
+    - AP 2
+    - AP 3
+    - AP 4
+    - Demolition
+    - Stagger
+    - Momentum
+    - Elemental Damage Type
+    - Status Effect Type
+    - Status Effect Duration
+}
+{$lua}
+-- Assigns weapon addresses to fixed variables
+registerSymbol("blitzer_settings", '["game.dll"+ 0201F3D8] + 01AC')
+registerSymbol("blitzer_damage",   '["game.dll"+ 0201F648] + 251C')
+
+{$asm}
+//! ========================================================
+//! ===================== B L I T Z E R ====================
+//! ========================================================
+
+//! ===================== RAY SETTINGS =====================
+blitzer_settings + 004: // Speed
+  dd (float)550 //300
+blitzer_settings + 008: // Distance
+  dd (float)90 //25
+blitzer_settings + 00C: //distance_at_max_angle_spread
+  dd (float)90 //10
+blitzer_settings + 010: //distance_at_max_angle_spread_first_shot
+  dd (float)90 //10
+blitzer_settings + 014: //max_angle_spread
+  dd (float)270 //10
+blitzer_settings + 018: //max_angle_spread_first_shot
+  dd (float)6 //10
+blitzer_settings + 01C: //max_chain_length
+  dd #50
+blitzer_settings + 020: //max_chain_split
+  dd #10
+
+//! =================== DAMAGE SETTINGS ====================
+blitzer_damage + 004:
+  dd #120
+blitzer_damage + 008:
+  dd #120
+blitzer_damage + 00C:
+  dd #7
+blitzer_damage + 010:
+  dd #7
+blitzer_damage + 014:
+  dd #7
+blitzer_damage + 018:
+  dd #7
+blitzer_damage + 01C:
+  dd #20
+blitzer_damage + 020:
+  dd #55
+blitzer_damage + 024:
+  dd #35
+blitzer_damage + 028:
+  dd #2
+blitzer_damage + 02C:
+  dd #37
+blitzer_damage + 030:
+  dd (float)20
+
+[DISABLE]
+
+blitzer_settings + 004:
+  dd (float)300
+blitzer_settings + 008:
+  dd (float)25
+blitzer_settings + 00C:
+  dd (float)10
+blitzer_settings + 010:
+  dd (float)10
+blitzer_settings + 014:
+  dd (float)10
+blitzer_settings + 018:
+  dd (float)10
+blitzer_settings + 01C:
+  dd #1
+blitzer_settings + 020:
+  dd #0
+
+blitzer_damage + 004:
+  dd #50
+blitzer_damage + 008:
+  dd #35
+blitzer_damage + 00C:
+  dd #3
+blitzer_damage + 010:
+  dd #3
+blitzer_damage + 014:
+  dd #3
+blitzer_damage + 018:
+  dd #0
+blitzer_damage + 01C:
+  dd #10
+blitzer_damage + 020:
+  dd #30
+blitzer_damage + 024:
+  dd #25
+blitzer_damage + 028:
+  dd #2
+blitzer_damage + 02C:
+  dd #37
+blitzer_damage + 030:
+  dd (float)0.7
+
+unregisterSymbol("blitzer_settings")
+unregisterSymbol("blitzer_damage")
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>16</Key>
+                <Key>39</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+              <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117470</ID>
+          <Description>"A/ARC-3 Tesla Tower                                                           (by Meausisi)"</Description>
+          <Color>FF8000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+{
+  Game    : helldivers2.exe
+  Version : 1.001.101
+  Date    : 2024-10-11
+  Original Author : (CFEMEN's Discord) Sakuno
+  Modifications by  : MIAUSISI
+
+  &gt; ARC WEAPONS MODIFICATIONS:
+  --------------------------
+  - Script modifies ARC-12 Blitzer RAY properties:
+    - Speed
+    - Distance
+    - Distance at Max Angle Spread
+    - Distance at Max Angle Spread First Shot
+    - Max Angle Spread
+    - Max Angle Spread First Shot
+    - Max Chain Length
+    - Max Chain Split
+  - Script modifies ARC-12 Blitzer DAMAGE properties:
+    - Standard damage
+    - Squishy damage
+    - AP 1
+    - AP 2
+    - AP 3
+    - AP 4
+    - Demolition
+    - Stagger
+    - Momentum
+    - Elemental Damage Type
+    - Status Effect Type
+    - Status Effect Duration
+}
+{$lua}
+-- Assigns weapon addresses to fixed variables
+registerSymbol("blitzer_settings", '["game.dll"+ 0201F3D8] + 01AC')
+registerSymbol("blitzer_damage",   '["game.dll"+ 0201F648] + 251C')
+
+{$asm}
+//! ========================================================
+//! ===================== B L I T Z E R ====================
+//! ========================================================
+
+//! ===================== RAY SETTINGS =====================
+blitzer_settings + 004: // Speed
+  dd (float)550 //300
+blitzer_settings + 008: // Distance
+  dd (float)90 //25
+blitzer_settings + 00C: //distance_at_max_angle_spread
+  dd (float)90 //10
+blitzer_settings + 010: //distance_at_max_angle_spread_first_shot
+  dd (float)90 //10
+blitzer_settings + 014: //max_angle_spread
+  dd (float)270 //10
+blitzer_settings + 018: //max_angle_spread_first_shot
+  dd (float)6 //10
+blitzer_settings + 01C: //max_chain_length
+  dd #50
+blitzer_settings + 020: //max_chain_split
+  dd #10
+
+//! =================== DAMAGE SETTINGS ====================
+blitzer_damage + 004:
+  dd #120
+blitzer_damage + 008:
+  dd #120
+blitzer_damage + 00C:
+  dd #7
+blitzer_damage + 010:
+  dd #7
+blitzer_damage + 014:
+  dd #7
+blitzer_damage + 018:
+  dd #7
+blitzer_damage + 01C:
+  dd #20
+blitzer_damage + 020:
+  dd #55
+blitzer_damage + 024:
+  dd #35
+blitzer_damage + 028:
+  dd #2
+blitzer_damage + 02C:
+  dd #37
+blitzer_damage + 030:
+  dd (float)20
+
+[DISABLE]
+
+blitzer_settings + 004:
+  dd (float)300
+blitzer_settings + 008:
+  dd (float)25
+blitzer_settings + 00C:
+  dd (float)10
+blitzer_settings + 010:
+  dd (float)10
+blitzer_settings + 014:
+  dd (float)10
+blitzer_settings + 018:
+  dd (float)10
+blitzer_settings + 01C:
+  dd #1
+blitzer_settings + 020:
+  dd #0
+
+blitzer_damage + 004:
+  dd #50
+blitzer_damage + 008:
+  dd #35
+blitzer_damage + 00C:
+  dd #3
+blitzer_damage + 010:
+  dd #3
+blitzer_damage + 014:
+  dd #3
+blitzer_damage + 018:
+  dd #0
+blitzer_damage + 01C:
+  dd #10
+blitzer_damage + 020:
+  dd #30
+blitzer_damage + 024:
+  dd #25
+blitzer_damage + 028:
+  dd #2
+blitzer_damage + 02C:
+  dd #37
+blitzer_damage + 030:
+  dd (float)0.7
+
+unregisterSymbol("blitzer_settings")
+unregisterSymbol("blitzer_damage")
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>16</Key>
+                <Key>39</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+              <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>117468</ID>
+      <Description>"100% Electrical conduit passive                                              (by Meausisi)"</Description>
+      <Color>FF8000</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript Async="1">[ENABLE]
 //Patch 1.001.002  arc_settings.dl_bin
@@ -6138,35 +6607,32 @@ arc_ARC_3-C: //Target Scan Window Size
     </CheatEntry>
     <CheatEntry>
       <ID>117459</ID>
-      <Description>"Mortar_Proj_Mod (outdated)                                                 (by sakuno)"</Description>
-      <Color>0080FF</Color>
+      <Description>"Mortar_Proj_Mod                                                                   (by sakuno+Meausisi)"</Description>
+      <Color>FF8000</Color>
       <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>[ENABLE]
-{
+      <AssemblerScript>{
   Game   : helldivers2.exe
-  Version: 1.001.005
-  Date   : 2024-08-22
-  Mortar for helldiver 2
-}
-{$lua}
+  Version: 1.001.101
+  Date   : 2024-10-10
+  Original Author : (CFEMEN's Discord) Sakuno
+  Corrections by  : MIAUSISI
 
-registerSymbol("mortar_base", '["game.dll"+01FBA868]+0')
+  &gt; MORTAR MODIFICATIONS:
+  --------------------------
+  - Increases the number of projectiles fired by the Mortar 40mm HE.
+}
+
+[ENABLE]
+{$lua}
+registerSymbol("Mortar_40mm_HE", '["game.dll" + 0201F638] + 3748')
 
 {$asm}
-//  PROJECTILE-231: MORTAR
-mortar_base+1C: //num_projectiles
-  dd #10 //1
-mortar_base+8C: //explosion_type_on_impact
-  dd #155 //197
-
-
-
+Mortar_40mm_HE:
+  dd #20 //1
 [DISABLE]
-//  PROJECTILE-231: MORTAR
-mortar_base+1C: //num_projectiles
-  dd #1 //1
-mortar_base+8C: //explosion_type_on_impact
-  dd #197 //197
+Mortar_40mm_HE:
+  dd #1
+unregisterSymbol("Mortar_40mm_HE")
 
 
 </AssemblerScript>
@@ -6289,7 +6755,7 @@ aobUnlock3:
     </SymbolEntry>
     <SymbolEntry>
       <Name>AvatarClimbAddr</Name>
-      <Address>245E7A741E2</Address>
+      <Address>21BE4DA44BC</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
