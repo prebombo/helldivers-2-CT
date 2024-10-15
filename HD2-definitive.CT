@@ -5299,6 +5299,8 @@ dmg_newmem:
     je dmg_code
   cmp [rcx+00], #244 // Mortar turret Explosion
     je dmg_code
+  cmp [rcx+00], #298 // Mini Missile Silo 2 explosion
+    je dmg_code
   cmp [rcx+00], #139 // Autocannon Sentry Projectile
     je dmg_code
   cmp [rcx+00], #234 // Autocannon sentry Explosion
