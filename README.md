@@ -27,3 +27,5 @@ Changed script colors to represent their authors<br>
 Inf last Stim<br>
 Higher spread ratio<br>
 (New)100% electricity conduction<br>
+------15/10------<br>
+Weapon IDs
