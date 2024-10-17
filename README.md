@@ -28,4 +28,5 @@ Inf last Stim<br>
 Higher spread ratio<br>
 (New)100% electricity conduction<br>
 ------15/10------<br>
-Weapon IDs
+Weapon IDs<br>
+Senator Inf Last Bullet<br>
