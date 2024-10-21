@@ -6078,8 +6078,8 @@ game.dll+E1E0A9: FF C7                    - inc edi
     </CheatEntry>
     <CheatEntry>
       <ID>117440</ID>
-      <Description>"No ammo consume/inf mecha                                              (by gir489)"</Description>
-      <Color>0000FF</Color>
+      <Description>"No ammo consume/inf mecha (outdated)                            (by gir489)"</Description>
+      <Color>0080FF</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -6724,33 +6724,31 @@ arc_ARC_3-C: //Target Scan Window Size
     </CheatEntry>
     <CheatEntry>
       <ID>117459</ID>
-      <Description>"Mortar_Proj_Mod                                                                   (by sakuno+Meausisi)"</Description>
+      <Description>"Mortar_Proj_Mod                                                                   (by sakuno+fallout11)"</Description>
       <Color>FF8000</Color>
       <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>{
+      <AssemblerScript>[ENABLE]
+{
   Game   : helldivers2.exe
-  Version: 1.001.101
-  Date   : 2024-10-10
-  Original Author : (CFEMEN's Discord) Sakuno
-  Corrections by  : MIAUSISI
-
-  &gt; MORTAR MODIFICATIONS:
-  --------------------------
-  - Increases the number of projectiles fired by the Mortar 40mm HE.
+  Version: 1.001.105
+  Date   : 2024-09-17
+  Mortar Mod for Helldivers 2
 }
-
-[ENABLE]
 {$lua}
-registerSymbol("Mortar_40mm_HE", '["game.dll" + 0201F638] + 3748')
-
+registerSymbol("mortar_base", '["game.dll"+0201F620+8088]')
 {$asm}
-Mortar_40mm_HE:
-  dd #20 //1
+//  A/M-12 MORTAR SENTRY
+mortar_base+3748: //num_projectiles
+  dd #1 //1
+mortar_base+37BC: //explosion_type_on_impact
+  dd #25 //211 (25=SEAF Explosive/precision strike) (170=SEAF Mininuke) (165=SEAF High Yield Explosive)
 [DISABLE]
-Mortar_40mm_HE:
-  dd #1
-unregisterSymbol("Mortar_40mm_HE")
-
+//  A/M-12 MORTAR SENTRY
+mortar_base+3748: //num_projectiles
+  dd #1 //1
+mortar_base+37BC: //explosion_type_on_impact
+  dd #211 //211 (was 208)
+unregisterSymbol("Mortar_base")
 
 </AssemblerScript>
     </CheatEntry>
@@ -6872,7 +6870,7 @@ aobUnlock3:
     </SymbolEntry>
     <SymbolEntry>
       <Name>AvatarClimbAddr</Name>
-      <Address>21BE4DA44BC</Address>
+      <Address>204E8C947CC</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
