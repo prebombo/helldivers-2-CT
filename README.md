@@ -30,3 +30,5 @@ Higher spread ratio<br>
 ------15/10------<br>
 Weapon IDs<br>
 Senator Inf Last Bullet<br>
+------21/10------<br>
+Mortar script fixed<br>
