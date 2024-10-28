@@ -32,3 +32,5 @@ Weapon IDs<br>
 Senator Inf Last Bullet<br>
 ------21/10------<br>
 Mortar script fixed<br>
+------28/10------<br>
+Deleted ZoDDel´s super dmg mod from All mods (it was outdated and the new one is on the easyaccess part)<br>
