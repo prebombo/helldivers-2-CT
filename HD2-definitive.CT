@@ -805,7 +805,7 @@ unregistersymbol(aobRecoil)
 }
 
 [ENABLE]
-aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB 08 0F 28 C2 E8 ?? ?? ?? ?? F3 0F 10 75 88 F3 0F )
+aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB 08 0F 28 C2 E8 ?? ?? ?? ?? F3 44 0F 10 45 88 F3 44 0F 59 C0 F3 44 0F 58 C6 F3 0F 10 75 8C F3 0F 59 F0)
 
 aobCalcSway:
   nop 4
@@ -900,7 +900,7 @@ game.dll+2CC80A: C7 40 04 FF FF FF FF  - mov [rax+04],FFFFFFFF
           <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_CheckIsBlipSeen,game.dll,41 0F B6 41 ? F2 44 0F 11 65)
 aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BE ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BF)
-aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ? ? ? ? 80 7B ? ? 0F 84 ? ? ? ? F3 44 0F 5C 45)
+aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ?? ?? ?? ?? 80 7B ?? 00 0F 84 ?? 00 00 00 F3 )
 aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ? ? ? ? 48 8B 54 24 ? F3 43 0F 10 4C A5)
 aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8)
 registersymbol(aob_CheckIsBlipSeen)
@@ -1448,7 +1448,7 @@ dealloc(completeHiveBase_newmem)
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
-  Date   : 2024-06-13
+  Date   : 2024-10-29
   Author : cfemen
 
   This script does blah blah blah
@@ -1457,7 +1457,7 @@ dealloc(completeHiveBase_newmem)
 [ENABLE]
 
 
-aobscanmodule(aobWriteShuttleTimer,game.dll,F3 41 0F 5C C5 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
+aobscanmodule(aobSubTimer,game.dll,F3 0F 5C C3 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
 alloc(newmem,$1000)
 
 label(code)
@@ -1466,57 +1466,56 @@ label(return)
 newmem:
 
 code:
+  subss xmm0,xmm3
   subss xmm0,xmm13
   ucomiss xmm0, DWORD [compare_float_check]
   jbe short @f
     movss xmm0, DWORD [compare_float_check]
   @@:
-  //subss xmm0,xmm13
   mov edx,6109F766
   movss [rcx+rax],xmm0
   jmp return
 compare_float_check:
 dd (float)1.0
-aobWriteShuttleTimer:
+aobSubTimer:
   jmp far newmem
-  nop
 return:
-registersymbol(aobWriteShuttleTimer)
+registersymbol(aobSubTimer)
 
 [DISABLE]
 
-aobWriteShuttleTimer:
-  db F3 41 0F 5C C5 BA 66 F7 09 61 F3 0F 11 04 01
+aobSubTimer:
+  db F3 0F 5C C3 BA 66 F7 09 61 F3 0F 11 04 01
 
-unregistersymbol(aobWriteShuttleTimer)
+unregistersymbol(aobSubTimer)
 dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: game.dll+57BE5A
+// ORIGINAL CODE - INJECTION POINT: game.dll+5D3357
 
-game.dll+57BE3B: FF C1           - inc ecx
-game.dll+57BE3D: 48 83 C2 1C     - add rdx,1C
-game.dll+57BE41: 41 3B C8        - cmp ecx,r8d
-game.dll+57BE44: 72 DD           - jb game.dll+57BE23
-game.dll+57BE46: 84 DB           - test bl,bl
-game.dll+57BE48: 75 3D           - jne game.dll+57BE87
-game.dll+57BE4A: 49 8B 44 24 78  - mov rax,[r12+78]
-game.dll+57BE4F: 4B 8D 0C B6     - lea rcx,[r14+r14*4]
-game.dll+57BE53: 48 C1 E1 04     - shl rcx,04
-game.dll+57BE57: 0F 28 C6        - movaps xmm0,xmm6
+game.dll+5D3339: FF C1           - inc ecx
+game.dll+5D333B: 48 83 C2 1C     - add rdx,1C
+game.dll+5D333F: 41 3B C8        - cmp ecx,r8d
+game.dll+5D3342: 72 DD           - jb game.dll+5D3321
+game.dll+5D3344: 84 DB           - test bl,bl
+game.dll+5D3346: 75 39           - jne game.dll+5D3381
+game.dll+5D3348: 48 8B 47 78     - mov rax,[rdi+78]
+game.dll+5D334C: 4B 8D 0C B6     - lea rcx,[r14+r14*4]
+game.dll+5D3350: 48 C1 E1 04     - shl rcx,04
+game.dll+5D3354: 0F 28 C6        - movaps xmm0,xmm6
 // ---------- INJECTING HERE ----------
-game.dll+57BE5A: F3 41 0F 5C C5  - subss xmm0,xmm13
+game.dll+5D3357: F3 0F 5C C3     - subss xmm0,xmm3
 // ---------- DONE INJECTING  ----------
-game.dll+57BE5F: BA 66 F7 09 61  - mov edx,6109F766
-game.dll+57BE64: F3 0F 11 04 01  - movss [rcx+rax],xmm0
-game.dll+57BE69: 49 8B 44 24 60  - mov rax,[r12+60]
-game.dll+57BE6E: 4D 8B 44 24 78  - mov r8,[r12+78]
-game.dll+57BE73: 4C 03 C1        - add r8,rcx
-game.dll+57BE76: 4A 8B 0C F0     - mov rcx,[rax+r14*8]
-game.dll+57BE7A: 8B 49 10        - mov ecx,[rcx+10]
-game.dll+57BE7D: E8 2E 1E 56 00  - call game.dll+ADDCB0
-game.dll+57BE82: 49 8B D6        - mov rdx,r14
-game.dll+57BE85: EB 47           - jmp game.dll+57BECE
+game.dll+5D335B: BA 66 F7 09 61  - mov edx,6109F766
+game.dll+5D3360: F3 0F 11 04 01  - movss [rcx+rax],xmm0
+game.dll+5D3365: 48 8B 47 60     - mov rax,[rdi+60]
+game.dll+5D3369: 4C 8B 47 78     - mov r8,[rdi+78]
+game.dll+5D336D: 4C 03 C1        - add r8,rcx
+game.dll+5D3370: 4A 8B 0C F0     - mov rcx,[rax+r14*8]
+game.dll+5D3374: 8B 49 10        - mov ecx,[rcx+10]
+game.dll+5D3377: E8 64 74 58 00  - call game.dll+B5A7E0
+game.dll+5D337C: 49 8B D6        - mov rdx,r14
+game.dll+5D337F: EB 44           - jmp game.dll+5D33C5
 }
 </AssemblerScript>
         </CheatEntry>
@@ -2836,7 +2835,7 @@ unregistersymbol(aobRecoil)
 }
 
 [ENABLE]
-aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB 08 0F 28 C2 E8 ?? ?? ?? ?? F3 0F 10 75 88 F3 0F )
+aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB 08 0F 28 C2 E8 ?? ?? ?? ?? F3 44 0F 10 45 88 F3 44 0F 59 C0 F3 44 0F 58 C6 F3 0F 10 75 8C F3 0F 59 F0)
 
 aobCalcSway:
   nop 4
@@ -2858,7 +2857,7 @@ unregistersymbol(aobCalcSway)
               <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_CheckIsBlipSeen,game.dll,41 0F B6 41 ? F2 44 0F 11 65)
 aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BE ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BF)
-aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ? ? ? ? 80 7B ? ? 0F 84 ? ? ? ? F3 44 0F 5C 45)
+aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ?? ?? ?? ?? 80 7B ?? 00 0F 84 ?? 00 00 00 F3 )
 aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ? ? ? ? 48 8B 54 24 ? F3 43 0F 10 4C A5)
 aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8)
 registersymbol(aob_CheckIsBlipSeen)
@@ -3174,7 +3173,7 @@ dealloc(completeHiveBase_newmem)
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>{ Game   : helldivers2.exe
   Version:
-  Date   : 2024-06-13
+  Date   : 2024-10-29
   Author : cfemen
 
   This script does blah blah blah
@@ -3183,7 +3182,7 @@ dealloc(completeHiveBase_newmem)
 [ENABLE]
 
 
-aobscanmodule(aobWriteShuttleTimer,game.dll,F3 41 0F 5C C5 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
+aobscanmodule(aobSubTimer,game.dll,F3 0F 5C C3 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
 alloc(newmem,$1000)
 
 label(code)
@@ -3192,57 +3191,56 @@ label(return)
 newmem:
 
 code:
+  subss xmm0,xmm3
   subss xmm0,xmm13
   ucomiss xmm0, DWORD [compare_float_check]
   jbe short @f
     movss xmm0, DWORD [compare_float_check]
   @@:
-  //subss xmm0,xmm13
   mov edx,6109F766
   movss [rcx+rax],xmm0
   jmp return
 compare_float_check:
 dd (float)1.0
-aobWriteShuttleTimer:
+aobSubTimer:
   jmp far newmem
-  nop
 return:
-registersymbol(aobWriteShuttleTimer)
+registersymbol(aobSubTimer)
 
 [DISABLE]
 
-aobWriteShuttleTimer:
-  db F3 41 0F 5C C5 BA 66 F7 09 61 F3 0F 11 04 01
+aobSubTimer:
+  db F3 0F 5C C3 BA 66 F7 09 61 F3 0F 11 04 01
 
-unregistersymbol(aobWriteShuttleTimer)
+unregistersymbol(aobSubTimer)
 dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: game.dll+57BE5A
+// ORIGINAL CODE - INJECTION POINT: game.dll+5D3357
 
-game.dll+57BE3B: FF C1           - inc ecx
-game.dll+57BE3D: 48 83 C2 1C     - add rdx,1C
-game.dll+57BE41: 41 3B C8        - cmp ecx,r8d
-game.dll+57BE44: 72 DD           - jb game.dll+57BE23
-game.dll+57BE46: 84 DB           - test bl,bl
-game.dll+57BE48: 75 3D           - jne game.dll+57BE87
-game.dll+57BE4A: 49 8B 44 24 78  - mov rax,[r12+78]
-game.dll+57BE4F: 4B 8D 0C B6     - lea rcx,[r14+r14*4]
-game.dll+57BE53: 48 C1 E1 04     - shl rcx,04
-game.dll+57BE57: 0F 28 C6        - movaps xmm0,xmm6
+game.dll+5D3339: FF C1           - inc ecx
+game.dll+5D333B: 48 83 C2 1C     - add rdx,1C
+game.dll+5D333F: 41 3B C8        - cmp ecx,r8d
+game.dll+5D3342: 72 DD           - jb game.dll+5D3321
+game.dll+5D3344: 84 DB           - test bl,bl
+game.dll+5D3346: 75 39           - jne game.dll+5D3381
+game.dll+5D3348: 48 8B 47 78     - mov rax,[rdi+78]
+game.dll+5D334C: 4B 8D 0C B6     - lea rcx,[r14+r14*4]
+game.dll+5D3350: 48 C1 E1 04     - shl rcx,04
+game.dll+5D3354: 0F 28 C6        - movaps xmm0,xmm6
 // ---------- INJECTING HERE ----------
-game.dll+57BE5A: F3 41 0F 5C C5  - subss xmm0,xmm13
+game.dll+5D3357: F3 0F 5C C3     - subss xmm0,xmm3
 // ---------- DONE INJECTING  ----------
-game.dll+57BE5F: BA 66 F7 09 61  - mov edx,6109F766
-game.dll+57BE64: F3 0F 11 04 01  - movss [rcx+rax],xmm0
-game.dll+57BE69: 49 8B 44 24 60  - mov rax,[r12+60]
-game.dll+57BE6E: 4D 8B 44 24 78  - mov r8,[r12+78]
-game.dll+57BE73: 4C 03 C1        - add r8,rcx
-game.dll+57BE76: 4A 8B 0C F0     - mov rcx,[rax+r14*8]
-game.dll+57BE7A: 8B 49 10        - mov ecx,[rcx+10]
-game.dll+57BE7D: E8 2E 1E 56 00  - call game.dll+ADDCB0
-game.dll+57BE82: 49 8B D6        - mov rdx,r14
-game.dll+57BE85: EB 47           - jmp game.dll+57BECE
+game.dll+5D335B: BA 66 F7 09 61  - mov edx,6109F766
+game.dll+5D3360: F3 0F 11 04 01  - movss [rcx+rax],xmm0
+game.dll+5D3365: 48 8B 47 60     - mov rax,[rdi+60]
+game.dll+5D3369: 4C 8B 47 78     - mov r8,[rdi+78]
+game.dll+5D336D: 4C 03 C1        - add r8,rcx
+game.dll+5D3370: 4A 8B 0C F0     - mov rcx,[rax+r14*8]
+game.dll+5D3374: 8B 49 10        - mov ecx,[rcx+10]
+game.dll+5D3377: E8 64 74 58 00  - call game.dll+B5A7E0
+game.dll+5D337C: 49 8B D6        - mov rdx,r14
+game.dll+5D337F: EB 44           - jmp game.dll+5D33C5
 }
 </AssemblerScript>
             </CheatEntry>
@@ -4031,7 +4029,7 @@ unregistersymbol(aobRecoil)
 }
 
 [ENABLE]
-aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB 08 0F 28 C2 E8 ?? ?? ?? ?? F3 0F 10 75 88 F3 0F )
+aobscanmodule(aobCalcSway,game.dll,F3 0F 51 C2 EB 08 0F 28 C2 E8 ?? ?? ?? ?? F3 44 0F 10 45 88 F3 44 0F 59 C0 F3 44 0F 58 C6 F3 0F 10 75 8C F3 0F 59 F0)
 
 aobCalcSway:
   nop 4
@@ -4053,7 +4051,7 @@ unregistersymbol(aobCalcSway)
           <AssemblerScript Async="1">[ENABLE]
 aobscanmodule(aob_CheckIsBlipSeen,game.dll,41 0F B6 41 ? F2 44 0F 11 65)
 aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BE ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BF)
-aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ? ? ? ? 80 7B ? ? 0F 84 ? ? ? ? F3 44 0F 5C 45)
+aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ?? ?? ?? ?? 80 7B ?? 00 0F 84 ?? 00 00 00 F3 )
 aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ? ? ? ? 48 8B 54 24 ? F3 43 0F 10 4C A5)
 aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8)
 registersymbol(aob_CheckIsBlipSeen)
