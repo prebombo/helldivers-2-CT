@@ -38,3 +38,4 @@ Deleted ZoDDel´s super dmg mod from All mods (it was outdated and the new one i
 Updated: No Sway,Fast Extract & Map Hack<br>
 ------30/10------<br>
 Updated dmg IDs<br>
+Fixed instant complete mission (hives)<br>
