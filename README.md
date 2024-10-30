@@ -35,4 +35,6 @@ Mortar script fixed<br>
 ------28/10------<br>
 Deleted ZoDDel´s super dmg mod from All mods (it was outdated and the new one is on the easyaccess part)<br>
 ------29/10------<br>
-Updated: No Sway,Fast Extract & Map Hack
+Updated: No Sway,Fast Extract & Map Hack<br>
+------30/10------<br>
+Updated dmg IDs<br>
