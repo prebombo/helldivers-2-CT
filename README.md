@@ -39,3 +39,4 @@ Updated: No Sway,Fast Extract & Map Hack<br>
 ------30/10------<br>
 Updated dmg IDs<br>
 Fixed instant complete mission (hives)<br>
+Fix to electric mods from Miausisi+sakuno<br>
