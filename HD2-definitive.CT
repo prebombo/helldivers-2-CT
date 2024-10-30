@@ -1409,7 +1409,7 @@ completeHiveBase_newmem:
 
 completeHiveBase_code:
   imul r11, rsi, 2A8
-  imul rax, rsi, 34
+  imul rax, rsi, 38
   add r11, [rbx+48]
   add rax, [rbx+50]
   mov byte ptr [rax+31], #1
@@ -3134,7 +3134,7 @@ completeHiveBase_newmem:
 
 completeHiveBase_code:
   imul r11, rsi, 2A8
-  imul rax, rsi, 34
+  imul rax, rsi, 38
   add r11, [rbx+48]
   add rax, [rbx+50]
   mov byte ptr [rax+31], #1
@@ -6531,7 +6531,7 @@ aobUnlock3:
     </SymbolEntry>
     <SymbolEntry>
       <Name>AvatarClimbAddr</Name>
-      <Address>204E8C947CC</Address>
+      <Address>2AD5FE019EA</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
