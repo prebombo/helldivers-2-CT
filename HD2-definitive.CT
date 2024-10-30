@@ -5861,54 +5861,83 @@ unregistersymbol(aob_FinnikScript)
       </Hotkeys>
     </CheatEntry>
     <CheatEntry>
-      <ID>117467</ID>
-      <Description>"Higher spread ratio                                                                (by sakuno+Meausisi)"</Description>
+      <ID>117474</ID>
+      <Description>"Electrical scripts"</Description>
       <Options moHideChildren="1"/>
-      <Color>FF8000</Color>
-      <GroupHeader>1</GroupHeader>
+      <Color>00FFFF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript Async="1">[ENABLE]
+{
+  Game    : helldivers2.exe
+  Version : 1.001.201
+  Date    : 2024-10-29
+  Original Author : (CFEMEN's Discord) Sakuno
+  Modifications by  : MIAUSISI
+
+  &gt; ARC WEAPONS MODIFICATIONS:
+  --------------------------
+  - Script contains modification to the following weapons:
+    - ARC-3 Arc Thrower
+    - ARC-12 Blitzer
+    - A/ARC-3 Tesla Tower
+  - As of 11/10/24, it modifies the following properties:
+    - RayCount
+    - ChainCount
+    - Main Range
+    - Target Scan Angle 1
+    - Target Scan Angle 2
+    - Chain Target Scan Degree
+    - Target Scan Window Size
+}
+{$lua}
+registerSymbol("damage_anchor_address",  '[game.dll + 02090B18]')
+registerSymbol("arcwpn_anchor_address",  '[game.dll + 020909D0]')
+registerSymbol("unk000_anchor_address", '[[game.dll + 01A34E28] + A0] + 1C')
+{$asm}
+[DISABLE]
+unregisterSymbol("damage_anchor_address")
+unregisterSymbol("arcwpn_anchor_address")
+unregisterSymbol("unk000_anchor_address")
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>16</Key>
+            <Key>39</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+          <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
       <CheatEntries>
         <CheatEntry>
-          <ID>117466</ID>
-          <Description>"ARC-12 Blitzer                                                                      (by Meausisi)"</Description>
-          <Color>FF8000</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
+          <ID>117467</ID>
+          <Description>"Higher spread ratio                                                              (by sakuno+Meausisi)"</Description>
+          <Options moHideChildren="1"/>
+          <Color>00FFFF</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>117466</ID>
+              <Description>"ARC-12 Blitzer                                                                  (by Meausisi)"</Description>
+              <Color>00FFFF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
 {
   Game    : helldivers2.exe
-  Version : 1.001.101
-  Date    : 2024-10-11
+  Version : 1.001.201
+  Date    : 2024-10-29
   Original Author : (CFEMEN's Discord) Sakuno
   Modifications by  : MIAUSISI
 
-  &gt; ARC WEAPONS MODIFICATIONS:
-  --------------------------
-  - Script modifies ARC-12 Blitzer RAY properties:
-    - Speed
-    - Distance
-    - Distance at Max Angle Spread
-    - Distance at Max Angle Spread First Shot
-    - Max Angle Spread
-    - Max Angle Spread First Shot
-    - Max Chain Length
-    - Max Chain Split
-  - Script modifies ARC-12 Blitzer DAMAGE properties:
-    - Standard damage
-    - Squishy damage
-    - AP 1
-    - AP 2
-    - AP 3
-    - AP 4
-    - Demolition
-    - Stagger
-    - Momentum
-    - Elemental Damage Type
-    - Status Effect Type
-    - Status Effect Duration
+  &gt; ARC-12 Blitzer modifications.
 }
 {$lua}
 -- Assigns weapon addresses to fixed variables
-registerSymbol("blitzer_settings", '["game.dll"+ 0201F3D8] + 01AC')
-registerSymbol("blitzer_damage",   '["game.dll"+ 0201F648] + 251C')
+registerSymbol("blitzer_settings", 'arcwpn_anchor_address + 0180')
+registerSymbol("blitzer_damage",   'damage_anchor_address + 4C*81')
 
 {$asm}
 //! ========================================================
@@ -5917,21 +5946,21 @@ registerSymbol("blitzer_damage",   '["game.dll"+ 0201F648] + 251C')
 
 //! ===================== RAY SETTINGS =====================
 blitzer_settings + 004: // Speed
-  dd (float)550 //300
+  dd (float)850 //300
 blitzer_settings + 008: // Distance
   dd (float)90 //25
 blitzer_settings + 00C: //distance_at_max_angle_spread
-  dd (float)90 //10
+  dd (float)15 //10
 blitzer_settings + 010: //distance_at_max_angle_spread_first_shot
-  dd (float)90 //10
+  dd (float)15 //10
 blitzer_settings + 014: //max_angle_spread
-  dd (float)270 //10
+  dd (float)35 //10
 blitzer_settings + 018: //max_angle_spread_first_shot
-  dd (float)6 //10
+  dd (float)35 //10
 blitzer_settings + 01C: //max_chain_length
-  dd #50
+  dd #3
 blitzer_settings + 020: //max_chain_split
-  dd #10
+  dd #3
 
 //! =================== DAMAGE SETTINGS ====================
 blitzer_damage + 004:
@@ -6006,177 +6035,155 @@ blitzer_damage + 030:
 unregisterSymbol("blitzer_settings")
 unregisterSymbol("blitzer_damage")
 </AssemblerScript>
-          <Hotkeys>
-            <Hotkey>
-              <Action>Toggle Activation</Action>
-              <Keys>
-                <Key>16</Key>
-                <Key>39</Key>
-              </Keys>
-              <ID>0</ID>
-              <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-              <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-            </Hotkey>
-          </Hotkeys>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117469</ID>
-          <Description>"ARC-3 Arc Thrower                                                               (by Meausisi)"</Description>
-          <Color>FF8000</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>16</Key>
+                    <Key>39</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117469</ID>
+              <Description>"ARC-3 Arc Thrower                                                          (by Meausisi)"</Description>
+              <Color>00FFFF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
 {
   Game    : helldivers2.exe
-  Version : 1.001.101
-  Date    : 2024-10-11
+  Version : 1.001.201
+  Date    : 2024-10-29
   Original Author : (CFEMEN's Discord) Sakuno
-  Modifications by  : MIAUSISI
+  Corrections by  : MIAUSISI
 
-  &gt; ARC WEAPONS MODIFICATIONS:
-  --------------------------
-  - Script modifies ARC-12 Blitzer RAY properties:
-    - Speed
-    - Distance
-    - Distance at Max Angle Spread
-    - Distance at Max Angle Spread First Shot
-    - Max Angle Spread
-    - Max Angle Spread First Shot
-    - Max Chain Length
-    - Max Chain Split
-  - Script modifies ARC-12 Blitzer DAMAGE properties:
-    - Standard damage
-    - Squishy damage
-    - AP 1
-    - AP 2
-    - AP 3
-    - AP 4
-    - Demolition
-    - Stagger
-    - Momentum
-    - Elemental Damage Type
-    - Status Effect Type
-    - Status Effect Duration
+  &gt; ARC Thrower Modifications.
 }
 {$lua}
 -- Assigns weapon addresses to fixed variables
-registerSymbol("blitzer_settings", '["game.dll"+ 0201F3D8] + 01AC')
-registerSymbol("blitzer_damage",   '["game.dll"+ 0201F648] + 251C')
+registerSymbol("arcthrower_settings", 'arcwpn_anchor_address + 0000')
+registerSymbol("arcthrower_damage",   'damage_anchor_address + 4C*7F')
 
 {$asm}
+
 //! ========================================================
-//! ===================== B L I T Z E R ====================
+//! =============== A R C      T H R O W E R ===============
 //! ========================================================
 
 //! ===================== RAY SETTINGS =====================
-blitzer_settings + 004: // Speed
-  dd (float)550 //300
-blitzer_settings + 008: // Distance
-  dd (float)90 //25
-blitzer_settings + 00C: //distance_at_max_angle_spread
-  dd (float)90 //10
-blitzer_settings + 010: //distance_at_max_angle_spread_first_shot
-  dd (float)90 //10
-blitzer_settings + 014: //max_angle_spread
-  dd (float)270 //10
-blitzer_settings + 018: //max_angle_spread_first_shot
-  dd (float)6 //10
-blitzer_settings + 01C: //max_chain_length
-  dd #50
-blitzer_settings + 020: //max_chain_split
-  dd #10
+arcthrower_settings + 004: // Speed
+  dd (float)850 //300
+arcthrower_settings + 008: // Distance
+  dd (float)90 //55
+arcthrower_settings + 00C: //distance_at_max_angle_spread
+  dd (float)45 //40
+arcthrower_settings + 010: //distance_at_max_angle_spread_first_shot
+  dd (float)45 //40
+arcthrower_settings + 014: //max_angle_spread
+  dd (float)66 //60
+arcthrower_settings + 018: //max_angle_spread_first_shot
+  dd (float)6 //3
+arcthrower_settings + 01C: //max_chain_split
+  dd #3 //1
+arcthrower_settings + 020: //max_chain_length
+  dd #3 //1
 
 //! =================== DAMAGE SETTINGS ====================
-blitzer_damage + 004:
-  dd #120
-blitzer_damage + 008:
-  dd #120
-blitzer_damage + 00C:
+arcthrower_damage + 004:
+  dd #350
+arcthrower_damage + 008:
+  dd #300
+arcthrower_damage + 00C:
   dd #7
-blitzer_damage + 010:
+arcthrower_damage + 010:
   dd #7
-blitzer_damage + 014:
+arcthrower_damage + 014:
   dd #7
-blitzer_damage + 018:
+arcthrower_damage + 018:
   dd #7
-blitzer_damage + 01C:
+arcthrower_damage + 01C:
   dd #20
-blitzer_damage + 020:
+arcthrower_damage + 020:
   dd #55
-blitzer_damage + 024:
-  dd #35
-blitzer_damage + 028:
+arcthrower_damage + 024:
+  dd #10
+arcthrower_damage + 028:
   dd #2
-blitzer_damage + 02C:
+arcthrower_damage + 02C:
   dd #37
-blitzer_damage + 030:
+arcthrower_damage + 030:
   dd (float)20
 
 [DISABLE]
-
-blitzer_settings + 004:
+arcthrower_settings + 004:
   dd (float)300
-blitzer_settings + 008:
-  dd (float)25
-blitzer_settings + 00C:
-  dd (float)10
-blitzer_settings + 010:
-  dd (float)10
-blitzer_settings + 014:
-  dd (float)10
-blitzer_settings + 018:
-  dd (float)10
-blitzer_settings + 01C:
+arcthrower_settings + 008:
+  dd (float)55
+arcthrower_settings + 00C:
+  dd (float)40
+arcthrower_settings + 010:
+  dd (float)40
+arcthrower_settings + 014:
+  dd (float)60
+arcthrower_settings + 018:
+  dd (float)3
+arcthrower_settings + 01C:
   dd #1
-blitzer_settings + 020:
-  dd #0
+arcthrower_settings + 020:
+  dd #1
 
-blitzer_damage + 004:
-  dd #50
-blitzer_damage + 008:
+arcthrower_damage + 004:
+  dd #250
+arcthrower_damage + 008:
+  dd #100
+arcthrower_damage + 00C:
+  dd #7
+arcthrower_damage + 010:
+  dd #7
+arcthrower_damage + 014:
+  dd #7
+arcthrower_damage + 018:
+  dd #0
+arcthrower_damage + 01C:
+  dd #20
+arcthrower_damage + 020:
   dd #35
-blitzer_damage + 00C:
-  dd #3
-blitzer_damage + 010:
-  dd #3
-blitzer_damage + 014:
-  dd #3
-blitzer_damage + 018:
-  dd #0
-blitzer_damage + 01C:
+arcthrower_damage + 024:
   dd #10
-blitzer_damage + 020:
-  dd #30
-blitzer_damage + 024:
-  dd #25
-blitzer_damage + 028:
+arcthrower_damage + 028:
   dd #2
-blitzer_damage + 02C:
+arcthrower_damage + 02C:
   dd #37
-blitzer_damage + 030:
-  dd (float)0.7
+arcthrower_damage + 030:
+  dd (float)8
 
-unregisterSymbol("blitzer_settings")
-unregisterSymbol("blitzer_damage")
+unregisterSymbol("arcthrower_settings")
+unregisterSymbol("arcthrower_damage")
+
 </AssemblerScript>
-          <Hotkeys>
-            <Hotkey>
-              <Action>Toggle Activation</Action>
-              <Keys>
-                <Key>16</Key>
-                <Key>39</Key>
-              </Keys>
-              <ID>0</ID>
-              <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-              <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-            </Hotkey>
-          </Hotkeys>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117470</ID>
-          <Description>"A/ARC-3 Tesla Tower                                                           (by Meausisi)"</Description>
-          <Color>FF8000</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>16</Key>
+                    <Key>39</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117470</ID>
+              <Description>"A/ARC-3 Tesla Tower                                                       (by Meausisi)"</Description>
+              <Color>00FFFF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
 {
   Game    : helldivers2.exe
   Version : 1.001.101
@@ -6186,7 +6193,7 @@ unregisterSymbol("blitzer_damage")
 
   &gt; ARC WEAPONS MODIFICATIONS:
   --------------------------
-  - Script modifies ARC-12 Blitzer RAY properties:
+  - Script modifies A/ARC-3 Tesla Tower RAY properties:
     - Speed
     - Distance
     - Distance at Max Angle Spread
@@ -6195,7 +6202,7 @@ unregisterSymbol("blitzer_damage")
     - Max Angle Spread First Shot
     - Max Chain Length
     - Max Chain Split
-  - Script modifies ARC-12 Blitzer DAMAGE properties:
+  - Script modifies A/ARC-3 Tesla Tower DAMAGE properties:
     - Standard damage
     - Squishy damage
     - AP 1
@@ -6211,104 +6218,154 @@ unregisterSymbol("blitzer_damage")
 }
 {$lua}
 -- Assigns weapon addresses to fixed variables
-registerSymbol("blitzer_settings", '["game.dll"+ 0201F3D8] + 01AC')
-registerSymbol("blitzer_damage",   '["game.dll"+ 0201F648] + 251C')
+registerSymbol("tesla_tower_settings", 'arcwpn_anchor_address + 01E0')
+registerSymbol("tesla_tower_damage",   'damage_anchor_address + 4C*8A')
 
 {$asm}
 //! ========================================================
-//! ===================== B L I T Z E R ====================
+//! =================== T E S L A   T O W E R ==============
 //! ========================================================
 
 //! ===================== RAY SETTINGS =====================
-blitzer_settings + 004: // Speed
-  dd (float)550 //300
-blitzer_settings + 008: // Distance
-  dd (float)90 //25
-blitzer_settings + 00C: //distance_at_max_angle_spread
-  dd (float)90 //10
-blitzer_settings + 010: //distance_at_max_angle_spread_first_shot
-  dd (float)90 //10
-blitzer_settings + 014: //max_angle_spread
-  dd (float)270 //10
-blitzer_settings + 018: //max_angle_spread_first_shot
-  dd (float)6 //10
-blitzer_settings + 01C: //max_chain_length
-  dd #50
-blitzer_settings + 020: //max_chain_split
-  dd #10
+tesla_tower_settings + 004: // Speed
+  dd (float)3000
+tesla_tower_settings + 008: // Distance
+  dd (float)30
+tesla_tower_settings + 00C: //distance_at_max_angle_spread
+  dd (float)3
+tesla_tower_settings + 010: //distance_at_max_angle_spread_first_shot
+  dd (float)25
+tesla_tower_settings + 014: //max_angle_spread
+  dd (float)359
+tesla_tower_settings + 018: //max_angle_spread_first_shot
+  dd (float)180
+tesla_tower_settings + 01C: //max_chain_length
+  dd #4
+tesla_tower_settings + 020: //max_chain_split
+  dd #4
 
 //! =================== DAMAGE SETTINGS ====================
-blitzer_damage + 004:
-  dd #120
-blitzer_damage + 008:
-  dd #120
-blitzer_damage + 00C:
+tesla_tower_damage + 004:
+  dd #750
+tesla_tower_damage + 008:
+  dd #750
+tesla_tower_damage + 00C:
   dd #7
-blitzer_damage + 010:
+tesla_tower_damage + 010:
   dd #7
-blitzer_damage + 014:
+tesla_tower_damage + 014:
   dd #7
-blitzer_damage + 018:
+tesla_tower_damage + 018:
   dd #7
-blitzer_damage + 01C:
+tesla_tower_damage + 01C:
   dd #20
-blitzer_damage + 020:
-  dd #55
-blitzer_damage + 024:
+tesla_tower_damage + 020:
   dd #35
-blitzer_damage + 028:
+tesla_tower_damage + 024:
+  dd #10
+tesla_tower_damage + 028:
   dd #2
-blitzer_damage + 02C:
+tesla_tower_damage + 02C:
   dd #37
-blitzer_damage + 030:
+tesla_tower_damage + 030:
   dd (float)20
 
 [DISABLE]
 
-blitzer_settings + 004:
+tesla_tower_settings + 004:
+  dd (float)2000
+tesla_tower_settings + 008:
+  dd (float)20
+tesla_tower_settings + 00C:
+  dd (float)1
+tesla_tower_settings + 010:
+  dd (float)20
+tesla_tower_settings + 014:
   dd (float)300
-blitzer_settings + 008:
-  dd (float)25
-blitzer_settings + 00C:
-  dd (float)10
-blitzer_settings + 010:
-  dd (float)10
-blitzer_settings + 014:
-  dd (float)10
-blitzer_settings + 018:
-  dd (float)10
-blitzer_settings + 01C:
-  dd #1
-blitzer_settings + 020:
-  dd #0
-
-blitzer_damage + 004:
-  dd #50
-blitzer_damage + 008:
-  dd #35
-blitzer_damage + 00C:
-  dd #3
-blitzer_damage + 010:
-  dd #3
-blitzer_damage + 014:
-  dd #3
-blitzer_damage + 018:
-  dd #0
-blitzer_damage + 01C:
-  dd #10
-blitzer_damage + 020:
-  dd #30
-blitzer_damage + 024:
-  dd #25
-blitzer_damage + 028:
+tesla_tower_settings + 018:
+  dd (float)180
+tesla_tower_settings + 01C:
   dd #2
-blitzer_damage + 02C:
-  dd #37
-blitzer_damage + 030:
-  dd (float)0.7
+tesla_tower_settings + 020:
+  dd #2
 
-unregisterSymbol("blitzer_settings")
-unregisterSymbol("blitzer_damage")
+tesla_tower_damage + 004:
+  dd #600
+tesla_tower_damage + 008:
+  dd #600
+tesla_tower_damage + 00C:
+  dd #4
+tesla_tower_damage + 010:
+  dd #4
+tesla_tower_damage + 014:
+  dd #4
+tesla_tower_damage + 018:
+  dd #0
+tesla_tower_damage + 01C:
+  dd #20
+tesla_tower_damage + 020:
+  dd #35
+tesla_tower_damage + 024:
+  dd #10
+tesla_tower_damage + 028:
+  dd #2
+tesla_tower_damage + 02C:
+  dd #37
+tesla_tower_damage + 030:
+  dd (float)8
+
+unregisterSymbol("tesla_tower_settings")
+unregisterSymbol("tesla_tower_damage")
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>16</Key>
+                    <Key>39</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117468</ID>
+          <Description>"100% Electrical conduit passive                                           (by Meausisi)"</Description>
+          <Color>00FFFF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+{
+  Game   : helldivers2.exe
+  Version: 1.001.005
+  Date   : 2024-10-10
+  Author : MEOW-SEE-SEE (MIAUSISI)
+  Many thanks to "That super cool Russian Guy" to help me
+  with a faster way to look up the passive!
+
+  &gt; IMPROVED ELECTRICAL CONDUIT
+  -----------------------------
+  - Sets resistance to ARC damage from 95% to 100%
+
+}
+
+{$lua}
+registerSymbol('arc_resistance', 'unk000_anchor_address + 190')
+{$asm}
+
+arc_resistance + 38:
+  dd (float)0.0
+[DISABLE]
+
+arc_resistance + 38:
+  dd (float)0.05
+
+
+unregistersymbol('arc_resistance')
+
 </AssemblerScript>
           <Hotkeys>
             <Hotkey>
@@ -6326,92 +6383,44 @@ unregisterSymbol("blitzer_damage")
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
-      <ID>117468</ID>
-      <Description>"100% Electrical conduit passive                                              (by Meausisi)"</Description>
-      <Color>FF8000</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">[ENABLE]
-//Patch 1.001.002  arc_settings.dl_bin
-{$lua}
--- ArcSet
-registerSymbol("arc_ARC_3", '["game.dll"+01FB3738]+50')
-{$asm}
-
-arc_ARC_3-4: //RayCount
-  dd #1 //0 /1
-arc_ARC_3-8: //ChainCount
-  dd #60 //1 /20
-arc_ARC_3-1C: //Main Range
-  dd (float)200 //50 /100
-arc_ARC_3-18: //Aim Scan Range 1
-  dd (float)80 //40 ;170
-arc_ARC_3-14: //Aim Scan Range 2
-  dd (float)80 //40 ;170
-arc_ARC_3-10: //Chain Scan Degree
-  dd (float)140 //60 ;300
-arc_ARC_3-C: //Aim Size
-  dd (float)6 //3
-
-[DISABLE]
-
-/*Example recommended max value are stable
-arc_ARC_3-4: //RayCount
-  dd #14 &lt;—————————————————— Each shot's lightning count
-arc_ARC_3-8: //ChainCount
-  dd #0 // &lt;—————————————————— Reduce this value if you can see ghosting lightning.
-arc_ARC_3-1C: //Main Range
-  dd (float)200 //&lt;—————————————————— Arc Max Range, Recommended below 1000
-arc_ARC_3-18: //Target Scan Angle 1
-  dd (float)80 // &lt;—————————————————— Recommended below 350
-arc_ARC_3-14: //Target Scan Angle 2
-  dd (float)80// &lt;—————————————————— Recommended below 350
-arc_ARC_3-10: //Chain Target Scan Degree
-  dd (float)140 // &lt;—————————————————— Recommended below 300, Reduce this value if you can see ghosting lightning.
-arc_ARC_3-C: //Target Scan Window Size
-  dd (float)6 // &lt;—————————————————— Recommended below 360
-</AssemblerScript>
-      <Hotkeys>
-        <Hotkey>
-          <Action>Toggle Activation</Action>
-          <Keys>
-            <Key>16</Key>
-            <Key>39</Key>
-          </Keys>
-          <ID>0</ID>
-          <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-          <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-        </Hotkey>
-      </Hotkeys>
-    </CheatEntry>
-    <CheatEntry>
       <ID>117459</ID>
-      <Description>"Mortar_Proj_Mod                                                                   (by sakuno+fallout11)"</Description>
+      <Description>"Mortar_Proj_Mod                                                                   (by sakuno+MIAUSISI)"</Description>
+      <Options moHideChildren="1"/>
       <Color>FF8000</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
 {
   Game   : helldivers2.exe
-  Version: 1.001.105
-  Date   : 2024-09-17
-  Mortar Mod for Helldivers 2
+  Version: 1.001.101
+  Date   : 2024-10-10
+  Original Author : (CFEMEN's Discord) Sakuno
+  Corrections by  : MIAUSISI
+
+  &gt; MORTAR MODIFICATIONS:
+  --------------------------
+  - Increases the number of projectiles fired by the Mortar 40mm HE.
 }
 {$lua}
-registerSymbol("mortar_base", '["game.dll"+0201F620+8088]')
+registerSymbol("Mortar_40mm_HE", '[game.dll + 02091FD0] + 391C')
+
 {$asm}
-//  A/M-12 MORTAR SENTRY
-mortar_base+3748: //num_projectiles
-  dd #1 //1
-mortar_base+37BC: //explosion_type_on_impact
-  dd #25 //211 (25=SEAF Explosive/precision strike) (170=SEAF Mininuke) (165=SEAF High Yield Explosive)
+
 [DISABLE]
-//  A/M-12 MORTAR SENTRY
-mortar_base+3748: //num_projectiles
-  dd #1 //1
-mortar_base+37BC: //explosion_type_on_impact
-  dd #211 //211 (was 208)
-unregisterSymbol("Mortar_base")
+Mortar_40mm_HE:
+  dd #1
+unregisterSymbol("Mortar_40mm_HE")
+
 
 </AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>" (default = 1)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Mortar_40mm_HE</Address>
+        </CheatEntry>
+      </CheatEntries>
     </CheatEntry>
     <CheatEntry>
       <ID>117429</ID>
