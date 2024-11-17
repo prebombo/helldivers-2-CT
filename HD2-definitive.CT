@@ -4839,9 +4839,9 @@ dmg_newmem:
     je dmg_code
   cmp [rcx+00], #100 // SG-451 Cookout incindiary shotgun
     je dmg_code
-  cmp [rcx+00], #105 // SG-20 Halt shotgun (fletchette)
+  cmp [rcx+00], #102 // SG-20 Halt shotgun (fletchette)
     je dmg_code
-  cmp [rcx+00], #115 // SG-20 Halt shotgun (stun)
+  cmp [rcx+00], #111 // SG-20 Halt shotgun (stun)
     je dmg_code
   //cmp [rcx+00], #? // SG-33LA Concussive
   //  je dmg_code
@@ -4853,6 +4853,8 @@ dmg_newmem:
   cmp [rcx+00], #138 // CB-9 explosive crossbow Explosion
     je dmg_code
   cmp [rcx+00], #94 // JAR-5 Dominator
+    je dmg_code
+  cmp [rcx+00], #124 // R-36 Eruptor Shrapnel
     je dmg_code
   cmp [rcx+00], #90 // R-36 Eruptor Projectile
     je dmg_code
