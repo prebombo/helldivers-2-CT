@@ -40,3 +40,7 @@ Updated: No Sway,Fast Extract & Map Hack<br>
 Updated dmg IDs<br>
 Fixed instant complete mission (hives)<br>
 Fix to electric mods from Miausisi+sakuno<br>
+------14/11------<br>
+Updated mortar script pointer<br>
+------17/11------<br>
+Added 500kg expanded radius<br>
