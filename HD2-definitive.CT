@@ -6384,7 +6384,7 @@ unregistersymbol('arc_resistance')
     </CheatEntry>
     <CheatEntry>
       <ID>117459</ID>
-      <Description>"Mortar_Proj_Mod                                                                   (by sakuno+MIAUSISI)"</Description>
+      <Description>"Mortar_Proj_Mod                                                                   (by sakuno+fallout11)"</Description>
       <Options moHideChildren="1"/>
       <Color>FF8000</Color>
       <VariableType>Auto Assembler Script</VariableType>
@@ -6394,27 +6394,61 @@ unregistersymbol('arc_resistance')
   Version: 1.001.101
   Date   : 2024-10-10
   Original Author : (CFEMEN's Discord) Sakuno
-  Corrections by  : MIAUSISI
+  Corrections by  : fallout11
 
   &gt; MORTAR MODIFICATIONS:
   --------------------------
   - Increases the number of projectiles fired by the Mortar 40mm HE.
 }
 {$lua}
-registerSymbol("Mortar_40mm_HE", '[game.dll + 02091FD0] + 391C')
-
+registerSymbol("mortar_base", '["game.dll" + 02093080]')
 {$asm}
+//  A/M-12 MORTAR SENTRY
+mortar_base+391C: //num_projectiles
+  dd #1 //1
+mortar_base+3990: //explosion_type_on_impact
+  dd #25 //211 (25=SEAF Explosive) (174=SEAF Mininuke) (169=SEAF High Yield Explosive)
 
 [DISABLE]
-Mortar_40mm_HE:
-  dd #1
-unregisterSymbol("Mortar_40mm_HE")
-
-
+//  A/M-12 MORTAR SENTRY
+mortar_base+391C: //num_projectiles
+  dd #1 //1
+mortar_base+3990: //explosion_type_on_impact
+  dd #215 //215
+unregisterSymbol("Mortar_base")
 </AssemblerScript>
       <CheatEntries>
         <CheatEntry>
           <ID>1</ID>
+          <Description>" (default = 1)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Mortar_40mm_HE</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>117475</ID>
+      <Description>"500kg expanded radius                                                         (fallout11)"</Description>
+      <Options moHideChildren="1"/>
+      <Color>00FFFF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("eagle500kg_base", '["game.dll"+02093080] + 100*A + 9C')
+{$asm}
+// eagle 500kg bomb
+eagle500kg_base: //explosion_type_on_impact
+  dd #174 //(168=500kg) (174=Nuke)
+
+[DISABLE]
+//  eagle 500kg bomb
+eagle500kg_base: //explosion_type_on_impact
+  dd #168 //168 (500kg)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>117476</ID>
           <Description>" (default = 1)"</Description>
           <ShowAsSigned>0</ShowAsSigned>
           <VariableType>4 Bytes</VariableType>
