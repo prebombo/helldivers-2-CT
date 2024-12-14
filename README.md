@@ -44,3 +44,10 @@ Fix to electric mods from Miausisi+sakuno<br>
 Updated mortar script pointer<br>
 ------17/11------<br>
 Added 500kg expanded radius<br>
+------14/12------<br>
+Fixed Map<br>
+Fixed No Sway<br>
+Fixed Instant complete mission<br>
+Fixed Instant charge Railgun/Arc<br>
+(Pending Update damage IDs)<br>
+Improved the inf. shield + inf. health for the new planet!<br>
