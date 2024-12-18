@@ -51,3 +51,10 @@ Fixed Instant complete mission<br>
 Fixed Instant charge Railgun/Arc<br>
 (Pending Update damage IDs)<br>
 Improved the inf. shield + inf. health for the new planet!<br>
+------17/12------<br>
+Fixed IDs<br>
+------14/12------<br>
+SC Drop<br>
+Instant Drop<br>
+New Inf last bullet<br>
+Customizable SEAF<br>
