@@ -438,34 +438,121 @@ dealloc(newmem)
               <Color>07AFF8</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(LegitLastBulletInMag,game.dll,DB 8B 44 C8 18 03 C6) // should be unique
-alloc(LegitLastBulletInMag_newmem,$1000, LegitLastBulletInMag)
-label(LegitLastBulletInMag_code)
-label(LegitLastBulletInMag_return)
+aobscanmodule(LegitLastBulletInMag,game.dll,8B 07 85 C0 74 39 83) // primary weapons
+alloc(newmem,$1000,LegitLastBulletInMag)
+label(code)
+label(return)
 
-LegitLastBulletInMag_newmem:
-  cmp [rax+rcx8+18],1 //: checks ammo left in magazine
-  jbe LegitLastBulletInMag_code  //: jumps if less than or equal to
-  cmp [rax+rcx8+18],3 //: checks ammo left in magazine
-  ja LegitLastBulletInMag_code //: jumps if greater than or equal to
-  mov [rax+rcx8+18],2 //: writes number to ammo if checks fail
+newmem:
+  cmp [rdi],1
+  jbe code
+  cmp [rdi],3
+  ja code
+  mov [rdi],6
+code:
+  mov eax,[rdi]
+  test eax,eax
+  je return+39
+  jmp return
 
-LegitLastBulletInMag_code:
-  mov eax,[rax+rcx8+18]
-  add eax,esi
-  jmp LegitLastBulletInMag_return
-
-LegitLastBulletInMag+01:
-  jmp LegitLastBulletInMag_newmem
+LegitLastBulletInMag:
+  jmp newmem
   nop
-LegitLastBulletInMag_return:
+return:
 registersymbol(LegitLastBulletInMag)
 
+
+aobscanmodule(LegitLastBulletInMagA,game.dll,DB 8B 44 C8 18 03 C6) // Sidearms (iirc)
+alloc(LegitLastBulletInMagA_newmem,$1000,LegitLastBulletInMagA)
+label(LegitLastBulletInMagA_code)
+label(LegitLastBulletInMagA_return)
+
+LegitLastBulletInMagA_newmem:
+  cmp [rax+rcx*8+18],0
+  jbe LegitLastBulletInMagA_code
+  cmp [rax+rcx*8+18],1
+  ja LegitLastBulletInMagA_code
+  mov [rax+rcx*8+18],2
+
+LegitLastBulletInMagA_code:
+  mov eax,[rax+rcx*8+18]
+  add eax,esi
+  jmp LegitLastBulletInMagA_return
+
+LegitLastBulletInMagA+01:
+  jmp LegitLastBulletInMagA_newmem
+  nop
+LegitLastBulletInMagA_return:
+registersymbol(LegitLastBulletInMagA)
+
+
+aobscanmodule(LegitLastBulletInMagB,game.dll,41 8B 85 1C 8C 00 00) // A few odd cases (iirc)
+alloc(LegitLastBulletInMagB_newmem,$1000,LegitLastBulletInMagB)
+label(LegitLastBulletInMagB_code)
+label(LegitLastBulletInMagB_return)
+
+LegitLastBulletInMagB_newmem:
+  cmp [r13+00008C1C],1
+  jbe LegitLastBulletInMagB_code
+  cmp [r13+00008C1C],3
+  ja LegitLastBulletInMagB_code
+  mov [r13+00008C1C],6
+LegitLastBulletInMagB_code:
+  mov eax,[r13+00008C1C]
+  jmp LegitLastBulletInMagB_return
+
+LegitLastBulletInMagB:
+  jmp LegitLastBulletInMagB_newmem
+  nop 2
+LegitLastBulletInMagB_return:
+registersymbol(LegitLastBulletInMagB)
+
+
 [DISABLE]
-LegitLastBulletInMag+01:
-  db 8B 44 C8 18 03 C6
+
+LegitLastBulletInMag:
+  db 8B 07 85 C0 74 39
 unregistersymbol(LegitLastBulletInMag)
-dealloc(LegitLastBulletInMag_newmem)
+dealloc(newmem)
+
+LegitLastBulletInMagA+01:
+  db 8B 44 C8 18 03 C6
+unregistersymbol(LegitLastBulletInMagA)
+dealloc(LegitLastBulletInMagA_newmem)
+
+LegitLastBulletInMagB:
+  db 41 8B 85 1C 8C 00 00
+unregistersymbol(LegitLastBulletInMagB)
+dealloc(LegitLastBulletInMagB_newmem)
+
+
+
+//aobscanmodule(LegitLastBulletInMagMech,game.dll,44 89 74 01 18 4D 8B 42 50) // should be unique
+//alloc(Mech_newmem,$1000,LegitLastBulletInMagMech)
+//label(Mech_code)
+//label(Mech_return)
+
+//Mech_newmem:
+  //cmp r14d,1
+  //jbe Mech_code
+  //cmp r14d,#6
+  //ja Mech_code
+  //mov r14d,#10
+
+//Mech_code:
+  //mov [rcx+rax+18],r14d
+  //jmp Mech_return
+
+//LegitLastBulletInMagMech:
+  //jmp Mech_newmem
+//Mech_return:
+//registersymbol(LegitLastBulletInMagMech)
+
+
+//LegitLastBulletInMagMech:
+  //db 44 89 74 01 18
+//unregistersymbol(LegitLastBulletInMagMech)
+//dealloc(Mech_newmem)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -4035,39 +4122,126 @@ dealloc(newmem)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
-          <ID>117479</ID>
-          <Description>"Inf last bullet                                                                        (by fallout11)"</Description>
+          <ID>117482</ID>
+          <Description>"Inf last bullet                                                                       (by fallout11)"</Description>
           <Color>07AFF8</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(LegitLastBulletInMag,game.dll,DB 8B 44 C8 18 03 C6) // should be unique
-alloc(LegitLastBulletInMag_newmem,$1000, LegitLastBulletInMag)
-label(LegitLastBulletInMag_code)
-label(LegitLastBulletInMag_return)
+aobscanmodule(LegitLastBulletInMag,game.dll,8B 07 85 C0 74 39 83) // primary weapons
+alloc(newmem,$1000,LegitLastBulletInMag)
+label(code)
+label(return)
 
-LegitLastBulletInMag_newmem:
-  cmp [rax+rcx8+18],1 //: checks ammo left in magazine
-  jbe LegitLastBulletInMag_code  //: jumps if less than or equal to
-  cmp [rax+rcx8+18],3 //: checks ammo left in magazine
-  ja LegitLastBulletInMag_code //: jumps if greater than or equal to
-  mov [rax+rcx8+18],40 //: writes number to ammo if checks fail
+newmem:
+  cmp [rdi],1
+  jbe code
+  cmp [rdi],3
+  ja code
+  mov [rdi],6
+code:
+  mov eax,[rdi]
+  test eax,eax
+  je return+39
+  jmp return
 
-LegitLastBulletInMag_code:
-  mov eax,[rax+rcx8+18]
-  add eax,esi
-  jmp LegitLastBulletInMag_return
-
-LegitLastBulletInMag+01:
-  jmp LegitLastBulletInMag_newmem
+LegitLastBulletInMag:
+  jmp newmem
   nop
-LegitLastBulletInMag_return:
+return:
 registersymbol(LegitLastBulletInMag)
 
+
+aobscanmodule(LegitLastBulletInMagA,game.dll,DB 8B 44 C8 18 03 C6) // Sidearms (iirc)
+alloc(LegitLastBulletInMagA_newmem,$1000,LegitLastBulletInMagA)
+label(LegitLastBulletInMagA_code)
+label(LegitLastBulletInMagA_return)
+
+LegitLastBulletInMagA_newmem:
+  cmp [rax+rcx*8+18],0
+  jbe LegitLastBulletInMagA_code
+  cmp [rax+rcx*8+18],1
+  ja LegitLastBulletInMagA_code
+  mov [rax+rcx*8+18],2
+
+LegitLastBulletInMagA_code:
+  mov eax,[rax+rcx*8+18]
+  add eax,esi
+  jmp LegitLastBulletInMagA_return
+
+LegitLastBulletInMagA+01:
+  jmp LegitLastBulletInMagA_newmem
+  nop
+LegitLastBulletInMagA_return:
+registersymbol(LegitLastBulletInMagA)
+
+
+aobscanmodule(LegitLastBulletInMagB,game.dll,41 8B 85 1C 8C 00 00) // A few odd cases (iirc)
+alloc(LegitLastBulletInMagB_newmem,$1000,LegitLastBulletInMagB)
+label(LegitLastBulletInMagB_code)
+label(LegitLastBulletInMagB_return)
+
+LegitLastBulletInMagB_newmem:
+  cmp [r13+00008C1C],1
+  jbe LegitLastBulletInMagB_code
+  cmp [r13+00008C1C],3
+  ja LegitLastBulletInMagB_code
+  mov [r13+00008C1C],6
+LegitLastBulletInMagB_code:
+  mov eax,[r13+00008C1C]
+  jmp LegitLastBulletInMagB_return
+
+LegitLastBulletInMagB:
+  jmp LegitLastBulletInMagB_newmem
+  nop 2
+LegitLastBulletInMagB_return:
+registersymbol(LegitLastBulletInMagB)
+
+
 [DISABLE]
-LegitLastBulletInMag+01:
-  db 8B 44 C8 18 03 C6
+
+LegitLastBulletInMag:
+  db 8B 07 85 C0 74 39
 unregistersymbol(LegitLastBulletInMag)
-dealloc(LegitLastBulletInMag_newmem)
+dealloc(newmem)
+
+LegitLastBulletInMagA+01:
+  db 8B 44 C8 18 03 C6
+unregistersymbol(LegitLastBulletInMagA)
+dealloc(LegitLastBulletInMagA_newmem)
+
+LegitLastBulletInMagB:
+  db 41 8B 85 1C 8C 00 00
+unregistersymbol(LegitLastBulletInMagB)
+dealloc(LegitLastBulletInMagB_newmem)
+
+
+
+//aobscanmodule(LegitLastBulletInMagMech,game.dll,44 89 74 01 18 4D 8B 42 50) // should be unique
+//alloc(Mech_newmem,$1000,LegitLastBulletInMagMech)
+//label(Mech_code)
+//label(Mech_return)
+
+//Mech_newmem:
+  //cmp r14d,1
+  //jbe Mech_code
+  //cmp r14d,#6
+  //ja Mech_code
+  //mov r14d,#10
+
+//Mech_code:
+  //mov [rcx+rax+18],r14d
+  //jmp Mech_return
+
+//LegitLastBulletInMagMech:
+  //jmp Mech_newmem
+//Mech_return:
+//registersymbol(LegitLastBulletInMagMech)
+
+
+//LegitLastBulletInMagMech:
+  //db 44 89 74 01 18
+//unregistersymbol(LegitLastBulletInMagMech)
+//dealloc(Mech_newmem)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -4715,8 +4889,8 @@ dmg_Melee:
   mov [rcx+10],#50 // writes penetration value 2
   mov [rcx+14],#50 // writes penetration value 3
   mov [rcx+18],#50 // writes penetration value 4
-  mov [rcx+1C],#29 // writes demolition value
-  mov [rcx+20],#29 // writes pushback / stagger value
+  mov [rcx+1C],#29 // writes demolition value 29
+  mov [rcx+20],#50 // writes pushback / stagger value 29
   //mov [rcx+24],#100 // writes ??? value
   movd xmm3,[rcx+04]
   movd xmm1,[rcx+08]
@@ -6599,22 +6773,24 @@ unregisterSymbol("Mortar_base")
     </CheatEntry>
     <CheatEntry>
       <ID>117475</ID>
-      <Description>"500kg expanded radius (outdated)                                        (by fallout11)"</Description>
+      <Description>"500kg expanded radius                                                         (by fallout11+Meowsisi)"</Description>
       <Options moHideChildren="1"/>
-      <Color>4080FF</Color>
+      <Color>40FF00</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
 {$lua}
-registerSymbol("eagle500kg_base", '["game.dll"+02093080] + 100*A + 9C')
+registerSymbol("eagle500kg_base", '[game.dll + 02124038] + 100*A + 9C')
 {$asm}
+//
+
 // eagle 500kg bomb
 eagle500kg_base: //explosion_type_on_impact
-  dd #174 //(168=500kg) (174=Nuke)
+  dd #58 //(58=Hellbomb) (177=500kg) (157=SEAF Mininuke also works)
 
 [DISABLE]
 //  eagle 500kg bomb
 eagle500kg_base: //explosion_type_on_impact
-  dd #168 //168 (500kg)
+  dd #177 //177=500kg
 </AssemblerScript>
       <CheatEntries>
         <CheatEntry>
@@ -6776,7 +6952,7 @@ dealloc(newmem)
     </CheatEntry>
     <CheatEntry>
       <ID>117481</ID>
-      <Description>"Customize Seaf                                                                       (by sakuno)"</Description>
+      <Description>"Customize Seaf                                                                      (by sakuno)"</Description>
       <Color>C080FF</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript Async="1">[ENABLE]
@@ -6835,7 +7011,7 @@ ObjectiveShellRackAddr+4:
     </SymbolEntry>
     <SymbolEntry>
       <Name>AvatarClimbAddr</Name>
-      <Address>1D77625606E</Address>
+      <Address>1A87FC1606E</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
