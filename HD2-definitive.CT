@@ -6792,15 +6792,6 @@ eagle500kg_base: //explosion_type_on_impact
 eagle500kg_base: //explosion_type_on_impact
   dd #177 //177=500kg
 </AssemblerScript>
-      <CheatEntries>
-        <CheatEntry>
-          <ID>117476</ID>
-          <Description>" (default = 1)"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>4 Bytes</VariableType>
-          <Address>Mortar_40mm_HE</Address>
-        </CheatEntry>
-      </CheatEntries>
     </CheatEntry>
     <CheatEntry>
       <ID>117429</ID>
@@ -7011,7 +7002,11 @@ ObjectiveShellRackAddr+4:
     </SymbolEntry>
     <SymbolEntry>
       <Name>AvatarClimbAddr</Name>
-      <Address>1A87FC1606E</Address>
+      <Address>2AC0A6C606E</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>eagle500kg_base</Name>
+      <Address>[game.dll + 02124038] + 100*A + 9C</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
