@@ -53,8 +53,10 @@ Fixed Instant charge Railgun/Arc<br>
 Improved the inf. shield + inf. health for the new planet!<br>
 ------17/12------<br>
 Fixed IDs<br>
-------14/12------<br>
+------19/12------<br>
 SC Drop<br>
 Instant Drop<br>
 New Inf last bullet<br>
 Customizable SEAF<br>
+------20/12------<br>
+Fixed 500Kg Exmapnded radius<br>
