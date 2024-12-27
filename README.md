@@ -60,3 +60,6 @@ New Inf last bullet<br>
 Customizable SEAF<br>
 ------20/12------<br>
 Fixed 500Kg Exmapnded radius<br>
+------27/12------<br>
+Added 100% democrazy<br>
+Added action shotgun ID<br>
