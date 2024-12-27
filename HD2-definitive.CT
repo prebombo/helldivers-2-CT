@@ -6993,24 +6993,29 @@ ObjectiveShellRackAddr+4:
     </CheatEntry>
     <CheatEntry>
       <ID>117483</ID>
-      <Description>"100% Democracy                                                                  (by LoveMiku)"</Description>
+      <Description>"100% Democracy                                                                  (by Dottie)"</Description>
       <Color>FFFF00</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript Async="1">[ENABLE]
 {$lua}
 registerSymbol("DemocrayProtect_Chance", '[[[[[game.dll + 01B51540] + 900] + 30] + F60] + A8] + 3CC')
-{$asm}
-//
 
-// DemocrayProtect_Chance
-DemocrayProtect_Chance: //HelldiverCustomizationPassiveBonusModifierType_Multiply
-  dd (float)2  // 100 percent  chance protection
+{$asm}
+DemocrayProtect_Chance:
+  dd (float)2.0
 
 [DISABLE]
-//  DemocrayProtect_Chance
-DemocrayProtect_Chance: //HelldiverCustomizationPassiveBonusModifierType_Multiply
-  dd (float)1.5 // default 50 percent chance protection
+{$asm}
+DemocrayProtect_Chance:
+  dd (float)1.5
 
+{$lua}
+local timer = createTimer(nil, false)
+timer.Interval = 100
+timer.OnTimer = function()
+  unregisterSymbol("DemocrayProtect_Chance")
+  timer.destroy()
+end
 </AssemblerScript>
     </CheatEntry>
   </CheatEntries>
