@@ -704,17 +704,16 @@ unregistersymbol(aob_FinnikScript)
               <Description>"Inf Jetpack                                                                      (by ???)"</Description>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
-//code from here to '[DISABLE]' will be used to enable the cheat
-
 aobscanmodule(aob_ToTheSky,game.dll,89 04 B9 83 FD 01)
 registersymbol(aob_ToTheSky)
 
 aob_ToTheSky:
-nop 3
- 
- 
+  nop 3
+
 [DISABLE]
-//code from here till the end of the code will be used to disable the cheat
+aob_ToTheSky:
+  db 89 04 B9
+unregistersymbol(aob_ToTheSky)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -2829,17 +2828,16 @@ game.dll+4194A5: CC                       - int 3
               <Description>"Inf Jetpack                                                                      (by ???)"</Description>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
-//code from here to '[DISABLE]' will be used to enable the cheat
-
 aobscanmodule(aob_ToTheSky,game.dll,89 04 B9 83 FD 01)
 registersymbol(aob_ToTheSky)
 
 aob_ToTheSky:
-nop 3
- 
- 
+  nop 3
+
 [DISABLE]
-//code from here till the end of the code will be used to disable the cheat
+aob_ToTheSky:
+  db 89 04 B9
+unregistersymbol(aob_ToTheSky)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -4249,17 +4247,16 @@ dealloc(LegitLastBulletInMagB_newmem)
           <Description>"Inf Jetpack                                                                            (by ???)"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
-//code from here to '[DISABLE]' will be used to enable the cheat
-
 aobscanmodule(aob_ToTheSky,game.dll,89 04 B9 83 FD 01)
 registersymbol(aob_ToTheSky)
 
 aob_ToTheSky:
-nop 3
- 
- 
+  nop 3
+
 [DISABLE]
-//code from here till the end of the code will be used to disable the cheat
+aob_ToTheSky:
+  db 89 04 B9
+unregistersymbol(aob_ToTheSky)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -4744,6 +4741,10 @@ dmg_newmem:
   //  // whitelisted weapons that get super damage
   cmp [rcx+00], #86 // R-63CS Diligence Counter Sniper
     je dmg_RegularSniper
+  cmp [rcx+00], #206 // Plas-35 Projectile
+    je dmg_Pistol
+  cmp [rcx+00], #207 // Plas-35 Explosion
+    je dmg_code
   cmp [rcx+00], #116 // SG-225SP Breaker Spray&amp;Pray
     je dmg_Shotgun
   cmp [rcx+00], #101 // SG-22 Bushwack &amp; SG-8 Punisher
@@ -4789,10 +4790,10 @@ dmg_newmem:
 
 // player global order from damage to stagger
 dmg_RegularSniper:
-  mov [rcx+0C],#777 // writes penetration value 1
-  mov [rcx+10],#777 // writes penetration value 2
-  mov [rcx+14],#50 // writes penetration value 3
-  mov [rcx+18],#50 // writes penetration value 4
+  //mov [rcx+0C],#777 // writes penetration value 1
+  //mov [rcx+10],#777 // writes penetration value 2
+  //mov [rcx+14],#50 // writes penetration value 3
+  //mov [rcx+18],#50 // writes penetration value 4
   //mov [rcx+1C],#40 // writes demolition value
   mov [rcx+20],#19 // writes pushback / stagger value
   //mov [rcx+24],#100 // writes ??? value
@@ -5113,6 +5114,10 @@ dmg_newmem:
   //  je dmg_code
   cmp [rcx+00], #75 // AR-20L Justice
     je dmg_code
+  cmp [rcx+00], #206 // Plas-35 Projectile
+    je dmg_code
+  cmp [rcx+00], #207 // Plas-35 Explosion
+    je dmg_code
 
   //Submachine guns
 
@@ -5146,6 +5151,8 @@ dmg_newmem:
   cmp [rcx+00], #104 // SG-20 Halt shotgun (fletchette)
     je dmg_code
   cmp [rcx+00], #113 // SG-20 Halt shotgun (stun)
+    je dmg_code
+  cmp [rcx+00], #107 // Projectile_Break-Action Shotgun
     je dmg_code
   //cmp [rcx+00], #? // SG-33LA Concussive
   //  je dmg_code
@@ -5337,6 +5344,12 @@ dmg_newmem:
   cmp [rcx+00], #260 // LAS-99 quasar Projectile
     je dmg_code
   cmp [rcx+00], #261 // LAS-99 quasar Explosion
+    je dmg_code
+  cmp [rcx+00], #15 // Artillery Direct
+    je dmg_code
+  cmp [rcx+00], #165 // WASP Projectile
+    je dmg_code
+  cmp [rcx+00], #269 // WASP Explopsion
     je dmg_code
 
   //Laser
@@ -6978,6 +6991,28 @@ ObjectiveShellRackAddr+4:
   dd #7
 </AssemblerScript>
     </CheatEntry>
+    <CheatEntry>
+      <ID>117483</ID>
+      <Description>"100% Democracy                                                                  (by LoveMiku)"</Description>
+      <Color>FFFF00</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript Async="1">[ENABLE]
+{$lua}
+registerSymbol("DemocrayProtect_Chance", '[[[[[game.dll + 01B51540] + 900] + 30] + F60] + A8] + 3CC')
+{$asm}
+//
+
+// DemocrayProtect_Chance
+DemocrayProtect_Chance: //HelldiverCustomizationPassiveBonusModifierType_Multiply
+  dd (float)2  // 100 percent  chance protection
+
+[DISABLE]
+//  DemocrayProtect_Chance
+DemocrayProtect_Chance: //HelldiverCustomizationPassiveBonusModifierType_Multiply
+  dd (float)1.5 // default 50 percent chance protection
+
+</AssemblerScript>
+    </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols>
     <SymbolEntry>
@@ -6998,15 +7033,11 @@ ObjectiveShellRackAddr+4:
     </SymbolEntry>
     <SymbolEntry>
       <Name>HellpodDataAddr</Name>
-      <Address>1D7758A2D1A</Address>
+      <Address>2AC09D12D1A</Address>
     </SymbolEntry>
     <SymbolEntry>
       <Name>AvatarClimbAddr</Name>
-      <Address>2AC0A6C606E</Address>
-    </SymbolEntry>
-    <SymbolEntry>
-      <Name>eagle500kg_base</Name>
-      <Address>[game.dll + 02124038] + 100*A + 9C</Address>
+      <Address>218F997606E</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
