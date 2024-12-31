@@ -3722,7 +3722,7 @@ dealloc(newmem)
         </CheatEntry>
         <CheatEntry>
           <ID>31</ID>
-          <Description>"Add x? Resources(Samples) On Pickup                               (by cfemen)"</Description>
+          <Description>"Add x? Samples On Pickup  (stract with 99 or less)            (by cfemen)"</Description>
           <Options moHideChildren="1"/>
           <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
@@ -3850,7 +3850,7 @@ db 0
         </CheatEntry>
         <CheatEntry>
           <ID>117478</ID>
-          <Description>"SUPERCREDITS DROP                                                            (by sakuno)"</Description>
+          <Description>"SUPERCREDITS DROP                                                         (by sakuno)"</Description>
           <Color>C080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
@@ -6993,7 +6993,7 @@ ObjectiveShellRackAddr+4:
     </CheatEntry>
     <CheatEntry>
       <ID>117483</ID>
-      <Description>"100% Democracy                                                                  (by Dottie)"</Description>
+      <Description>"100% Democracy (armor passive)                                         (by Dottie)"</Description>
       <Color>FFFF00</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript Async="1">[ENABLE]
@@ -7016,6 +7016,45 @@ timer.OnTimer = function()
   unregisterSymbol("DemocrayProtect_Chance")
   timer.destroy()
 end
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>117484</ID>
+      <Description>"No fall damage                                                                      (by impushingp)"</Description>
+      <Color>C080FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript Async="1">[ENABLE]
+aobscanmodule(aob_NoFall,game.dll,48 81 EC 30 0B 00 00)
+registersymbol(aob_NoFall)
+alloc(newmem_NoFall,1024,game.dll)
+label(return_NoFall)
+
+newmem_NoFall:
+  push r14
+  mov r14d,[rbp+AB8]
+  cmp r14d,E32E9832
+  jne @f
+  pop r14
+  pop r13
+  pop rbx
+  pop rbp
+  ret
+  @@:
+  pop r14
+  sub rsp,00000B30
+  jmp return_NoFall
+
+aob_NoFall:
+  jmp newmem_NoFall
+  nop 2
+return_NoFall:
+
+[DISABLE]
+aob_NoFall:
+  db 48 81 EC 30 0B 00 00
+
+unregistersymbol(aob_NoFall)
+dealloc(newmem_NoFall)
 </AssemblerScript>
     </CheatEntry>
   </CheatEntries>
@@ -7129,7 +7168,7 @@ end
       local parent = getMainForm().Menu.Items
       bypassmenuitem = createMenuItem( parent )
       parent.add( bypassmenuitem )
-      bypassmenuitem.Caption = 'Bypass'
+      bypassmenuitem.Caption = 'Where can I get Bypass'
       bypassmenuitem.OnClick = pushBypass
       bypassmenualreadyexists = 'yes'
   end
