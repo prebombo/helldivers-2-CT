@@ -63,3 +63,5 @@ Fixed 500Kg Exmapnded radius<br>
 ------27/12------<br>
 Added 100% democrazy<br>
 Added action shotgun ID<br>
+------31/12------<br>
+Added no fall damage<br>
