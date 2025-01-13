@@ -2610,6 +2610,7 @@ dealloc(newmem2)
             <CheatEntry>
               <ID>113977</ID>
               <Description>"Inf Stamina                                                                    (by gir489+cfemen)"</Description>
+              <Color>8080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
 
@@ -3721,9 +3722,9 @@ dealloc(newmem)
           </CheatEntries>
         </CheatEntry>
         <CheatEntry>
-          <ID>31</ID>
-          <Description>"Add x? Samples On Pickup  (stract with 99 or less)            (by cfemen)"</Description>
-          <Options moHideChildren="1"/>
+          <ID>179</ID>
+          <Description>"1 Sample--&gt;33 33 33                                                         (by cfemen)"</Description>
+          <Options moAlwaysHideChildren="1"/>
           <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">{ Game   : helldivers2.exe
@@ -3754,9 +3755,9 @@ cmp byte ptr[bEverything],0
 je short L_Single
  push rbx
  mov rbx,[r14+40]
- add [rbx+4],eax // common
- add [rbx+8],eax // rare
- add [rbx+C],eax // super
+ mov [rbx+4],eax // common
+ mov [rbx+8],eax // rare
+ mov [rbx+C],eax // super
  pop rbx
  xor eax,eax
 L_Single:
@@ -3766,9 +3767,9 @@ L_Single:
   add r8,rbx
   jmp return
 iAmount:
-dd #5
+dd #33
 bEverything:
-db 0
+db 1
 
 aobAddSamples:
   jmp far newmem
@@ -3825,25 +3826,25 @@ game.dll+64E240: 49 8B 46 30              - mov rax,[r14+30]
           </Hotkeys>
           <CheatEntries>
             <CheatEntry>
-              <ID>121</ID>
+              <ID>180</ID>
               <Description>"Amount:"</Description>
               <ShowAsSigned>0</ShowAsSigned>
               <VariableType>4 Bytes</VariableType>
               <Address>iAmount</Address>
             </CheatEntry>
             <CheatEntry>
-              <ID>122</ID>
+              <ID>181</ID>
               <Description>"Add All 3 Types At Once"</Description>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 bEverything:
-db 1
+db 0
 
  
  
 [DISABLE]
 bEverything:
-db 0
+db 1
 </AssemblerScript>
             </CheatEntry>
           </CheatEntries>
@@ -7076,12 +7077,12 @@ dealloc(newmem_NoFall)
       <Address>1D7758CF352</Address>
     </SymbolEntry>
     <SymbolEntry>
-      <Name>HellpodDataAddr</Name>
-      <Address>2AC09D12D1A</Address>
+      <Name>AvatarClimbAddr</Name>
+      <Address>2259DA0606E</Address>
     </SymbolEntry>
     <SymbolEntry>
-      <Name>AvatarClimbAddr</Name>
-      <Address>218F997606E</Address>
+      <Name>HellpodDataAddr</Name>
+      <Address>2259D052D1A</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
