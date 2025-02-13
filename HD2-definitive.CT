@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheatTable CheatEngineTableVersion="45">
+<CheatTable CheatEngineTableVersion="46">
   <CheatEntries>
     <CheatEntry>
       <ID>113968</ID>
@@ -98,10 +98,11 @@ dealloc(newmem2)
             <CheatEntry>
               <ID>14</ID>
               <Description>"Inf Stamina                                                                    (by gir489+cfemen)"</Description>
+              <Color>8080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
 
-aobscanmodule(aobSprintWrite,game.dll,F3 41 0F 11 08 8B 48 10 E8 ** ** ** ** 41 8B 47 48 0F 28 B4 24 50 08 00 00) // should be unique
+aobscanmodule(aobSprintWrite,game.dll,F3 41 0F 11 08 48 8B 84 FD 00 01 00 00) // should be unique
 
 aobSprintWrite:
   nop 5
@@ -127,34 +128,31 @@ unregistersymbol(aobSprintWrite)
 // EXE Compile Date  : September 19, 2024 11:09 AM
 // Script Date       : September 24, 2024 06:58 PM
 [ENABLE]
-aobscanmodule(syringe,game.dll,48 8D 14 49 8B CF 48 03 D2 8B 74 D0 18) // should be unique
-alloc(newmem,$1000,syringe)
-label(code)
-label(return)
+aobscanmodule(aob_Syringes,game.dll, 43 8B 54 F7 ? 8B C8)
+registersymbol(aob_Syringes)
+alloc(newmem_Syringes,1024)
+label(return_Syringes)
 
-newmem:
-  lea rdx,[rcx+rcx2]
-  mov ecx,edi
-  add rdx,rdx
-  cmp [rax+rdx8+18],#1
-  jae code
-  mov [rax+rdx8+18],#1
+newmem_Syringes:
+  mov edx,[r15+r14*8+04]
+  mov ecx,eax
+  cmp edx, #1
+  je short @f
+    dec edx
+  @@:
+  mov [r15+rcx*8+04],edx
+  jmp return_Syringes
 
-code:
-  mov esi,[rax+rdx8+18]
-  jmp return
-
-syringe:
-  jmp newmem
-  nop 8
-return:
-registersymbol(syringe)
+aob_Syringes:
+  jmp far newmem_Syringes
+return_Syringes:
 
 [DISABLE]
-syringe:
-  db 48 8D 14 49 8B CF 48 03 D2 8B 74 D0 18
-unregistersymbol(syringe)
-dealloc(newmem)
+aob_Syringes:
+  db 43 8B 54 F7 04 8B C8 FF CA 41 89 54 CF 04
+
+unregistersymbol(aob_Syringes)
+dealloc(newmem_Syringes)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -193,29 +191,29 @@ unregistersymbol(aobSyrige)
 // EXE Compile Date  : April 25, 2024 04:05 AM
 // Script Date       : April 29, 2024 11:13 AM
 [ENABLE]
-aobscanmodule(aob_Grenades,game.dll,41 FF 0C 06 48 8B 45 40)
+aobscanmodule(aob_Grenades,game.dll,42 FF 0C E0)
 registersymbol(aob_Grenades)
 alloc(newmem_Grenades,1024)
 label(return_Grenades)
 
 newmem_Grenades:
-  cmp [r14+rax], #1
+  cmp [rax+r12*8], #1
   je short @f
-    dec [r14+rax]
+    dec [rax+r12*8]
   @@:
-  mov rax,[rbp+40]
-  mov r8,[rbp+58]
-  add r8,r14
+  mov rax,[r14+58]
+  lea r8,[rax+r12*8]
+  mov rax,[r14+40]
   jmp return_Grenades
 
 aob_Grenades:
   jmp far newmem_Grenades
-  nop
+  nop 2
 return_Grenades:
 
 [DISABLE]
 aob_Grenades:
-  db 41 FF 0C 06 48 8B 45 40 4C 8B 45 58 4D 03 C6
+  db 42 FF 0C E0 49 8B 46 58 4E 8D 04 E0 49 8B 46 40
 
 unregistersymbol(aob_Grenades)
 dealloc(newmem_Grenades)
@@ -401,7 +399,7 @@ nrV3_return:
             </CheatEntry>
             <CheatEntry>
               <ID>117473</ID>
-              <Description>"Inf last Bullet SENATOR                                                  (by fallout11)"</Description>
+              <Description>"Inf last Bullet SENATOR(outdated)                                                  (by fallout11)"</Description>
               <Color>07AFF8</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
@@ -434,7 +432,7 @@ dealloc(newmem)
             </CheatEntry>
             <CheatEntry>
               <ID>117480</ID>
-              <Description>"Inf last bullet                                                                  (by fallout11)"</Description>
+              <Description>"Inf last bullet(outdated)                                                                  (by fallout11)"</Description>
               <Color>07AFF8</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
@@ -578,8 +576,8 @@ unregistersymbol(aobReload)
             </CheatEntry>
             <CheatEntry>
               <ID>57</ID>
-              <Description>"No ammo consume                                                       (by gir489)"</Description>
-              <Color>0000FF</Color>
+              <Description>"No ammo consume(outdated)                                                       (by gir489)"</Description>
+              <Color>4080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -649,23 +647,11 @@ game.dll+4194A4: CC                       - int 3
 game.dll+4194A5: CC                       - int 3
 }
 </AssemblerScript>
-              <Hotkeys>
-                <Hotkey>
-                  <Action>Toggle Activation</Action>
-                  <Keys>
-                    <Key>16</Key>
-                    <Key>39</Key>
-                  </Keys>
-                  <ID>0</ID>
-                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-                </Hotkey>
-              </Hotkeys>
             </CheatEntry>
             <CheatEntry>
               <ID>117441</ID>
-              <Description>"No bullets consume                                                       (by gir489)"</Description>
-              <Color>0000FF</Color>
+              <Description>"No bullets consume(outdated)                                                       (by gir489)"</Description>
+              <Color>4080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">// Game Executable : helldivers2.exe
 // Author : gir489
@@ -686,18 +672,6 @@ aob_FinnikScript:
 
 unregistersymbol(aob_FinnikScript)
 </AssemblerScript>
-              <Hotkeys>
-                <Hotkey>
-                  <Action>Toggle Activation</Action>
-                  <Keys>
-                    <Key>16</Key>
-                    <Key>39</Key>
-                  </Keys>
-                  <ID>0</ID>
-                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-                </Hotkey>
-              </Hotkeys>
             </CheatEntry>
             <CheatEntry>
               <ID>113970</ID>
@@ -846,17 +820,17 @@ unregistersymbol(aobStratacmp)
 [ENABLE]
 
 
-aobscanmodule(aobSubTime,game.dll,F3 0F 5C C7 F3 41 0F 5F C2 F3 43 0F 11 84 EF ?? ?? ?? ??) // should be unique
+aobscanmodule(aobSubTime,game.dll,F3 43 0F 11 84 FC B8 F5 03 00) // should be unique
 
 aobSubTime:
-  nop 4
+  nop A
 
 registersymbol(aobSubTime)
 
 [DISABLE]
 
 aobSubTime:
-  db F3 0F 5C C7
+  db F3 43 0F 11 84 FC B8 F5 03 00
 
 unregistersymbol(aobSubTime)
 </AssemblerScript>
@@ -1044,24 +1018,23 @@ game.dll+2CC80A: C7 40 04 FF FF FF FF  - mov [rax+04],FFFFFFFF
           <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_CheckIsBlipSeen,game.dll,0F B6 40 33) // 0F B6 40 33 ?
-aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BF AC CA 05 00 00)
-aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ?? ?? ?? ?? 48 8B 44 24 ?? 80 78)
-aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 01 02 00 00 48 8B 54 24 58)
-aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8)
+aobscanmodule(aob_CheckIsBlipSeen,game.dll,44 0F B6 68 33)
+//aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BF ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BD)
+aobscanmodule(aob_CheckIfAlienHiveSeen,game.dll,0F 84 ?? ?? ?? ?? 83 7C 24 40 20)
+aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll, 0F 85 ? ? ? ? 48 8B 44 24 ? 80 78)
+aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ?? ?? ?? ?? 48 8B 54 24 58 F3 42 0F 10 4C EB 04)
+aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 13 02 00 00 4C 8B 6C 24 48 41 0F 28 CD)
 registersymbol(aob_CheckIsBlipSeen)
 registersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 registersymbol(aob_GetMinorInterestBlipIcon)
-registersymbol(aob_CheckIfAlienHivesAreObstructed)
+registersymbol(aob_CheckIfAlienHiveSeen)
 registersymbol(aob_CheckMissionBlip)
 
 aob_CheckIsBlipSeen:
-  xor eax,eax
-  mov al,1
+  mov r13w,1
 
-aob_CheckIfAlienHivesAreObstructed:
-  clc
-  nop 7
+aob_CheckIfAlienHiveSeen:
+  db 0F 87
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 90 E9
@@ -1074,10 +1047,10 @@ aob_CheckMissionBlip:
 
 [DISABLE]
 aob_CheckIsBlipSeen:
-  db 0F B6 40 33
+  db 44 0F B6 68 33
 
-aob_CheckIfAlienHivesAreObstructed:
-  db 41 80 BF AC CA 05 00 00
+aob_CheckIfAlienHiveSeen:
+  db 0F 84
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 0F 85
@@ -1089,7 +1062,7 @@ aob_CheckMissionBlip:
   db 0F 85
 
 unregistersymbol(aob_CheckIsBlipSeen)
-unregistersymbol(aob_CheckIfAlienHivesAreObstructed)
+unregistersymbol(aob_CheckIfAlienHiveSeen)
 unregistersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 unregistersymbol(aob_GetMinorInterestBlipIcon)
 unregistersymbol(aob_CheckMissionBlip)
@@ -1668,8 +1641,8 @@ game.dll+5D337F: EB 44           - jmp game.dll+5D33C5
         </CheatEntry>
         <CheatEntry>
           <ID>113957</ID>
-          <Description>"No Laser Overheat                                                               (by gir489)"</Description>
-          <Color>0000FF</Color>
+          <Description>"No Laser Overheat(outdated)                                                               (by gir489)"</Description>
+          <Color>4080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -2441,18 +2414,6 @@ game.dll+64E23C: 01 7C A8 28              - add [rax+rbp*4+28],edi
 game.dll+64E240: 49 8B 46 30              - mov rax,[r14+30]
 }
 </AssemblerScript>
-          <Hotkeys>
-            <Hotkey>
-              <Action>Toggle Activation</Action>
-              <Keys>
-                <Key>16</Key>
-                <Key>40</Key>
-              </Keys>
-              <ID>0</ID>
-              <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-              <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-            </Hotkey>
-          </Hotkeys>
           <CheatEntries>
             <CheatEntry>
               <ID>117444</ID>
@@ -2483,7 +2444,7 @@ db 0
     <CheatEntry>
       <ID>113939</ID>
       <Description>"Solo Farming (please play alone), show my children to edit the samples"</Description>
-      <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
       <Color>00FF00</Color>
       <GroupHeader>1</GroupHeader>
       <CheatEntries>
@@ -2510,17 +2471,17 @@ db 0
 [ENABLE]
 
 
-aobscanmodule(aobSubTime,game.dll,F3 0F 5C C7 F3 41 0F 5F C2 F3 43 0F 11 84 EF ?? ?? ?? ??) // should be unique
+aobscanmodule(aobSubTime,game.dll,F3 43 0F 11 84 FC B8 F5 03 00) // should be unique
 
 aobSubTime:
-  nop 4
+  nop A
 
 registersymbol(aobSubTime)
 
 [DISABLE]
 
 aobSubTime:
-  db F3 0F 5C C7
+  db F3 43 0F 11 84 FC B8 F5 03 00
 
 unregistersymbol(aobSubTime)
 </AssemblerScript>
@@ -2614,7 +2575,7 @@ dealloc(newmem2)
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
 
-aobscanmodule(aobSprintWrite,game.dll,F3 41 0F 11 08 8B 48 10 E8 ** ** ** ** 41 8B 47 48 0F 28 B4 24 50 08 00 00) // should be unique
+aobscanmodule(aobSprintWrite,game.dll,F3 41 0F 11 08 48 8B 84 FD 00 01 00 00) // should be unique
 
 aobSprintWrite:
   nop 5
@@ -2697,8 +2658,8 @@ legit_grenades_return:
             </CheatEntry>
             <CheatEntry>
               <ID>113980</ID>
-              <Description>"Inf last Mag                                                                   (by ZoDDel)"</Description>
-              <Color>FFFF00</Color>
+              <Description>"Inf last Mag(outdated)                                                                   (by ZoDDel)"</Description>
+              <Color>4080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -2740,8 +2701,8 @@ legit_ammo_return:
             </CheatEntry>
             <CheatEntry>
               <ID>117433</ID>
-              <Description>"No ammo consume                                                       (by gir489)"</Description>
-              <Color>0000FF</Color>
+              <Description>"No ammo consume(outdated)                                                       (by gir489)"</Description>
+              <Color>4080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -2811,18 +2772,6 @@ game.dll+4194A4: CC                       - int 3
 game.dll+4194A5: CC                       - int 3
 }
 </AssemblerScript>
-              <Hotkeys>
-                <Hotkey>
-                  <Action>Toggle Activation</Action>
-                  <Keys>
-                    <Key>16</Key>
-                    <Key>39</Key>
-                  </Keys>
-                  <ID>0</ID>
-                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-                </Hotkey>
-              </Hotkeys>
             </CheatEntry>
             <CheatEntry>
               <ID>113982</ID>
@@ -3004,18 +2953,13 @@ unregistersymbol(aobRecoil)
 }
 
 [ENABLE]
-
-
-aobscanmodule(aobCalcSway,game.dll,F3 0F 51 FA EB 0B 0F 28 C2 E8 ?? ?? ?? ?? 0F 28 F8 44 0F 28 C7 0F 28 F7) // should be unique
-
+aobscanmodule(aobCalcSway,game.dll,F3 0F 51 FA EB 0B 0F 28 C2 E8 ?? ?? ?? ?? 0F 28 F8 80 7C 24 30 00 44 0F 28 CF F3 44 0F 59 CE 0F 28 F7 F3 41 0F 59 F0) // should be unique
 aobCalcSway:
   nop 4
 
 [DISABLE]
-
 aobCalcSway:
   db F3 0F 51 FA
-
 unregistersymbol(aobCalcSway)
 </AssemblerScript>
             </CheatEntry>
@@ -3025,24 +2969,23 @@ unregistersymbol(aobCalcSway)
               <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_CheckIsBlipSeen,game.dll,0F B6 40 33) // 0F B6 40 33 ?
-aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BF AC CA 05 00 00)
-aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ?? ?? ?? ?? 48 8B 44 24 ?? 80 78)
-aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 01 02 00 00 48 8B 54 24 58)
-aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8)
+aobscanmodule(aob_CheckIsBlipSeen,game.dll,44 0F B6 68 33)
+//aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BF ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BD)
+aobscanmodule(aob_CheckIfAlienHiveSeen,game.dll,0F 84 ?? ?? ?? ?? 83 7C 24 40 20)
+aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll, 0F 85 ? ? ? ? 48 8B 44 24 ? 80 78)
+aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ?? ?? ?? ?? 48 8B 54 24 58 F3 42 0F 10 4C EB 04)
+aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 13 02 00 00 4C 8B 6C 24 48 41 0F 28 CD)
 registersymbol(aob_CheckIsBlipSeen)
 registersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 registersymbol(aob_GetMinorInterestBlipIcon)
-registersymbol(aob_CheckIfAlienHivesAreObstructed)
+registersymbol(aob_CheckIfAlienHiveSeen)
 registersymbol(aob_CheckMissionBlip)
 
 aob_CheckIsBlipSeen:
-  xor eax,eax
-  mov al,1
+  mov r13w,1
 
-aob_CheckIfAlienHivesAreObstructed:
-  clc
-  nop 7
+aob_CheckIfAlienHiveSeen:
+  db 0F 87
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 90 E9
@@ -3055,10 +2998,10 @@ aob_CheckMissionBlip:
 
 [DISABLE]
 aob_CheckIsBlipSeen:
-  db 0F B6 40 33
+  db 44 0F B6 68 33
 
-aob_CheckIfAlienHivesAreObstructed:
-  db 41 80 BF AC CA 05 00 00
+aob_CheckIfAlienHiveSeen:
+  db 0F 84
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 0F 85
@@ -3070,7 +3013,7 @@ aob_CheckMissionBlip:
   db 0F 85
 
 unregistersymbol(aob_CheckIsBlipSeen)
-unregistersymbol(aob_CheckIfAlienHivesAreObstructed)
+unregistersymbol(aob_CheckIfAlienHiveSeen)
 unregistersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 unregistersymbol(aob_GetMinorInterestBlipIcon)
 unregistersymbol(aob_CheckMissionBlip)
@@ -3265,8 +3208,8 @@ game.dll+5D337F: EB 44           - jmp game.dll+5D33C5
             </CheatEntry>
             <CheatEntry>
               <ID>117431</ID>
-              <Description>"instant complete all missions RButton                           (by ZoDDel)"</Description>
-              <Color>FFFF00</Color>
+              <Description>"instant complete all missions RButton(outdated)                           (by ZoDDel)"</Description>
+              <Color>4080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">{ Game   : helldivers2.exe
   Version:
@@ -3504,8 +3447,8 @@ game.dll+58FE03: 80 7C 24 40 00           - cmp byte ptr [rsp+40],00
             </CheatEntry>
             <CheatEntry>
               <ID>113994</ID>
-              <Description>"No Laser Overheat                                                          (by gir489)"</Description>
-              <Color>0000FF</Color>
+              <Description>"No Laser Overheat(outdated)                                                          (by gir489)"</Description>
+              <Color>4080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -3688,7 +3631,7 @@ unregistersymbol(AvatarClimbAddr)
             </CheatEntry>
             <CheatEntry>
               <ID>117472</ID>
-              <Description>"Inf last Bullet SENATOR                                                   (by fallout11)"</Description>
+              <Description>"Inf last Bullet SENATOR(outdated)                                                   (by fallout11)"</Description>
               <Color>07AFF8</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
@@ -3812,18 +3755,6 @@ game.dll+64E23C: 01 7C A8 28              - add [rax+rbp*4+28],edi
 game.dll+64E240: 49 8B 46 30              - mov rax,[r14+30]
 }
 </AssemblerScript>
-          <Hotkeys>
-            <Hotkey>
-              <Action>Toggle Activation</Action>
-              <Keys>
-                <Key>16</Key>
-                <Key>40</Key>
-              </Keys>
-              <ID>0</ID>
-              <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-              <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-            </Hotkey>
-          </Hotkeys>
           <CheatEntries>
             <CheatEntry>
               <ID>180</ID>
@@ -3900,10 +3831,11 @@ db 79 75 4F 01 CA 13 49 A9
         <CheatEntry>
           <ID>113986</ID>
           <Description>"Inf Stamina                                                                          (by gir489+cfemen)"</Description>
+          <Color>8080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
 
-aobscanmodule(aobSprintWrite,game.dll,F3 41 0F 11 08 8B 48 10 E8 ** ** ** ** 41 8B 47 48 0F 28 B4 24 50 08 00 00) // should be unique
+aobscanmodule(aobSprintWrite,game.dll,F3 41 0F 11 08 48 8B 84 FD 00 01 00 00) // should be unique
 
 aobSprintWrite:
   nop 5
@@ -3929,34 +3861,31 @@ unregistersymbol(aobSprintWrite)
 // EXE Compile Date  : September 19, 2024 11:09 AM
 // Script Date       : September 24, 2024 06:58 PM
 [ENABLE]
-aobscanmodule(syringe,game.dll,48 8D 14 49 8B CF 48 03 D2 8B 74 D0 18) // should be unique
-alloc(newmem,$1000,syringe)
-label(code)
-label(return)
+aobscanmodule(aob_Syringes,game.dll, 43 8B 54 F7 ? 8B C8)
+registersymbol(aob_Syringes)
+alloc(newmem_Syringes,1024)
+label(return_Syringes)
 
-newmem:
-  lea rdx,[rcx+rcx2]
-  mov ecx,edi
-  add rdx,rdx
-  cmp [rax+rdx8+18],#1
-  jae code
-  mov [rax+rdx8+18],#1
+newmem_Syringes:
+  mov edx,[r15+r14*8+04]
+  mov ecx,eax
+  cmp edx, #1
+  je short @f
+    dec edx
+  @@:
+  mov [r15+rcx*8+04],edx
+  jmp return_Syringes
 
-code:
-  mov esi,[rax+rdx8+18]
-  jmp return
-
-syringe:
-  jmp newmem
-  nop 8
-return:
-registersymbol(syringe)
+aob_Syringes:
+  jmp far newmem_Syringes
+return_Syringes:
 
 [DISABLE]
-syringe:
-  db 48 8D 14 49 8B CF 48 03 D2 8B 74 D0 18
-unregistersymbol(syringe)
-dealloc(newmem)
+aob_Syringes:
+  db 43 8B 54 F7 04 8B C8 FF CA 41 89 54 CF 04
+
+unregistersymbol(aob_Syringes)
+dealloc(newmem_Syringes)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -3973,39 +3902,38 @@ dealloc(newmem)
 }
 
 [ENABLE]
+aobscanmodule(aob_Grenades,game.dll,42 FF 0C E0)
+registersymbol(aob_Grenades)
+alloc(newmem_Grenades,1024)
+label(return_Grenades)
 
-aobscanmodule(legit_grenades,game.dll,41 FF 0C 06 48 8B 45 40 4C 8B 45 58 4D 03 C6) // should be unique
-alloc(legit_grenades_newmem,$1000)
+newmem_Grenades:
+  cmp [rax+r12*8], #1
+  je short @f
+    dec [rax+r12*8]
+  @@:
+  mov rax,[r14+58]
+  lea r8,[rax+r12*8]
+  mov rax,[r14+40]
+  jmp return_Grenades
 
-label(legit_grenades_code)
-label(legit_grenades_return)
-
-legit_grenades_newmem:
-  cmp dword ptr [r14+rax],#1
-  je legit_grenades_code
-  dec [r14+rax]
-  jmp legit_grenades_code
-
-
-legit_grenades_code:
-  mov rax,[rbp+40]
-  mov r8,[rbp+58]
-  add r8,r14
-  jmp legit_grenades_return
-
-legit_grenades:
-  jmp far legit_grenades_newmem
-  nop
-legit_grenades_return:
-
+aob_Grenades:
+  jmp far newmem_Grenades
+  nop 2
+return_Grenades:
 
 [DISABLE]
+aob_Grenades:
+  db 42 FF 0C E0 49 8B 46 58 4E 8D 04 E0 49 8B 46 40
+
+unregistersymbol(aob_Grenades)
+dealloc(newmem_Grenades)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
           <ID>113989</ID>
-          <Description>"Inf last Mag                                                                         (by ZoDDel)"</Description>
-          <Color>FFFF00</Color>
+          <Description>"Inf last Mag(outdated)                                                                         (by ZoDDel)"</Description>
+          <Color>4080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
@@ -4046,50 +3974,8 @@ legit_ammo_return:
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
-          <ID>117434</ID>
-          <Description>"Inf last Bullet (outdated)                                                      (by ZoDDel)"</Description>
-          <Color>0080FF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>{ Game   : helldivers2.exe
-  Version: 
-  Date   : 2024-04-29
-  Author : ZoDDeL
-
-  This script does blah blah blah
-}
-
-[ENABLE]
-
-aobscanmodule(noReloadV3a,game.dll,48 8B 43 50 48 8D 0C FF 8B 44 C8 18 03 C6 41 3B C1 7C 09 45 84 C0 0F 84 E1) // should be unique
-alloc(nrV3_newmem,$1000)
-
-label(nrV3_code)
-label(nrV3_return)
-
-nrV3_newmem:
-  mov rax,[rbx+50]
-  lea rcx,[rdi+rdi*8]
-  cmp [rax+rcx*8+18],#2  // checks if ammo in clip is greater or equal number
-  jge nrV3_code
-  mov [rax+rcx*8+18],#2  // writes number to clip address if the previous check is false
-  jmp nrV3_code
-
-nrV3_code:
-  mov eax,[rax+rcx*8+18]
-  add eax,esi
-  jmp nrV3_return
-
-noReloadV3a:
-  jmp far nrV3_newmem
-nrV3_return:
-
-
-[DISABLE]
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
           <ID>117471</ID>
-          <Description>"Inf last Bullet SENATOR                                                       (by fallout11)"</Description>
+          <Description>"Inf last Bullet SENATOR(outdated)                                                       (by fallout11)"</Description>
           <Color>07AFF8</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
@@ -4122,7 +4008,7 @@ dealloc(newmem)
         </CheatEntry>
         <CheatEntry>
           <ID>117482</ID>
-          <Description>"Inf last bullet                                                                       (by fallout11)"</Description>
+          <Description>"Inf last bullet(outdated)                                                                       (by fallout11)"</Description>
           <Color>07AFF8</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
@@ -4323,18 +4209,13 @@ unregistersymbol(aobRecoil)
 }
 
 [ENABLE]
-
-
-aobscanmodule(aobCalcSway,game.dll,F3 0F 51 FA EB 0B 0F 28 C2 E8 ?? ?? ?? ?? 0F 28 F8 44 0F 28 C7 0F 28 F7) // should be unique
-
+aobscanmodule(aobCalcSway,game.dll,F3 0F 51 FA EB 0B 0F 28 C2 E8 ?? ?? ?? ?? 0F 28 F8 80 7C 24 30 00 44 0F 28 CF F3 44 0F 59 CE 0F 28 F7 F3 41 0F 59 F0) // should be unique
 aobCalcSway:
   nop 4
 
 [DISABLE]
-
 aobCalcSway:
   db F3 0F 51 FA
-
 unregistersymbol(aobCalcSway)
 </AssemblerScript>
         </CheatEntry>
@@ -4344,24 +4225,23 @@ unregistersymbol(aobCalcSway)
           <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_CheckIsBlipSeen,game.dll,0F B6 40 33) // 0F B6 40 33 ?
-aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BF AC CA 05 00 00)
-aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll,0F 85 ?? ?? ?? ?? 48 8B 44 24 ?? 80 78)
-aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 01 02 00 00 48 8B 54 24 58)
-aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 ? ? ? ? 49 8D B8)
+aobscanmodule(aob_CheckIsBlipSeen,game.dll,44 0F B6 68 33)
+//aobscanmodule(aob_CheckIfAlienHivesAreObstructed,game.dll,41 80 BF ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BD)
+aobscanmodule(aob_CheckIfAlienHiveSeen,game.dll,0F 84 ?? ?? ?? ?? 83 7C 24 40 20)
+aobscanmodule(aob_CheckIfMinorInterestBlipIsDiscovered,game.dll, 0F 85 ? ? ? ? 48 8B 44 24 ? 80 78)
+aobscanmodule(aob_GetMinorInterestBlipIcon,game.dll,0F 84 ?? ?? ?? ?? 48 8B 54 24 58 F3 42 0F 10 4C EB 04)
+aobscanmodule(aob_CheckMissionBlip,game.dll,0F 85 13 02 00 00 4C 8B 6C 24 48 41 0F 28 CD)
 registersymbol(aob_CheckIsBlipSeen)
 registersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 registersymbol(aob_GetMinorInterestBlipIcon)
-registersymbol(aob_CheckIfAlienHivesAreObstructed)
+registersymbol(aob_CheckIfAlienHiveSeen)
 registersymbol(aob_CheckMissionBlip)
 
 aob_CheckIsBlipSeen:
-  xor eax,eax
-  mov al,1
+  mov r13w,1
 
-aob_CheckIfAlienHivesAreObstructed:
-  clc
-  nop 7
+aob_CheckIfAlienHiveSeen:
+  db 0F 87
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 90 E9
@@ -4374,10 +4254,10 @@ aob_CheckMissionBlip:
 
 [DISABLE]
 aob_CheckIsBlipSeen:
-  db 0F B6 40 33
+  db 44 0F B6 68 33
 
-aob_CheckIfAlienHivesAreObstructed:
-  db 41 80 BF AC CA 05 00 00
+aob_CheckIfAlienHiveSeen:
+  db 0F 84
 
 aob_CheckIfMinorInterestBlipIsDiscovered:
   db 0F 85
@@ -4389,7 +4269,7 @@ aob_CheckMissionBlip:
   db 0F 85
 
 unregistersymbol(aob_CheckIsBlipSeen)
-unregistersymbol(aob_CheckIfAlienHivesAreObstructed)
+unregistersymbol(aob_CheckIfAlienHiveSeen)
 unregistersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 unregistersymbol(aob_GetMinorInterestBlipIcon)
 unregistersymbol(aob_CheckMissionBlip)
@@ -4593,8 +4473,8 @@ game.dll+58FE03: 80 7C 24 40 00           - cmp byte ptr [rsp+40],00
         </CheatEntry>
         <CheatEntry>
           <ID>113993</ID>
-          <Description>"No Laser Overheat                                                                (by gir489)"</Description>
-          <Color>0000FF</Color>
+          <Description>"No Laser Overheat(outdated)                                                                (by gir489)"</Description>
+          <Color>4080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -4740,48 +4620,57 @@ dmg_newmem:
 
 
   //  // whitelisted weapons that get super damage
-  cmp [rcx+00], #86 // R-63CS Diligence Counter Sniper
-    je dmg_RegularSniper
-  cmp [rcx+00], #206 // Plas-35 Projectile
-    je dmg_Pistol
-  cmp [rcx+00], #207 // Plas-35 Explosion
-    je dmg_code
-  cmp [rcx+00], #116 // SG-225SP Breaker Spray&amp;Pray
-    je dmg_Shotgun
-  cmp [rcx+00], #101 // SG-22 Bushwack &amp; SG-8 Punisher
-    je dmg_Shotgun
-  cmp [rcx+00], #51 // P-113 Verdict
-    je dmg_Pistol
-  cmp [rcx+00], #54 // P-4 Senator revolver
-    je dmg_Pistol
-  cmp [rcx+00], #35 // Knight
-    je dmg_Pistol
-  cmp [rcx+00], #61 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
+  cmp [rcx+00], #65 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
     je dmg_Machinegun
-  cmp [rcx+00], #137 // anti material rifle
+
+  cmp [rcx+00], #90 // R-63CS Diligence Counter Sniper
+    je dmg_RegularSniper
+  cmp [rcx+00], #214 // Plas-39 Projectile
+    je dmg_Pistol
+  cmp [rcx+00], #215 // Plas-39 Explosion
+    je dmg_code
+  cmp [rcx+00], #141 // anti material rifle
     je dmg_Sniper
-  cmp [rcx+00], #130 // ARC-3 Arc Thrower
-    je dmg_Arc
-  cmp [rcx+00], #132 // ARC-12 Blitzer
-    je dmg_Arc
-  cmp [rcx+00], #345 // LAS-98
-    je dmg_Arc
-  cmp [rcx+00], #293 // Hellpod impact damage
+
+  cmp [rcx+00], #39 // Knight
+    je dmg_Pistol
+
+  cmp [rcx+00], #120 // SG-225SP Breaker Spray&amp;Pray
+    je dmg_Shotgun
+
+  cmp [rcx+00], #55 // P-113 Verdict
+    je dmg_Pistol
+  cmp [rcx+00], #58 // P-4 Senator revolver
+    je dmg_Pistol
+  cmp [rcx+00], #105 // SG-22 Bushwack &amp; SG-8 Punisher
+    je dmg_Shotgun
+
+  cmp [rcx+00], #447 // K-2 Throwing knife
     je dmg_Oneshot
-  cmp [rcx+00], #294 // Hellpod impact fire damage
+
+  cmp [rcx+00], #134 // ARC-3 Arc Thrower
+    je dmg_Arc
+  cmp [rcx+00], #136 // ARC-12 Blitzer
+    je dmg_Arc
+  cmp [rcx+00], #355 // LAS-98
+    je dmg_Arc
+
+  cmp [rcx+00], #303 // Hellpod impact damage
     je dmg_Oneshot
-  cmp [rcx+00], #370 // Melee
-    je dmg_Melee
-  cmp [rcx+00], #372 // Melee with Muscle Enhancement Booster
-    je dmg_Melee
-  cmp [rcx+00], #373 // Helldiver Bayonet
-    je dmg_Melee
-  cmp [rcx+00], #431 // K-2 Throwing knife
+  cmp [rcx+00], #2304 // Hellpod impact fire damage
     je dmg_Oneshot
-  cmp [rcx+00], #375 // baton
-    je dmg_Melee
-  cmp [rcx+00], #374 // spear
-    je dmg_Melee
+  cmp [rcx+00], #384 // Helldiver melee
+    je dmg_code
+  cmp [rcx+00], #385 // Helldiver melee Muscle Enhaced
+    je dmg_code
+  cmp [rcx+00], #390 // CQC-19 Stunning Spear
+    je dmg_code
+  cmp [rcx+00], #391 // CQC-30 Stunning Baton
+    je dmg_code
+  cmp [rcx+00], #391 // CQC-5 Combat axe
+    je dmg_code
+  cmp [rcx+00], #387 // Shovel Melee Attack
+    je dmg_code
 
 
   cmp [dmg_toggle_enemyORdefault],#1
@@ -5071,211 +4960,240 @@ dmg_newmem:
 
   //Helldiver
 
-  cmp [rcx+00], #375 // baton
+  cmp [rcx+00], #303 // Hellpod Impact
     je dmg_code
-  cmp [rcx+00], #374 // spear
-    je dmg_code
-  cmp [rcx+00], #370 // Helldiver melee
-    je dmg_code
-  cmp [rcx+00], #372 // Helldiver melee Muscle Enhaced
-    je dmg_code
-  cmp [rcx+00], #373 // Helldiver Bayonet
-    je dmg_code
-  cmp [rcx+00], #293 // Hellpod Impact
-    je dmg_code
-  cmp [rcx+00], #295 // Hellpod Fire Impact
+  cmp [rcx+00], #304 // Hellpod Fire Impact
     je dmg_code
 
   //Assault rifles
 
-  cmp [rcx+00], #61 // AR-23 Liberator
+  cmp [rcx+00], #65 // AR-23 Liberator
     je dmg_code
-  cmp [rcx+00], #58 // AR-23P Liberator Penetrator
+  cmp [rcx+00], #62 // AR-23P Liberator Penetrator
     je dmg_code
-  cmp [rcx+00], #60 // AR-23C Liberator Concussive
+  cmp [rcx+00], #64 // AR-23C Liberator Concussive
     je dmg_code
-  //cmp [rcx+00], #? // AR-23A Liberator Carabine
-  //  je dmg_code
-  cmp [rcx+00], #82 // AR-61 Tenderizer
+  cmp [rcx+00], #65 // AR StA-52
     je dmg_code
-  cmp [rcx+00], #81 //BR-14 Adjudicator
+  cmp [rcx+00], #65 // AR-23A Liberator Carabine
+    je dmg_code
+  cmp [rcx+00], #86 // AR-61 Tenderizer
+    je dmg_code
+  cmp [rcx+00], #85 // BR-14 Adjudicator
     je dmg_code
 
   //Sniper rifle
 
-  cmp [rcx+00], #137 // Anti material rifle
+  cmp [rcx+00], #87 // R-2124 Constitution
     je dmg_code
-  cmp [rcx+00], #85 // R-63 Diligence
+  cmp [rcx+00], #89 // R-63 Diligence
     je dmg_code
-  cmp [rcx+00], #86 // R-63CS Diligence Counter Sniper
+  cmp [rcx+00], #90 // R-63CS Diligence Counter Sniper
     je dmg_code
-  cmp [rcx+00], #83 // R-2124 Constitution
+  cmp [rcx+00], #214 // Plas-39 Projectile
     je dmg_code
-  //cmp [rcx+00], #? // SR-01 Justice
-  //  je dmg_code
-  cmp [rcx+00], #75 // AR-20L Justice
+  cmp [rcx+00], #215 // Plas-39 Explosion
     je dmg_code
-  cmp [rcx+00], #206 // Plas-35 Projectile
+  cmp [rcx+00], #141// Anti material rifle
     je dmg_code
-  cmp [rcx+00], #207 // Plas-35 Explosion
+  cmp [rcx+00], #79 // AR-20L Justice
     je dmg_code
 
   //Submachine guns
 
-  cmp [rcx+00], #35 // MP-98 Knight
+  cmp [rcx+00], #39 // MP-98 Knight
+    je dmg_code
+  cmp [rcx+00], #39 // SMG StA-11
+    je dmg_code
+  cmp [rcx+00], #56 // SMG-32 Reprimand
+    je dmg_code
+  cmp [rcx+00], #47 // SMG-37 Defender
+    je dmg_code
+  cmp [rcx+00], #54 // SMG-72 Pummeler
     je dmg_code
   //cmp [rcx+00], #? // SMG-006 Suppressor
   //  je dmg_code
-  cmp [rcx+00], #43// SMG-37 Defender
-    je dmg_code
-  cmp [rcx+00], #50 // SMG-72 Pummeler
-    je dmg_code
-  cmp [rcx+00], #52 // SMG-32 Reprimand
-    je dmg_code
 
   //Shotgun
 
-  cmp [rcx+00], #101 // SG-8 Punisher
+  cmp [rcx+00], #105 // SG-8 Punisher
     je dmg_code
-  cmp [rcx+00], #114 // SG-8S Slugger
+  cmp [rcx+00], #118 // SG-8S Slugger
     je dmg_code
-  cmp [rcx+00], #117 // SG-225 Breaker
+  cmp [rcx+00], #108 // SG-20 Halt shotgun (fletchette)
     je dmg_code
-  cmp [rcx+00], #116 // SG-225SP Breaker Spray&amp;Pray
+  cmp [rcx+00], #117 // SG-20 Halt shotgun (stun)
     je dmg_code
-  cmp [rcx+00], #120 // SG-225IE Breaker Incendiary
+  cmp [rcx+00], #106 // SG-451 Cookout incindiary shotgun
     je dmg_code
-  cmp [rcx+00], #119 // SG-225NS Breaker Nailspitter
+  cmp [rcx+00], #121 // SG-225 Breaker
     je dmg_code
-  cmp [rcx+00], #102 // SG-451 Cookout incindiary shotgun
+  cmp [rcx+00], #120 // SG-225SP Breaker Spray&amp;Pray
     je dmg_code
-  cmp [rcx+00], #104 // SG-20 Halt shotgun (fletchette)
+  cmp [rcx+00], #124 // SG-225IE Breaker Incendiary
     je dmg_code
-  cmp [rcx+00], #113 // SG-20 Halt shotgun (stun)
+  cmp [rcx+00], #123 // SG-225NS Breaker Nailspitter
     je dmg_code
-  cmp [rcx+00], #107 // Projectile_Break-Action Shotgun
+  cmp [rcx+00], #111 // Projectile_Break-Action Shotgun
     je dmg_code
   //cmp [rcx+00], #? // SG-33LA Concussive
   //  je dmg_code
 
   //Explosive
 
-  cmp [rcx+00], #139 // CB-9 explosive crossbow Projectile
+  cmp [rcx+00], #143 // CB-9 explosive crossbow Projectile
     je dmg_code
-  cmp [rcx+00], #140 // CB-9 explosive crossbow Explosion
+  cmp [rcx+00], #144 // CB-9 explosive crossbow Explosion
     je dmg_code
-  cmp [rcx+00], #96 // JAR-5 Dominator
+  cmp [rcx+00], #130 // R-36 Eruptor Shrapnel
     je dmg_code
-  cmp [rcx+00], #126 // R-36 Eruptor Shrapnel
+  cmp [rcx+00], #96 // R-36 Eruptor Projectile
     je dmg_code
-  cmp [rcx+00], #92 // R-36 Eruptor Projectile
-    je dmg_code
-  cmp [rcx+00], #236 // R-36 Eruptor Explosion
+  cmp [rcx+00], #245 // R-36 Eruptor Explosion
     je dmg_code
 
   //Energy
 
-  cmp [rcx+00], #28 // SG-8P Punisher Plasma Projectile
+  cmp [rcx+00], #32 // SG-8P Punisher Plasma Projectile
     je dmg_code
-  cmp [rcx+00], #209 // SG-8P Punisher Plasma Explosion
+  cmp [rcx+00], #218 // SG-8P Punisher Plasma Explosion
     je dmg_code
-  cmp [rcx+00], #132 // ARC-12 Blitzer
+  cmp [rcx+00], #136 // ARC-12 Blitzer
     je dmg_code
-  cmp [rcx+00], #340 // LAS-5 Scythe
+  cmp [rcx+00], #350 // LAS-5 Scythe
     je dmg_code
-  cmp [rcx+00], #25 // LAS-16 Sickle
+  cmp [rcx+00], #26 // LAS-16 Sickle
     je dmg_code
-  cmp [rcx+00], #27 // PLAS-1 Scorcher Projectile
+  cmp [rcx+00], #27 // LAS-17 Double-Edged Sickle
     je dmg_code
-  cmp [rcx+00], #204 // PLAS-1 Scorcher Explosion
+  cmp [rcx+00], #28 // LAS-17 Double-Edged Sickle
     je dmg_code
-  cmp [rcx+00], #30 // PLAS-101 Purifier bullet
+  cmp [rcx+00], #29 // LAS-17 Double-Edged Sickle
     je dmg_code
-  cmp [rcx+00], #210 // PLAS-101 Purifier min charge
+  cmp [rcx+00], #31 // PLAS-1 Scorcher Projectile
     je dmg_code
-  cmp [rcx+00], #211 // PLAS-101 Purifier max charge
+  cmp [rcx+00], #213 // PLAS-1 Scorcher Explosion
+    je dmg_code
+  cmp [rcx+00], #34 // PLAS-101 Purifier bullet
+    je dmg_code
+  cmp [rcx+00], #219 // PLAS-101 Purifier min charge
+    je dmg_code
+  cmp [rcx+00], #220 // PLAS-101 Purifier max charge
+    je dmg_code
+
+  //Special
+
+  cmp [rcx+00], #11 // FLAM-66 Torcher flame rifle Impact
+    je dmg_code
+  cmp [rcx+00], #100 // JAR-5 Dominator
     je dmg_code
 
   //Pistol
 
-  cmp [rcx+00], #101 // SG-22 Bushwack
+  cmp [rcx+00], #40 // P-2 Peacemaker
     je dmg_code
-  //cmp [rcx+00], #? // Peacemaker suppressed
+  cmp [rcx+00], #38 // P-19 Redeemer
+    je dmg_code
+  cmp [rcx+00], #55 // P-113 Verdict
+    je dmg_code
+  cmp [rcx+00], #58 // P-4 Senator
+    je dmg_code
+
+  //Melee
+
+  cmp [rcx+00], #384 // Helldiver melee
+    je dmg_code
+  cmp [rcx+00], #385 // Helldiver melee Muscle Enhaced
+    je dmg_code
+  cmp [rcx+00], #390 // CQC-19 Stunning Spear
+    je dmg_code
+  cmp [rcx+00], #391 // CQC-30 Stunning Baton
+    je dmg_code
+  cmp [rcx+00], #391 // CQC-5 Combat axe
+    je dmg_code
+  cmp [rcx+00], #387 // Shovel Melee Attack
+    je dmg_code
+  cmp [rcx+00], #389 // Helldiver Bayonet
+    je dmg_code
+
+  //Special
+
+  //cmp [rcx+00], #? // P-11 Stims Pistol
   //  je dmg_code
-  cmp [rcx+00], #36 // P-2 Peacemaker
-    je dmg_code
-  cmp [rcx+00], #34 // P-19 Redeemer
-    je dmg_code
-  cmp [rcx+00], #149 // GP-31 grenade pistol Projectile
-    je dmg_code
-  cmp [rcx+00], #253 // GP-31 grenade pistol Explosion
-    je dmg_code
-  cmp [rcx+00], #339 // LAS-7 Dagger
-    je dmg_code
-  cmp [rcx+00], #51 // P-113 Verdict
-    je dmg_code
-  cmp [rcx+00], #54 // P-4 Senator
+  cmp [rcx+00], #105 // SG-22 Bushwack
     je dmg_code
   cmp [rcx+00], #11 // P-72 Crisper
     je dmg_code
-  cmp [rcx+00], #26 // PLAS-15 Projectile Min
+  cmp [rcx+00], #154 // GP-31 grenade pistol Projectile
     je dmg_code
-  cmp [rcx+00], #29 // PLAS-15 Projectile Max
+  cmp [rcx+00], #263 // GP-31 grenade pistol Explosion
     je dmg_code
-  cmp [rcx+00], #212 // PLAS-15 Explosion Min
+  cmp [rcx+00], #349 // LAS-7 Dagger
     je dmg_code
-  cmp [rcx+00], #213 // PLAS-15 Explosion Max
+  cmp [rcx+00], #183 // GP-31 Ultimatum Impact
+    je dmg_code
+  cmp [rcx+00], #314 // GP-31 Ultimatum Explosion
+    je dmg_code
+  cmp [rcx+00], #30 // PLAS-15 Projectile Min
+    je dmg_code
+  cmp [rcx+00], #33 // PLAS-15 Projectile Max
+    je dmg_code
+  cmp [rcx+00], #221 // PLAS-15 Explosion Min
+    je dmg_code
+  cmp [rcx+00], #222 // PLAS-15 Explosion Max
     je dmg_code
 
   //Grenades
 
-  cmp [rcx+00], #307 // G-4 Gas Grenade Impact
+  cmp [rcx+00], #239 // G-6 Frag
     je dmg_code
-  cmp [rcx+00], #363 // G-4 Gas Grenade Gas
+  cmp [rcx+00], #255 // G-12 High Explosive
     je dmg_code
-  cmp [rcx+00], #230 // G-6 Frag
+  cmp [rcx+00], #241 // G-10 Incendiary Impact
     je dmg_code
-  cmp [rcx+00], #245 // G-12 High Explosive
+  cmp [rcx+00], #362 // G-10 Incendiary Fire
     je dmg_code
-  cmp [rcx+00], #232 // G-10 Incendiary Impact
+  cmp [rcx+00], #256 // G-16 Impact
     je dmg_code
-  cmp [rcx+00], #352 // G-10 Incendiary Fire
+  cmp [rcx+00], #242 // G-13 Incendiary Impact
     je dmg_code
-  cmp [rcx+00], #246 // G-16 Impact
+  cmp [rcx+00], #362 // G-13 Incendiary Fire
     je dmg_code
-  cmp [rcx+00], #233 // G-13 Incendiary Impact
+  cmp [rcx+00], #193 // G-23 Stun
     je dmg_code
-  cmp [rcx+00], #352 // G-13 Incendiary Fire
+  cmp [rcx+00], #317 // G-4 Gas Grenade Impact
     je dmg_code
-  cmp [rcx+00], #190 // G-23 Stun
+  cmp [rcx+00], #373 // G-4 Gas Grenade Gas
+    je dmg_code
+  cmp [rcx+00], #256 // G-50 Seeker Drone
     je dmg_code
   //cmp [rcx+00], #? // G-3 Smoke
   //  je dmg_code
-  cmp [rcx+00], #353 // G-123 Thermite (burn)
+  cmp [rcx+00], #363 // G-123 Thermite (burn)
     je dmg_code
-  cmp [rcx+00], #431 // K-2 Throwing knife
+  cmp [rcx+00], #447 // K-2 Throwing knife
     je dmg_code
 
   //EXOs
 
-  cmp [rcx+00], #75 // EXO-45 Gatling
+  cmp [rcx+00], #79 // EXO-45 Gatling
     je dmg_code
-  cmp [rcx+00], #163 // EXO-45 rocket Projectile
+  cmp [rcx+00], #168 // EXO-45 rocket Projectile
     je dmg_code
-  cmp [rcx+00], #267 // EXO-45 rocket Explosion
+  cmp [rcx+00], #277 // EXO-45 rocket Explosion
     je dmg_code
-  cmp [rcx+00], #145 // Emancipator exo gun Projectile
+  cmp [rcx+00], #150 // Emancipator exo gun Projectile
     je dmg_code
-  cmp [rcx+00], #250 // Emancipator exo gun Explosion
+  cmp [rcx+00], #260 // Emancipator exo gun Explosion
     je dmg_code
 
   //Machine guns
 
-  cmp [rcx+00], #75 // MG-43
+  cmp [rcx+00], #79 // MG-43
     je dmg_code
-  cmp [rcx+00], #61 // M-105 Stalwart
+  cmp [rcx+00], #65 // M-105 Stalwart
     je dmg_code
-  cmp [rcx+00], #136 // MG-206 HMG
+  cmp [rcx+00], #140 // MG-206 HMG
     je dmg_code
 
   //Flame thrower
@@ -5284,202 +5202,203 @@ dmg_newmem:
     je dmg_code
   cmp [rcx+00], #11 // FLAM-66 Torcher
     je dmg_code
-  cmp [rcx+00], #352 // Flamethrower ground fire
+  cmp [rcx+00], #362 // Flamethrower ground fire
     je dmg_code
 
   //Gas
 
-  cmp [rcx+00], #13 // TX-41 Sterilizer
+  cmp [rcx+00], #14 // TX-41 Sterilizer
     je dmg_code
 
   //Rocket launchers
 
-  cmp [rcx+00], #151 // EAT-17 Projectile
+  cmp [rcx+00], #156 // EAT-17 Projectile
     je dmg_code
-  cmp [rcx+00], #259 // EAT-17 Explosion
+  cmp [rcx+00], #269 // EAT-17 Explosion
     je dmg_code
-  cmp [rcx+00], #152 // recoil-less rifle (regular) Projectile
+  cmp [rcx+00], #157 // GR-8 recoil-less rifle (regular) Projectile
     je dmg_code
-  cmp [rcx+00], #258 // recoil-less rifle (regular) Explosion
+  cmp [rcx+00], #268 // GR-8 recoil-less rifle (regular) Explosion
     je dmg_code
-  cmp [rcx+00], #159 // recoil-less rifle (High Explosive) Projectile
+  cmp [rcx+00], #164 // GR-8 recoil-less rifle (High Explosive) Projectile
     je dmg_code
-  cmp [rcx+00], #286 // recoil-less rifle High Explosive) Explosion
+  cmp [rcx+00], #296 // GR-8 recoil-less rifle High Explosive) Explosion
     je dmg_code
-  cmp [rcx+00], #133 // AC-8 Autocannon (flak) 1 impact
+  cmp [rcx+00], #137 // AC-8 Autocannon (flak) 1 impact
     je dmg_code
-  cmp [rcx+00], #142 // Autocannon Projectile
+  cmp [rcx+00], #147 // AC-8 Autocannon Projectile
     je dmg_code
-  cmp [rcx+00], #249 // Autocannon Explosion
+  cmp [rcx+00], #258 // AC-8 Autocannon Explosion
     je dmg_code
-  cmp [rcx+00], #161 // MLS-4X Commando Projectile
+  cmp [rcx+00], #267 // RL-77 airburst rocket launcher Projectile
     je dmg_code
-  cmp [rcx+00], #265 // MLS-4X Commando Explosion
+  cmp [rcx+00], #239 // RL-77 airburst rocket launcher MiniCluster
     je dmg_code
-  cmp [rcx+00], #257 // RL-77 airburst rocket launcher Projectile
+  cmp [rcx+00], #240 // RL-77 airburst rocket launcher Explosion
     je dmg_code
-  cmp [rcx+00], #230 // RL-77 airburst rocket launcher MiniCluster
+  cmp [rcx+00], #166 // MLS-4X Commando Projectile
     je dmg_code
-  cmp [rcx+00], #231 // RL-77 airburst rocket launcher Explosion
+  cmp [rcx+00], #275 // MLS-4X Commando Explosion
     je dmg_code
-  cmp [rcx+00], #31 // RS-422 railgun Safe
+  cmp [rcx+00], #35 // RS-422 railgun Safe
     je dmg_code
-  cmp [rcx+00], #32 // RS-422 railgun Safe
+  cmp [rcx+00], #36 // RS-422 railgun Safe
     je dmg_code
-  cmp [rcx+00], #168 // Stinger Projectile
+  cmp [rcx+00], #171 // FAF-14 Spear 1 shell
     je dmg_code
-  cmp [rcx+00], #272 // Stinger Explosion
+  cmp [rcx+00], #280 // FAF-14 Spear 2 Explosion
     je dmg_code
-  cmp [rcx+00], #166 // FAF-14 Spear 1 shell
+  cmp [rcx+00], #279 // WASP Explopsion
     je dmg_code
-  cmp [rcx+00], #270 // FAF-14 Spear 2 Explosion
+  cmp [rcx+00], #172 // Stinger Projectile
     je dmg_code
-  cmp [rcx+00], #15 // GL-21 Grenade Launcher Projectile
+  cmp [rcx+00], #282 // Stinger Explosion
     je dmg_code
-  cmp [rcx+00], #253 // GL-21 Grenade Launcher Explosion
+  cmp [rcx+00], #16 // GL-21 Grenade Launcher Projectile
     je dmg_code
-  cmp [rcx+00], #189 // Stun grenade launcher
+  cmp [rcx+00], #263 // GL-21 Grenade Launcher Explosion
     je dmg_code
-  cmp [rcx+00], #234 // Incendiary grenade launcher
+  cmp [rcx+00], #193 // Stun grenade launcher
     je dmg_code
-  cmp [rcx+00], #260 // LAS-99 quasar Projectile
+  cmp [rcx+00], #243 // Incendiary grenade launcher
     je dmg_code
-  cmp [rcx+00], #261 // LAS-99 quasar Explosion
+  cmp [rcx+00], #270 // LAS-99 quasar Projectile
     je dmg_code
-  cmp [rcx+00], #15 // Artillery Direct
-    je dmg_code
-  cmp [rcx+00], #165 // WASP Projectile
-    je dmg_code
-  cmp [rcx+00], #269 // WASP Explopsion
+  cmp [rcx+00], #271 // LAS-99 quasar Explosion
     je dmg_code
 
   //Laser
 
-  cmp [rcx+00], #345 // LAS-98
+  cmp [rcx+00], #355 // LAS-98
     je dmg_code
-  cmp [rcx+00], #130 // ARC-3 Arc Thrower
-    je dmg_code
-
-  //Guard dogs
-
-  cmp [rcx+00], #340 // LAS-5 "Guard Dog" Rover
-    je dmg_code
-  cmp [rcx+00], #58 // Rifle "Guard Dog" Rover
-    je dmg_code
-  cmp [rcx+00], #14 // AX/TX-13 Guard Dog "Dog Breath"
-    je dmg_code
-
-
-  //Turrets
-
-  cmp [rcx+00], #135 // HMG Emplacement
-    je dmg_code
-  cmp [rcx+00], #141 // tesla tower
-    je dmg_code
-  cmp [rcx+00], #75 // Gatling Turret
-    je dmg_code
-  cmp [rcx+00], #154 // Mortar turret Projectile
-    je dmg_code
-  cmp [rcx+00], #256 // Mortar turret Explosion
-    je dmg_code
-  cmp [rcx+00], #312 // Mini Missile Silo 2 explosion
-    je dmg_code
-  cmp [rcx+00], #145 // Autocannon Sentry Projectile
-    je dmg_code
-  cmp [rcx+00], #249 // Autocannon sentry Explosion
-    je dmg_code
-  cmp [rcx+00], #156 // Rocket sentry turret Projectile
-    je dmg_code
-  cmp [rcx+00], #273 // Rocket sentry turret Explosion
+  cmp [rcx+00], #134 // ARC-3 Arc Thrower
     je dmg_code
 
   //Orbital Canons
 
-  cmp [rcx+00], #147 // Orbital gatling barrage Projectile
+  cmp [rcx+00], #152 // Orbital gatling barrage Projectile
     je dmg_code
-  cmp [rcx+00], #247 // Orbital gatling barrage Explosion
+  cmp [rcx+00], #257 // Orbital gatling barrage Explosion
     je dmg_code
-  cmp [rcx+00], #262 // Orbital airburst Strike Projectile
+  cmp [rcx+00], #272 // Orbital airburst Strike Projectile
     je dmg_code
-  cmp [rcx+00], #127 // Orbital airburst Strike Shrapnel
+  cmp [rcx+00], #131 // Orbital airburst Strike Shrapnel
     je dmg_code
-  cmp [rcx+00], #177 // Orbital 120MM HE barrage Projectile
+  cmp [rcx+00], #182 // Orbital 120MM HE barrage Projectile
     je dmg_code
-  cmp [rcx+00], #305 // Orbital 120MM HE barrage Explosion
+  cmp [rcx+00], #315 // Orbital 120MM HE barrage Explosion
     je dmg_code
-  cmp [rcx+00], #178 // Orbital 380MM HE barrage Projectile
+  cmp [rcx+00], #183 // Orbital 380MM HE barrage Projectile
     je dmg_code
-  cmp [rcx+00], #304 // Orbital 380MM HE barrage Explosion
+  cmp [rcx+00], #314 // Orbital 380MM HE barrage Explosion
     je dmg_code
-  cmp [rcx+00], #177 // Orbital walking impact
+  cmp [rcx+00], #182 // Orbital walking impact
     je dmg_code
-  cmp [rcx+00], #348 // Orbital Laser
+  cmp [rcx+00], #358 // Orbital Laser
     je dmg_code
-  cmp [rcx+00], #181 // Orbital railcannon Projectile
+  cmp [rcx+00], #184 // Orbital Napalm Barrage Impact
     je dmg_code
-  cmp [rcx+00], #303 // Orbital railcannon Explosion
+  cmp [rcx+00], #185 // Orbital Napalm Barrage Explosion
+    je dmg_code
+  cmp [rcx+00], #186 // Orbital railcannon Projectile
+    je dmg_code
+  cmp [rcx+00], #313 // Orbital railcannon Explosion
     je dmg_code
 
   //Hangar
 
-  cmp [rcx+00], #147 // Eagle strafing run Projectile
+  cmp [rcx+00], #152 // Eagle strafing run Projectile
     je dmg_code
-  cmp [rcx+00], #247 // Eagle strafing run Explosion
+  cmp [rcx+00], #257 // Eagle strafing run Explosion
     je dmg_code
-  cmp [rcx+00], #158 // Eagle Airstrike Projectile
+  cmp [rcx+00], #163 // Eagle Airstrike Projectile
     je dmg_code
-  cmp [rcx+00], #289 // Eagle Airstrike Explosion
+  cmp [rcx+00], #299 // Eagle Airstrike Explosion
     je dmg_code
-  cmp [rcx+00], #127 // Eagle Clusterbomb Projectile
+  cmp [rcx+00], #131 // Eagle Clusterbomb Projectile
     je dmg_code
-  cmp [rcx+00], #262 // Eagle Clusterbomb Explosion
+  cmp [rcx+00], #272 // Eagle Clusterbomb Explosion
     je dmg_code
-  cmp [rcx+00], #264 // Napalm SEAF Projectile
+  cmp [rcx+00], #274 // Napalm SEAF/Eagle Projectile
     je dmg_code
-  cmp [rcx+00], #358 // Napalm SEAF heavy burn
+  cmp [rcx+00], #368 // Napalm SEAF/Eagle heavy burn
     je dmg_code
   //cmp [rcx+00], #? // Eagle smoke
   //  je dmg_code
-  cmp [rcx+00], #169 // Eagle 110MM rocket Projectile
+  cmp [rcx+00], #174 // Eagle 110MM rocket Projectile
     je dmg_code
-  cmp [rcx+00], #275 // Eagle 110MM rocket Explosion
+  cmp [rcx+00], #285 // Eagle 110MM rocket Explosion
     je dmg_code
-  cmp [rcx+00], #172 // 500KG bomb Projectile
+  cmp [rcx+00], #177 // 500KG bomb Projectile
     je dmg_code
-  cmp [rcx+00], #288 //Eagle 500kg bomb Impact
+  cmp [rcx+00], #298 // Eagle 500kg bomb Impact
     je dmg_code
-  cmp [rcx+00], #311 // 500KG Bomb Explosion
+  cmp [rcx+00], #321 // 500KG Bomb Explosion
     je dmg_code
-  //cmp [rcx+00], #303? // Carpet bomb
-  //  je dmg_code
 
   //Bridge
 
-  cmp [rcx+00], #178 // Orbital precison strike Projectile
+  cmp [rcx+00], #183 // Orbital precison strike Projectile
     je dmg_code
   //cmp [rcx+00], #? // Orbital precison strike Explosion
   //  je dmg_code
-  cmp [rcx+00], #306 // Orbital Gas Impact
+  cmp [rcx+00], #316 // Orbital Gas Impact
     je dmg_code
-  cmp [rcx+00], #363 // Orbital Gas
+  cmp [rcx+00], #389 // Orbital Gas
     je dmg_code
-  cmp [rcx+00], #182 // Orbital ems Projectile
+  cmp [rcx+00], #187 // Orbital ems Projectile
     je dmg_code
-  cmp [rcx+00], #309 // Orbital ems Explosion
+  cmp [rcx+00], #319 // Orbital ems Explosion
     je dmg_code
   //cmp [rcx+00], #? // Orbital smoke
   //  je dmg_code
 
+  //Turrets
+
+  cmp [rcx+00], #139 // HMG Emplacement
+    je dmg_code
+  cmp [rcx+00], #145 // Tesla tower
+    je dmg_code
+  cmp [rcx+00], #79 // Gatling Turret
+    je dmg_code
+  cmp [rcx+00], #159 // Mortar turret Projectile
+    je dmg_code
+  cmp [rcx+00], #266 // Mortar turret Explosion
+    je dmg_code
+  cmp [rcx+00], #150 // Autocannon Sentry Projectile
+    je dmg_code
+  cmp [rcx+00], #258 // Autocannon sentry Explosion
+    je dmg_code
+  cmp [rcx+00], #161 // Rocket sentry turret Projectile
+    je dmg_code
+  cmp [rcx+00], #283 // Rocket sentry turret Explosion
+    je dmg_code
+  cmp [rcx+00], #253 // A/M-23 EMS Mortar Sentry Impact
+    je dmg_code
+  cmp [rcx+00], #319 // A/M-23 EMS Mortar Sentry Explosion
+    je dmg_code
+  cmp [rcx+00], #322 // Mini Missile Silo 2 explosion
+    je dmg_code
+
   //Mines
 
-  cmp [rcx+00], #277 // Anti personnel mines
+  cmp [rcx+00], #287 // Anti personnel mines
     je dmg_code
-  cmp [rcx+00], #279 // Anti tank mines
+  cmp [rcx+00], #288 // Incendiary mines Explosion
     je dmg_code
-  cmp [rcx+00], #278 // Incendiary mines Explosion
+  cmp [rcx+00], #289 // Anti tank mines
     je dmg_code
 
-  cmp [rcx+00], #326 // Hellbomb / SEAF Mini-Nuke
+  //Guard dogs
+
+  cmp [rcx+00], #350 // LAS-5 "Guard Dog" Rover
+    je dmg_code
+  cmp [rcx+00], #62 // Rifle "Guard Dog" Rover
+    je dmg_code
+  cmp [rcx+00], #15 // AX/TX-13 Guard Dog "Dog Breath"
+    je dmg_code
+
+  cmp [rcx+00], #336 // Hellbomb / SEAF Mini-Nuke
     je dmg_code
 
 
@@ -5608,11 +5527,17 @@ dealloc(dmg_newmem)
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
-      <ID>113961</ID>
-      <Description>"Energy Shield Mod (edit your cd)                                          (by gir489)"</Description>
-      <Color>0000FF</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>// Game Executable   : helldivers2.exe
+      <ID>117485</ID>
+      <Description>"EasyAccessScripts"</Description>
+      <Options moHideChildren="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>113961</ID>
+          <Description>"Energy Shield Mod (edit your cd)                                          (by gir489)"</Description>
+          <Color>0000FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
 // Executable Version: 1.8.20424.0
 // MD5 Signature     : 714FB37A355B892081B500B0148D8A2B
@@ -5644,14 +5569,14 @@ unregistersymbol(aob_ShielDeezNutts)
 aob_ShielDeezNutts:
   db F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1
 </AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>138</ID>
-      <Description>"OnClick Armory Weapon Editor                                            (by cfemen)"</Description>
-      <Options moHideChildren="1"/>
-      <Color>C0C0C0</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>{ Game   : helldivers2.exe
+        </CheatEntry>
+        <CheatEntry>
+          <ID>138</ID>
+          <Description>"OnClick Armory Weapon Editor                                            (by cfemen)"</Description>
+          <Options moHideChildren="1"/>
+          <Color>C0C0C0</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : helldivers2.exe
   Version: 
   Date   : 2024-03-21
   Author : cfe
@@ -6032,75 +5957,75 @@ game.dll+E1E0A5: 48 6B D1 1C              - imul rdx,rcx,1C
 game.dll+E1E0A9: FF C7                    - inc edi
 }
 </AssemblerScript>
-      <CheatEntries>
-        <CheatEntry>
-          <ID>139</ID>
-          <Description>"Firerate:"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Float</VariableType>
-          <Address>pFirerate</Address>
-          <Offsets>
-            <Offset>8</Offset>
-          </Offsets>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>139</ID>
+              <Description>"Firerate:"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>pFirerate</Address>
+              <Offsets>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>140</ID>
+              <Description>"Damage:"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pWeapon</Address>
+              <Offsets>
+                <Offset>4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>141</ID>
+              <Description>"Structure Penetration"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pWeapon</Address>
+              <Offsets>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>142</ID>
+              <Description>"Penetration (No Angle)"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pWeapon</Address>
+              <Offsets>
+                <Offset>C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>143</ID>
+              <Description>"Penetration (Angle)"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pWeapon</Address>
+              <Offsets>
+                <Offset>10</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>144</ID>
+              <Description>"Demolition"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pWeapon</Address>
+              <Offsets>
+                <Offset>1C</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
         </CheatEntry>
         <CheatEntry>
-          <ID>140</ID>
-          <Description>"Damage:"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>4 Bytes</VariableType>
-          <Address>pWeapon</Address>
-          <Offsets>
-            <Offset>4</Offset>
-          </Offsets>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>141</ID>
-          <Description>"Structure Penetration"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>4 Bytes</VariableType>
-          <Address>pWeapon</Address>
-          <Offsets>
-            <Offset>8</Offset>
-          </Offsets>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>142</ID>
-          <Description>"Penetration (No Angle)"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>4 Bytes</VariableType>
-          <Address>pWeapon</Address>
-          <Offsets>
-            <Offset>C</Offset>
-          </Offsets>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>143</ID>
-          <Description>"Penetration (Angle)"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>4 Bytes</VariableType>
-          <Address>pWeapon</Address>
-          <Offsets>
-            <Offset>10</Offset>
-          </Offsets>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>144</ID>
-          <Description>"Demolition"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>4 Bytes</VariableType>
-          <Address>pWeapon</Address>
-          <Offsets>
-            <Offset>1C</Offset>
-          </Offsets>
-        </CheatEntry>
-      </CheatEntries>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117440</ID>
-      <Description>"No ammo consume/inf mecha                                              (by gir489)"</Description>
-      <Color>0000FF</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
+          <ID>117440</ID>
+          <Description>"No ammo consume/inf mecha(outdated)                                              (by gir489)"</Description>
+          <Color>4080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
 // Executable Version: 1.8.17201.0
 // MD5 Signature     : 495C5D1678F8B6C0A61041D667C48362
@@ -6168,25 +6093,13 @@ game.dll+4194A4: CC                       - int 3
 game.dll+4194A5: CC                       - int 3
 }
 </AssemblerScript>
-      <Hotkeys>
-        <Hotkey>
-          <Action>Toggle Activation</Action>
-          <Keys>
-            <Key>16</Key>
-            <Key>39</Key>
-          </Keys>
-          <ID>0</ID>
-          <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-          <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-        </Hotkey>
-      </Hotkeys>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117432</ID>
-      <Description>"No bullets consume                                                               (by gir489)"</Description>
-      <Color>0000FF</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">// Game Executable : helldivers2.exe
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117432</ID>
+          <Description>"No bullets consume(outdated)                                                               (by gir489)"</Description>
+          <Color>4080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">// Game Executable : helldivers2.exe
 // Author : gir489
 // Executable Version: 1.8.20424.0
 // MD5 Signature : 714FB37A355B892081B500B0148D8A2B
@@ -6205,26 +6118,14 @@ aob_FinnikScript:
 
 unregistersymbol(aob_FinnikScript)
 </AssemblerScript>
-      <Hotkeys>
-        <Hotkey>
-          <Action>Toggle Activation</Action>
-          <Keys>
-            <Key>16</Key>
-            <Key>39</Key>
-          </Keys>
-          <ID>0</ID>
-          <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-          <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-        </Hotkey>
-      </Hotkeys>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117474</ID>
-      <Description>"Electrical scripts"</Description>
-      <Options moHideChildren="1"/>
-      <Color>00FFFF</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">[ENABLE]
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117474</ID>
+          <Description>"Electrical scripts"</Description>
+          <Options moHideChildren="1"/>
+          <Color>00FFFF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
 {
   Game    : helldivers2.exe
   Version : 1.001.201
@@ -6257,32 +6158,20 @@ unregisterSymbol("damage_anchor_address")
 unregisterSymbol("arcwpn_anchor_address")
 unregisterSymbol("unk000_anchor_address")
 </AssemblerScript>
-      <Hotkeys>
-        <Hotkey>
-          <Action>Toggle Activation</Action>
-          <Keys>
-            <Key>16</Key>
-            <Key>39</Key>
-          </Keys>
-          <ID>0</ID>
-          <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-          <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-        </Hotkey>
-      </Hotkeys>
-      <CheatEntries>
-        <CheatEntry>
-          <ID>117467</ID>
-          <Description>"Higher spread ratio                                                              (by sakuno+Meausisi)"</Description>
-          <Options moHideChildren="1"/>
-          <Color>00FFFF</Color>
-          <GroupHeader>1</GroupHeader>
           <CheatEntries>
             <CheatEntry>
-              <ID>117466</ID>
-              <Description>"ARC-12 Blitzer                                                                  (by Meausisi)"</Description>
+              <ID>117467</ID>
+              <Description>"Higher spread ratio                                                              (by sakuno+Meausisi)"</Description>
+              <Options moHideChildren="1"/>
               <Color>00FFFF</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript Async="1">[ENABLE]
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>117466</ID>
+                  <Description>"ARC-12 Blitzer                                                                  (by Meausisi)"</Description>
+                  <Color>00FFFF</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript Async="1">[ENABLE]
 {
   Game    : helldivers2.exe
   Version : 1.001.201
@@ -6393,25 +6282,25 @@ blitzer_damage + 030:
 unregisterSymbol("blitzer_settings")
 unregisterSymbol("blitzer_damage")
 </AssemblerScript>
-              <Hotkeys>
-                <Hotkey>
-                  <Action>Toggle Activation</Action>
-                  <Keys>
-                    <Key>16</Key>
-                    <Key>39</Key>
-                  </Keys>
-                  <ID>0</ID>
-                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-                </Hotkey>
-              </Hotkeys>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117469</ID>
-              <Description>"ARC-3 Arc Thrower                                                          (by Meausisi)"</Description>
-              <Color>00FFFF</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript Async="1">[ENABLE]
+                  <Hotkeys>
+                    <Hotkey>
+                      <Action>Toggle Activation</Action>
+                      <Keys>
+                        <Key>16</Key>
+                        <Key>39</Key>
+                      </Keys>
+                      <ID>0</ID>
+                      <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+                      <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+                    </Hotkey>
+                  </Hotkeys>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>117469</ID>
+                  <Description>"ARC-3 Arc Thrower                                                          (by Meausisi)"</Description>
+                  <Color>00FFFF</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript Async="1">[ENABLE]
 {
   Game    : helldivers2.exe
   Version : 1.001.201
@@ -6523,25 +6412,25 @@ unregisterSymbol("arcthrower_settings")
 unregisterSymbol("arcthrower_damage")
 
 </AssemblerScript>
-              <Hotkeys>
-                <Hotkey>
-                  <Action>Toggle Activation</Action>
-                  <Keys>
-                    <Key>16</Key>
-                    <Key>39</Key>
-                  </Keys>
-                  <ID>0</ID>
-                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-                </Hotkey>
-              </Hotkeys>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117470</ID>
-              <Description>"A/ARC-3 Tesla Tower                                                       (by Meausisi)"</Description>
-              <Color>00FFFF</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript Async="1">[ENABLE]
+                  <Hotkeys>
+                    <Hotkey>
+                      <Action>Toggle Activation</Action>
+                      <Keys>
+                        <Key>16</Key>
+                        <Key>39</Key>
+                      </Keys>
+                      <ID>0</ID>
+                      <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+                      <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+                    </Hotkey>
+                  </Hotkeys>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>117470</ID>
+                  <Description>"A/ARC-3 Tesla Tower                                                       (by Meausisi)"</Description>
+                  <Color>00FFFF</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript Async="1">[ENABLE]
 {
   Game    : helldivers2.exe
   Version : 1.001.101
@@ -6675,27 +6564,27 @@ tesla_tower_damage + 030:
 unregisterSymbol("tesla_tower_settings")
 unregisterSymbol("tesla_tower_damage")
 </AssemblerScript>
-              <Hotkeys>
-                <Hotkey>
-                  <Action>Toggle Activation</Action>
-                  <Keys>
-                    <Key>16</Key>
-                    <Key>39</Key>
-                  </Keys>
-                  <ID>0</ID>
-                  <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-                  <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-                </Hotkey>
-              </Hotkeys>
+                  <Hotkeys>
+                    <Hotkey>
+                      <Action>Toggle Activation</Action>
+                      <Keys>
+                        <Key>16</Key>
+                        <Key>39</Key>
+                      </Keys>
+                      <ID>0</ID>
+                      <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+                      <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+                    </Hotkey>
+                  </Hotkeys>
+                </CheatEntry>
+              </CheatEntries>
             </CheatEntry>
-          </CheatEntries>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117468</ID>
-          <Description>"100% Electrical conduit passive                                           (by Meausisi)"</Description>
-          <Color>00FFFF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
+            <CheatEntry>
+              <ID>117468</ID>
+              <Description>"100% Electrical conduit passive(outdated)                                           (by Meausisi)"</Description>
+              <Color>4080FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
 {
   Game   : helldivers2.exe
   Version: 1.001.005
@@ -6725,95 +6614,76 @@ arc_resistance + 38:
 unregistersymbol('arc_resistance')
 
 </AssemblerScript>
-          <Hotkeys>
-            <Hotkey>
-              <Action>Toggle Activation</Action>
-              <Keys>
-                <Key>16</Key>
-                <Key>39</Key>
-              </Keys>
-              <ID>0</ID>
-              <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-              <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-            </Hotkey>
-          </Hotkeys>
+            </CheatEntry>
+          </CheatEntries>
         </CheatEntry>
-      </CheatEntries>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117459</ID>
-      <Description>"Mortar_Proj_Mod                                                                   (by sakuno+fallout11)"</Description>
-      <Options moHideChildren="1"/>
-      <Color>FF8000</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>[ENABLE]
-{
-  Game   : helldivers2.exe
-  Version: 1.001.101
-  Date   : 2024-10-10
-  Original Author : (CFEMEN's Discord) Sakuno
-  Corrections by  : fallout11
-
-  &gt; MORTAR MODIFICATIONS:
-  --------------------------
-  - Increases the number of projectiles fired by the Mortar 40mm HE.
-}
+        <CheatEntry>
+          <ID>117459</ID>
+          <Description>"Mortar_Proj_Mod                                                                   (by sakuno+fallout11)"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF8000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
 {$lua}
-registerSymbol("mortar_base", '["game.dll" + 02093080]')
+registerSymbol("Mortar_40mm_HE_nproj", '["game.dll" + 02064478] + 3A48')
+registerSymbol("Mortar_40mm_HE_expls", '["game.dll" + 02064478] + 3ABC')
 {$asm}
-//  A/M-12 MORTAR SENTRY
-mortar_base+391C: //num_projectiles
+
+//A/M-12 MORTAR SENTRY
+Mortar_40mm_HE_nproj: //num_projectiles
   dd #1 //1
-mortar_base+3990: //explosion_type_on_impact
-  dd #25 //211 (25=SEAF Explosive) (174=SEAF Mininuke) (169=SEAF High Yield Explosive)
+Mortar_40mm_HE_expls: //explosion_type_on_impact (explosive ID)
+  dd #26 //(26=SEAF Explosive)(34=Orbital RailCannon)（222=380mm/GP-31_Ultimatum/Orbital PrecisionStrike） (187=Mini Nuke) (182=SEAF HighYield Explosive) (128=Eagle Airstrike) (151=Eagle 110 rocketpod)
 
 [DISABLE]
-//  A/M-12 MORTAR SENTRY
-mortar_base+391C: //num_projectiles
-  dd #1 //1
-mortar_base+3990: //explosion_type_on_impact
-  dd #215 //215
-unregisterSymbol("Mortar_base")
+Mortar_40mm_HE_nproj:
+  dd #1
+Mortar_40mm_HE_expls:
+  dd #234 // 234=Regular Mortar round
+unregisterSymbol(Mortar_40mm_HE_nproj)
+unregisterSymbol(Mortar_40mm_HE_expls)
 </AssemblerScript>
-      <CheatEntries>
-        <CheatEntry>
-          <ID>1</ID>
-          <Description>" (default = 1)"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>4 Bytes</VariableType>
-          <Address>Mortar_40mm_HE</Address>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1</ID>
+              <Description>" (default = 1)"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Mortar_40mm_HE</Address>
+            </CheatEntry>
+          </CheatEntries>
         </CheatEntry>
-      </CheatEntries>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117475</ID>
-      <Description>"500kg expanded radius                                                         (by fallout11+Meowsisi)"</Description>
-      <Options moHideChildren="1"/>
-      <Color>40FF00</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>[ENABLE]
+        <CheatEntry>
+          <ID>117475</ID>
+          <Description>"500kg expanded radius                                                         (by fallout11+Meowsisi)"</Description>
+          <Options moHideChildren="1"/>
+          <Color>4080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
 {$lua}
-registerSymbol("eagle500kg_base", '[game.dll + 02124038] + 100*A + 9C')
+registerSymbol("eagle500kg_base", '[game.dll + 02064478] + AC8')
 {$asm}
 //
 
 // eagle 500kg bomb
 eagle500kg_base: //explosion_type_on_impact
-  dd #58 //(58=Hellbomb) (177=500kg) (157=SEAF Mininuke also works)
+  dd #187 // (181=500kg) （60=Nuke）(187=SEAF Mini Nuke) （160=Hellbomb）
 
 [DISABLE]
-//  eagle 500kg bomb
+//eagle 500kg bomb
 eagle500kg_base: //explosion_type_on_impact
-  dd #177 //177=500kg
+  dd #181 //181=500kg
+
+unregisterSymbol("eagle500kg_base")
 </AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117429</ID>
-      <Description>"Semi weapons fire rate remover (outdated)                           (by impushingp.)"</Description>
-      <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
-      <Color>0080FF</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>[ENABLE]
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117429</ID>
+          <Description>"Semi weapons fire rate remover (outdated)                           (by impushingp)"</Description>
+          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
 
 {$asm}
 alloc(firerateType,4)
@@ -6839,12 +6709,12 @@ dealloc(firerateType,4)
 dealloc(valuetochange,4)
 
 </AssemblerScript>
-      <CheatEntries>
-        <CheatEntry>
-          <ID>117424</ID>
-          <Description>"Fire Rate Hack"</Description>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>{$lua}
+          <CheatEntries>
+            <CheatEntry>
+              <ID>117424</ID>
+              <Description>"Fire Rate Hack"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{$lua}
 if syntaxcheck then return end
 [ENABLE]
 
@@ -6857,38 +6727,38 @@ decodeFunction("c-n1?NspQU0EKZfZS5pYFTJ!q8L$})5L^qTLk5L$DUJwks8OP9ijF9YED6c^hyKt
 
 
 </AssemblerScript>
-          <CheatEntries>
-            <CheatEntry>
-              <ID>117425</ID>
-              <Description>"Select Fire Rates(0---&gt;X)"</Description>
-              <ShowAsSigned>0</ShowAsSigned>
-              <VariableType>Float</VariableType>
-              <Address>firerateType</Address>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117426</ID>
-              <Description>"Fire Rate To Change"</Description>
-              <ShowAsSigned>0</ShowAsSigned>
-              <VariableType>Float</VariableType>
-              <Address>valuetochange</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>117425</ID>
+                  <Description>"Select Fire Rates(0---&gt;X)"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>firerateType</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>117426</ID>
+                  <Description>"Fire Rate To Change"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>valuetochange</Address>
+                </CheatEntry>
+              </CheatEntries>
             </CheatEntry>
           </CheatEntries>
         </CheatEntry>
-      </CheatEntries>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117439</ID>
-      <Description>"Temp Unlock Armor, Weapons, Strategems                          (by cfemen)"</Description>
-      <Color>C0C0C0</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">[ENABLE]
+        <CheatEntry>
+          <ID>117439</ID>
+          <Description>"Temp Unlock Armor, Weapons, Strategems                          (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
 
 // stragem:
-aobscanmodule(aobUnlock1,game.dll,48 89 5C 24 08 85 D2 75 09)
+aobscanmodule(aobUnlock1,game.dll,48 89 5C 24 08 48 8B D9 85 D2 75 09)
 registersymbol(aobUnlock1)
 
 // weapon:
-aobscanmodule(aobUnlock2,game.dll,83 B9 ?? ?? ?? ?? 07 76 2B 85 D2 74 27 44 8B 89 ?? ?? ?? ??  45 33 C0 45 85 C9 74 18 48 8D 81 ?? ?? ?? ?? 39 50 04 74 0F 41 FF C0 48 83 C0 18 45 3B C1 72 EF 32 C0 C3 8B 00 48 69 C8 E8 00 00 00)
+aobscanmodule(aobUnlock2,game.dll,83 B9 A0 C8 06 00 07 76 2B 85 D2 74 27 44 8B 89 88 12 00 00 45 33 C0 45 85 C9 74 18 48 8D 81 8C 76 05 00 39 50 04 74 0F 41 FF C0 48 83 C0 18 45 3B C1 72 EF 32 C0 C3 8B 00 48 69 C8 B8 00 00 00)
 registersymbol(aobUnlock2)
 
 // armor:
@@ -6908,14 +6778,14 @@ aobUnlock3:
 
 
 </AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117477</ID>
-      <Description>"Instant drop                                                                           (by fallout11)"</Description>
-      <Color>07AFF8</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(instantstratdrop,game.dll,F3 0F 11 04 06 48 8B 47 60 4C 8B 47 78 4C 03 C6 4A 8B 0C F0) // should be unique
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117477</ID>
+          <Description>"Instant drop                                                                           (by fallout11)"</Description>
+          <Color>07AFF8</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+aobscanmodule(instantstratdrop,game.dll,F3 0F 11 04 06 48 8B 47 60 4C 8B 47 78 4C 03 C6 4A 8B 0C F8) // should be unique
 alloc(newmem,$1000,instantstratdrop)
 alloc(stratMax,8)
 
@@ -6925,7 +6795,7 @@ label(code)
 label(return)
 
 stratMax:
-dd (float).5
+dd (float)3.5 //&lt;-seconds for supply drop to arrive
 
 newmem:
   push edx
@@ -6954,13 +6824,13 @@ unregistersymbol(instantstratdrop)
 dealloc(stratMax)
 dealloc(newmem)
 </AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117481</ID>
-      <Description>"Customize Seaf                                                                      (by sakuno)"</Description>
-      <Color>C080FF</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">[ENABLE]
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117481</ID>
+          <Description>"Customize Seaf                                                                      (by sakuno)"</Description>
+          <Color>C080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
 {
   Alias      : 𝗦𝗘𝗔𝗙𝗦𝗵𝗲𝗹𝗹𝗥𝗮𝗰𝗸𝗠𝗼𝗱
   Game       : Helldiver 2
@@ -6991,100 +6861,139 @@ ObjectiveShellRackAddr+4:
 ObjectiveShellRackAddr+4:
   dd #7
 </AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117483</ID>
-      <Description>"100% Democracy (armor passive)                                         (by Dottie)"</Description>
-      <Color>FFFF00</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">[ENABLE]
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117483</ID>
+          <Description>"100% Democracy (armor passive)                                         (by Dottie)"</Description>
+          <Color>000000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
 {$lua}
-registerSymbol("DemocrayProtect_Chance", '[[[[[game.dll + 01B51540] + 900] + 30] + F60] + A8] + 3CC')
-
-{$asm}
-DemocrayProtect_Chance:
-  dd (float)2.0
+local democracy_protects = getAddress("[[game.dll + 01A24878] + A8] + 1C") + 0x378 + 0x38
+writeFloat(democracy_protects, 2.0)
 
 [DISABLE]
-{$asm}
-DemocrayProtect_Chance:
-  dd (float)1.5
-
 {$lua}
-local timer = createTimer(nil, false)
-timer.Interval = 100
-timer.OnTimer = function()
-  unregisterSymbol("DemocrayProtect_Chance")
-  timer.destroy()
-end
+local democracy_protects = getAddress("[[game.dll + 01A24878] + A8] + 1C") + 0x378 + 0x38
+writeFloat(democracy_protects, 1.5)
 </AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>117484</ID>
-      <Description>"No fall damage                                                                      (by impushingp)"</Description>
-      <Color>C080FF</Color>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_NoFall,game.dll,48 81 EC 30 0B 00 00)
-registersymbol(aob_NoFall)
-alloc(newmem_NoFall,1024,game.dll)
-label(return_NoFall)
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117484</ID>
+          <Description>"No fall damage                                                                      (by impushingp)"</Description>
+          <Color>C080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">//Author  : Zodiac, impushingp.
+//Game    : HELLDIVERS™ 2
+//Version : 01.002.101
+//Process : helldivers2.exe
+//Module  : game.dll
+//Date      : 05/02/2025
+//Inject  : game.dll+87FBC0
+//Comment : Updated by Zodiac for the Experimental Division
 
-newmem_NoFall:
-  push r14
-  mov r14d,[rbp+AB8]
-  cmp r14d,E32E9832
-  jne @f
+[ENABLE]
+
+aobscanmodule(nofalldamage2,game.dll,49 8D AB A8 F5 FF FF 48 81 EC 48 0B 00 00) // should be unique
+alloc(NoFallnewmem2,$30,nofalldamage2)
+
+label(NoFallreturn2)
+
+NoFallnewmem2:
+  push r9
+  mov r9d,[rbp+AD8]
+  cmp r9d,E32E9832
+  jne short @f
+  pop r9
   pop r14
-  pop r13
+  pop r12
   pop rbx
   pop rbp
   ret
-  @@:
-  pop r14
-  sub rsp,00000B30
-  jmp return_NoFall
+@@:
+  pop r9
+  sub rsp,00000B48
+  jmp NoFallreturn2
 
-aob_NoFall:
-  jmp newmem_NoFall
+nofalldamage2+7:
+  jmp NoFallnewmem2
   nop 2
-return_NoFall:
+NoFallreturn2:
+registersymbol(nofalldamage2)
 
 [DISABLE]
-aob_NoFall:
-  db 48 81 EC 30 0B 00 00
 
-unregistersymbol(aob_NoFall)
-dealloc(newmem_NoFall)
+nofalldamage2+7:
+  db 48 81 EC 48 0B 00 00
+
+unregistersymbol(nofalldamage2)
+dealloc(NoFallnewmem2)
+
+//Original Instructions
+//game.dll+87FBAC - CC                      - int 3
+//game.dll+87FBAD - CC                      - int 3
+//game.dll+87FBAE - CC                      - int 3
+//game.dll+87FBAF - CC                      - int 3
+//game.dll+87FBB0 - 4C 8B DC                - mov r11,rsp
+//game.dll+87FBB3 - 55                      - push rbp
+//game.dll+87FBB4 - 53                      - push rbx
+//game.dll+87FBB5 - 41 54                   - push r12
+//game.dll+87FBB7 - 41 56                   - push r14
+//game.dll+87FBB9 - 49 8D AB A8F5FFFF       - lea rbp,[r11-00000A58]
+//------------------------------------------------------------------------------
+//game.dll+87FBC0 - 48 81 EC 480B0000       - sub rsp,00000B48
+//------------------------------------------------------------------------------
+//game.dll+87FBC7 - 48 8B 05 42E4B400       - mov rax,[game.dll+13CE010]
+//game.dll+87FBCE - 48 33 C4                - xor rax,rsp
+//game.dll+87FBD1 - 48 89 85 A0090000       - mov [rbp+000009A0],rax
+//game.dll+87FBD8 - 3B 15 0E482601          - cmp edx,[game.dll+1AE43EC]
+//game.dll+87FBDE - 45 8B E0                - mov r12d,r8d
+//game.dll+87FBE1 - 8B 85 800A0000          - mov eax,[rbp+00000A80]
+//game.dll+87FBE7 - 8B DA                   - mov ebx,edx
+//game.dll+87FBE9 - 89 45 14                - mov [rbp+14],eax
+//game.dll+87FBEC - 4C 8B F1                - mov r14,rcx
+//game.dll+87FBEF - 8B 85 880A0000          - mov eax,[rbp+00000A88]
 </AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117486</ID>
+          <Description>"No ragdoll                                                                             (by Randy)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule(ragdoll,game.dll,40 57 48 83 EC ? 3B 15 ? ? ? ? 41 8B F8 4C 89 7C 24) // should be unique
+alloc(newmem,$1000,ragdoll)
+
+label(code)
+label(return)
+
+newmem:
+  mov eax,1
+  ret
+code:
+  push rdi
+  sub rsp,30
+  jmp return
+
+ragdoll:
+  jmp newmem
+  nop
+return:
+registersymbol(ragdoll)
+
+[DISABLE]
+
+ragdoll:
+  db 40 57 48 83 EC 30
+
+unregistersymbol(ragdoll)
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
     </CheatEntry>
   </CheatEntries>
-  <UserdefinedSymbols>
-    <SymbolEntry>
-      <Name>fSpeed</Name>
-      <Address>1C4C6540000</Address>
-    </SymbolEntry>
-    <SymbolEntry>
-      <Name>pWeapon</Name>
-      <Address>1C4C6540010</Address>
-    </SymbolEntry>
-    <SymbolEntry>
-      <Name>pFirerate</Name>
-      <Address>1C4C6540020</Address>
-    </SymbolEntry>
-    <SymbolEntry>
-      <Name>ObjectiveShellRackAddr</Name>
-      <Address>1D7758CF352</Address>
-    </SymbolEntry>
-    <SymbolEntry>
-      <Name>AvatarClimbAddr</Name>
-      <Address>2259DA0606E</Address>
-    </SymbolEntry>
-    <SymbolEntry>
-      <Name>HellpodDataAddr</Name>
-      <Address>2259D052D1A</Address>
-    </SymbolEntry>
-  </UserdefinedSymbols>
+  <UserdefinedSymbols/>
   <LuaScript>if not syntaxcheck then
 
   function cycleFullCompact( sender, force )
