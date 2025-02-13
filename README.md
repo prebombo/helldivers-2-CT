@@ -65,3 +65,24 @@ Added 100% democrazy<br>
 Added action shotgun ID<br>
 ------31/12------<br>
 Added no fall damage<br>
+------16/01------<br>
+Fixed Map<br>
+Fixed Democrazyp<br>
+Fixed 500kg<br>
+------06/02------<br>
+Instant drop<br>
+No fall damage<br>
+No sway<br>
+Map<br>
+Inf Stamina<br>
+Inf last Stim<br>
+Inf grenades<br>
+Inf Time<br>
+No Ragdoll<br>
+Unlock all<br>
+------09/02------<br>
+500kg<br>
+Mortar<br>
+100% Democrazy<br>
+------13/02------<br>
+Updated IDs<br>
