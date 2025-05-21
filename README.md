@@ -86,3 +86,13 @@ Mortar<br>
 100% Democrazy<br>
 ------13/02------<br>
 Updated IDs<br>
+------15/05------<br>
+Inf Shield,
+Fast Stract,
+Inf Stratagems,
+Bunker,
+Speedhack,
+Armory weapon editor,
+------21/05------<br>
+IDs,
+Fixed speedhack and weapon armory editor
