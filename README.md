@@ -96,3 +96,8 @@ Armory weapon editor,
 ------21/05------<br>
 IDs,
 Fixed speedhack and weapon armory editor
+------12/06------<br>
+No fall dmg<br>
+500-->mininuke<br>
+Inf last stim<br>
+Shield CD<br>
