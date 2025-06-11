@@ -123,24 +123,24 @@ unregistersymbol(aobSprintWrite)
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
-// Executable Version: 1.8.22927.0
-// MD5 Signature     : 34B03C63A9B3946A71A77D7719475948
-// EXE Compile Date  : September 19, 2024 11:09 AM
-// Script Date       : September 24, 2024 06:58 PM
+// Executable Version: 1.8.27207.0
+// MD5 Signature     : 14C848EF74B1A8FEF0AC3DB6E396B3D2
+// EXE Compile Date  : January 28, 2025 10:15 AM
+// Script Date       : February 04, 2025 06:29 PM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 43 8B 54 F7 ? 8B C8)
+aobscanmodule(aob_Syringes,game.dll, 41 8B 54 EE 04 8B C8)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
 label(return_Syringes)
 
 newmem_Syringes:
-  mov edx,[r15+r14*8+04]
+  mov edx,[r14+rbp*8+4]
   mov ecx,eax
   cmp edx, #1
   je short @f
     dec edx
   @@:
-  mov [r15+rcx*8+04],edx
+  mov [r14+rbp*8+4],edx
   jmp return_Syringes
 
 aob_Syringes:
@@ -149,7 +149,7 @@ return_Syringes:
 
 [DISABLE]
 aob_Syringes:
-  db 43 8B 54 F7 04 8B C8 FF CA 41 89 54 CF 04
+  db 41 8B 54 EE 04 8B C8 FF CA 41 89 54 CE 04
 
 unregistersymbol(aob_Syringes)
 dealloc(newmem_Syringes)
@@ -292,49 +292,6 @@ unregistersymbol(aobNades)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
-              <ID>113877</ID>
-              <Description>"Inf last Mag(outdated)                                                                   (by ZoDDel)"</Description>
-              <Color>0080FF</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>{ Game   : helldivers2.exe
-  Version: 
-  Date   : 2024-04-30
-  Author : ZoDDeL
-
-  This script does blah blah blah
-}
-
-[ENABLE]
-
-aobscanmodule(legit_ammo,game.dll,4C 8D 04 D2 42 83 2C C1 01 48 8B 45 38 0F 94 C3) // should be unique
-alloc(legit_ammo_newmem,$1000)
-
-label(legit_ammo_code)
-label(legit_ammo_return)
-
-legit_ammo_newmem:
-  lea r8,[rdx+rdx*8]
-
-  cmp dword ptr [rcx+r8*8],#2
-  jl legit_ammo_code
-  sub dword ptr [rcx+r8*8],01
-  jmp legit_ammo_code
-
-
-legit_ammo_code:
-  mov rax,[rbp+38]
-  sete bl
-  jmp legit_ammo_return
-
-legit_ammo:
-  jmp far legit_ammo_newmem
-  nop 2
-legit_ammo_return:
-
-[DISABLE]
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
               <ID>43</ID>
               <Description>"Inf Mags                                                                        (by cfemen)"</Description>
               <Color>C0C0C0</Color>
@@ -354,204 +311,6 @@ aobAmmo:
 
 unregistersymbol(aobAmmo)
 
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>113875</ID>
-              <Description>"Inf last Bullet (outdated)                                                (by ZoDDel)"</Description>
-              <Color>0080FF</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>{ Game   : helldivers2.exe
-  Version: 
-  Date   : 2024-04-29
-  Author : ZoDDeL
-
-  This script does blah blah blah
-}
-
-[ENABLE]
-
-aobscanmodule(noReloadV3a,game.dll,48 8B 43 50 48 8D 0C FF 8B 44 C8 18 03 C6 41 3B C1 7C 09 45 84 C0 0F 84 E1) // should be unique
-alloc(nrV3_newmem,$1000)
-
-label(nrV3_code)
-label(nrV3_return)
-
-nrV3_newmem:
-  mov rax,[rbx+50]
-  lea rcx,[rdi+rdi*8]
-  cmp [rax+rcx*8+18],#2  // checks if ammo in clip is greater or equal number
-  jge nrV3_code
-  mov [rax+rcx*8+18],#2  // writes number to clip address if the previous check is false
-  jmp nrV3_code
-
-nrV3_code:
-  mov eax,[rax+rcx*8+18]
-  add eax,esi
-  jmp nrV3_return
-
-noReloadV3a:
-  jmp far nrV3_newmem
-nrV3_return:
-
-
-[DISABLE]
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117473</ID>
-              <Description>"Inf last Bullet SENATOR(outdated)                                                  (by fallout11)"</Description>
-              <Color>07AFF8</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-aobscanmodule(LegitNoReload,game.dll,8B 4D 30 F3 48 0F 2C F8) // should be unique
-alloc(newmem,$1000,LegitNoReload)
-label(code)
-label(return)
-
-newmem:
-  cmp [rbp+30],1 // checks if ammo in gun is equal to or greater than this number
-  jge code
-  mov [rbp+30],3 // writes this number to gun ammo address if the previous check is false
-code:
-  mov ecx,[rbp+30]
-  cvttss2si rdi,xmm0
-  jmp return
-
-LegitNoReload:
-  jmp newmem
-  nop 3
-return:
-registersymbol(LegitNoReload)
-
-[DISABLE]
-LegitNoReload:
-  db 8B 4D 30 F3 48 0F 2C F8
-unregistersymbol(LegitNoReload)
-dealloc(newmem)
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117480</ID>
-              <Description>"Inf last bullet(outdated)                                                                  (by fallout11)"</Description>
-              <Color>07AFF8</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(LegitLastBulletInMag,game.dll,8B 07 85 C0 74 39 83) // primary weapons
-alloc(newmem,$1000,LegitLastBulletInMag)
-label(code)
-label(return)
-
-newmem:
-  cmp [rdi],1
-  jbe code
-  cmp [rdi],3
-  ja code
-  mov [rdi],6
-code:
-  mov eax,[rdi]
-  test eax,eax
-  je return+39
-  jmp return
-
-LegitLastBulletInMag:
-  jmp newmem
-  nop
-return:
-registersymbol(LegitLastBulletInMag)
-
-
-aobscanmodule(LegitLastBulletInMagA,game.dll,DB 8B 44 C8 18 03 C6) // Sidearms (iirc)
-alloc(LegitLastBulletInMagA_newmem,$1000,LegitLastBulletInMagA)
-label(LegitLastBulletInMagA_code)
-label(LegitLastBulletInMagA_return)
-
-LegitLastBulletInMagA_newmem:
-  cmp [rax+rcx*8+18],0
-  jbe LegitLastBulletInMagA_code
-  cmp [rax+rcx*8+18],1
-  ja LegitLastBulletInMagA_code
-  mov [rax+rcx*8+18],2
-
-LegitLastBulletInMagA_code:
-  mov eax,[rax+rcx*8+18]
-  add eax,esi
-  jmp LegitLastBulletInMagA_return
-
-LegitLastBulletInMagA+01:
-  jmp LegitLastBulletInMagA_newmem
-  nop
-LegitLastBulletInMagA_return:
-registersymbol(LegitLastBulletInMagA)
-
-
-aobscanmodule(LegitLastBulletInMagB,game.dll,41 8B 85 1C 8C 00 00) // A few odd cases (iirc)
-alloc(LegitLastBulletInMagB_newmem,$1000,LegitLastBulletInMagB)
-label(LegitLastBulletInMagB_code)
-label(LegitLastBulletInMagB_return)
-
-LegitLastBulletInMagB_newmem:
-  cmp [r13+00008C1C],1
-  jbe LegitLastBulletInMagB_code
-  cmp [r13+00008C1C],3
-  ja LegitLastBulletInMagB_code
-  mov [r13+00008C1C],6
-LegitLastBulletInMagB_code:
-  mov eax,[r13+00008C1C]
-  jmp LegitLastBulletInMagB_return
-
-LegitLastBulletInMagB:
-  jmp LegitLastBulletInMagB_newmem
-  nop 2
-LegitLastBulletInMagB_return:
-registersymbol(LegitLastBulletInMagB)
-
-
-[DISABLE]
-
-LegitLastBulletInMag:
-  db 8B 07 85 C0 74 39
-unregistersymbol(LegitLastBulletInMag)
-dealloc(newmem)
-
-LegitLastBulletInMagA+01:
-  db 8B 44 C8 18 03 C6
-unregistersymbol(LegitLastBulletInMagA)
-dealloc(LegitLastBulletInMagA_newmem)
-
-LegitLastBulletInMagB:
-  db 41 8B 85 1C 8C 00 00
-unregistersymbol(LegitLastBulletInMagB)
-dealloc(LegitLastBulletInMagB_newmem)
-
-
-
-//aobscanmodule(LegitLastBulletInMagMech,game.dll,44 89 74 01 18 4D 8B 42 50) // should be unique
-//alloc(Mech_newmem,$1000,LegitLastBulletInMagMech)
-//label(Mech_code)
-//label(Mech_return)
-
-//Mech_newmem:
-  //cmp r14d,1
-  //jbe Mech_code
-  //cmp r14d,#6
-  //ja Mech_code
-  //mov r14d,#10
-
-//Mech_code:
-  //mov [rcx+rax+18],r14d
-  //jmp Mech_return
-
-//LegitLastBulletInMagMech:
-  //jmp Mech_newmem
-//Mech_return:
-//registersymbol(LegitLastBulletInMagMech)
-
-
-//LegitLastBulletInMagMech:
-  //db 44 89 74 01 18
-//unregistersymbol(LegitLastBulletInMagMech)
-//dealloc(Mech_newmem)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -803,17 +562,17 @@ unregistersymbol(aobStratacmp)
 [ENABLE]
 
 
-aobscanmodule(aobSubTime,game.dll,F3 43 0F 11 84 F4 40 9C 04 00) // should be unique
+aobscanmodule(aobSubTime,game.dll,F3 0F 5C C7 F3 41 0F 5F C7) // should be unique
 
 aobSubTime:
-  nop A
+  nop 4
 
 registersymbol(aobSubTime)
 
 [DISABLE]
 
 aobSubTime:
-  db F3 43 0F 11 84 F4 40 9C 04 00
+  db F3 0F 5C C7
 
 unregistersymbol(aobSubTime)
 </AssemblerScript>
@@ -1022,160 +781,6 @@ unregistersymbol(aob_CheckIfAlienHiveVisible)
 unregistersymbol(aob_CheckIfMinorInterestBlipIsDiscovered)
 unregistersymbol(aob_CheckMissionBlip)
 </AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>161</ID>
-          <Description>"Speedhack                                                                          (by cfemen)"</Description>
-          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
-          <Color>C0C0C0</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">{$lua}
-if syntaxcheck then return end
-openProcess("helldivers2.exe")
-Sleep(1000)
-{$asm}
-[ENABLE]
-globalalloc(pVars,128)
-
-label(fSpeed)
-registersymbol(fSpeed)
-
-pVars:
-fSpeed:
-dd (float)2
-
-
-[DISABLE]
-
-</AssemblerScript>
-          <CheatEntries>
-            <CheatEntry>
-              <ID>117507</ID>
-              <Description>"Speedhack"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FF8000</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>{ Game   : helldivers2.exe
-  Version: 
-  Date   : 2025-05-13
-  Author : cfemen
-
-  This script does blah blah blah
-}
-
-[ENABLE]
-
-
-aobscanmodule(AOB_Speed,game.dll,F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC) // should be unique
-alloc(newmem,$1000)
-
-label(code)
-label(return)
-label(bFreeze)
-registersymbol(bFreeze)
-newmem:
-
-code:
-  push rcx
-  lea rcx,[rsi+70]
-  cmp rbx,rcx // TransformArray[0] ?
-  je Player
-  mov rcx,712947D6712947D6 // Ship
-  cmp [r15],rcx
-  je Player
-  jmp Enemy
-Player:
-    mov rcx,fSpeed
-    mulss xmm1,[rcx]
-    mulss xmm1,[rbx+78]
-    mulss xmm1,[rbx+7C]
-    movaps xmm3,xmm1
-    subss xmm3,xmm4
-    pop rcx
-    jmp return
-Enemy:
-  pop rcx
-  cmp byte ptr[bFreeze],1
-  jne short @f
-   xorps xmm1,xmm1
-  @@:
-  mulss xmm1,[rbx+78]
-  mulss xmm1,[rbx+7C]
-  movaps xmm3,xmm1
-  subss xmm3,xmm4
-  jmp return
-bFreeze:
-db 0
-
-AOB_Speed:
-  jmp far newmem
-  nop 3
-return:
-registersymbol(AOB_Speed)
-
-[DISABLE]
-
-AOB_Speed:
-  db F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC
-
-unregistersymbol(AOB_Speed)
-dealloc(newmem)
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+731947
-
-game.dll+731913: 41 0F 28 F1              - movaps xmm6,xmm9
-game.dll+731917: F3 0F 5D F0              - minss xmm6,xmm0
-game.dll+73191B: EB 06                    - jmp game.dll+731923
-game.dll+73191D: F3 0F 10 7C 24 40        - movss xmm7,[rsp+40]
-game.dll+731923: F3 0F 10 4B 70           - movss xmm1,[rbx+70]
-game.dll+731928: F3 0F 59 4B 6C           - mulss xmm1,[rbx+6C]
-game.dll+73192D: F3 0F 10 A3 80 00 00 00  - movss xmm4,[rbx+00000080]
-game.dll+731935: F2 0F 10 2D 03 97 CA 00  - movsd xmm5,[game.dll+13DB040]
-game.dll+73193D: F3 0F 59 4B 74           - mulss xmm1,[rbx+74]
-game.dll+731942: F3 0F 10 53 30           - movss xmm2,[rbx+30]
-// ---------- INJECTING HERE ----------
-game.dll+731947: F3 0F 59 4B 78           - mulss xmm1,[rbx+78]
-// ---------- DONE INJECTING  ----------
-game.dll+73194C: F3 0F 59 4B 7C           - mulss xmm1,[rbx+7C]
-game.dll+731951: 0F 28 D9                 - movaps xmm3,xmm1
-game.dll+731954: F3 0F 5C DC              - subss xmm3,xmm4
-game.dll+731958: 0F 5A C3                 - cvtps2pd xmm0,xmm3
-game.dll+73195B: 0F 54 05 7E DC CA 00     - andps xmm0,[game.dll+13DF5E0]
-game.dll+731962: 66 0F 2F E8              - comisd xmm5,xmm0
-game.dll+731966: 77 20                    - ja game.dll+731988
-game.dll+731968: F3 0F 59 D7              - mulss xmm2,xmm7
-game.dll+73196C: 44 0F 2F E2              - comiss xmm12,xmm2
-game.dll+731970: 76 06                    - jna game.dll+731978
-}
-</AssemblerScript>
-              <CheatEntries>
-                <CheatEntry>
-                  <ID>117508</ID>
-                  <Description>"Speed:"</Description>
-                  <ShowAsSigned>0</ShowAsSigned>
-                  <VariableType>Float</VariableType>
-                  <Address>fSpeed</Address>
-                </CheatEntry>
-                <CheatEntry>
-                  <ID>117509</ID>
-                  <Description>"Freeze Non Player Characters"</Description>
-                  <VariableType>Auto Assembler Script</VariableType>
-                  <AssemblerScript>[ENABLE]
-bFreeze:
-db 1
-
- 
- 
-[DISABLE]
-bFreeze:
-db 0
-
-</AssemblerScript>
-                </CheatEntry>
-              </CheatEntries>
-            </CheatEntry>
-          </CheatEntries>
         </CheatEntry>
         <CheatEntry>
           <ID>113959</ID>
@@ -1407,6 +1012,137 @@ game.dll+6530D7: 49 8B D7        - mov rdx,r15
 game.dll+6530DA: EB 44           - jmp game.dll+653120
 }
 </AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117524</ID>
+          <Description>"Speedhack                                                                           (by cfemen)"</Description>
+          <Options moHideChildren="1"/>
+          <Color>C0C0C0</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">{ Game   : helldivers2.exe
+  Version:
+  Date   : 2025-05-13
+  Author : cfemen
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+
+aobscanmodule(AOB_Speed,game.dll,F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC) // should be unique
+alloc(newmem,$1000)
+alloc(fSpeed,4)
+registersymbol(fSpeed)
+
+fSpeed:
+db (float)1.25
+
+label(code)
+label(return)
+label(bFreeze)
+registersymbol(bFreeze)
+newmem:
+
+code:
+  push rcx
+  lea rcx,[rsi+70]
+  cmp rbx,rcx // TransformArray[0] ?
+  je Player
+  mov rcx,712947D6712947D6 // Ship
+  cmp [r15],rcx
+  je Player
+  jmp Enemy
+Player:
+    mov rcx,fSpeed
+    mulss xmm1,[rcx]
+    mulss xmm1,[rbx+78]
+    mulss xmm1,[rbx+7C]
+    movaps xmm3,xmm1
+    subss xmm3,xmm4
+    pop rcx
+    jmp return
+Enemy:
+  pop rcx
+  cmp byte ptr[bFreeze],1
+  jne short @f
+   xorps xmm1,xmm1
+  @@:
+  mulss xmm1,[rbx+78]
+  mulss xmm1,[rbx+7C]
+  movaps xmm3,xmm1
+  subss xmm3,xmm4
+  jmp return
+bFreeze:
+db 0
+
+AOB_Speed:
+  jmp far newmem
+  nop 3
+return:
+registersymbol(AOB_Speed)
+
+[DISABLE]
+
+AOB_Speed:
+  db F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC
+
+unregistersymbol(AOB_Speed)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+731947
+
+game.dll+731913: 41 0F 28 F1              - movaps xmm6,xmm9
+game.dll+731917: F3 0F 5D F0              - minss xmm6,xmm0
+game.dll+73191B: EB 06                    - jmp game.dll+731923
+game.dll+73191D: F3 0F 10 7C 24 40        - movss xmm7,[rsp+40]
+game.dll+731923: F3 0F 10 4B 70           - movss xmm1,[rbx+70]
+game.dll+731928: F3 0F 59 4B 6C           - mulss xmm1,[rbx+6C]
+game.dll+73192D: F3 0F 10 A3 80 00 00 00  - movss xmm4,[rbx+00000080]
+game.dll+731935: F2 0F 10 2D 03 97 CA 00  - movsd xmm5,[game.dll+13DB040]
+game.dll+73193D: F3 0F 59 4B 74           - mulss xmm1,[rbx+74]
+game.dll+731942: F3 0F 10 53 30           - movss xmm2,[rbx+30]
+// ---------- INJECTING HERE ----------
+game.dll+731947: F3 0F 59 4B 78           - mulss xmm1,[rbx+78]
+// ---------- DONE INJECTING  ----------
+game.dll+73194C: F3 0F 59 4B 7C           - mulss xmm1,[rbx+7C]
+game.dll+731951: 0F 28 D9                 - movaps xmm3,xmm1
+game.dll+731954: F3 0F 5C DC              - subss xmm3,xmm4
+game.dll+731958: 0F 5A C3                 - cvtps2pd xmm0,xmm3
+game.dll+73195B: 0F 54 05 7E DC CA 00     - andps xmm0,[game.dll+13DF5E0]
+game.dll+731962: 66 0F 2F E8              - comisd xmm5,xmm0
+game.dll+731966: 77 20                    - ja game.dll+731988
+game.dll+731968: F3 0F 59 D7              - mulss xmm2,xmm7
+game.dll+73196C: 44 0F 2F E2              - comiss xmm12,xmm2
+game.dll+731970: 76 06                    - jna game.dll+731978
+}
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>117525</ID>
+              <Description>"Speed:"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>fSpeed</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>113969</ID>
+              <Description>"Freeze Non Player Characters"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+bFreeze:
+db 1
+
+ 
+ 
+[DISABLE]
+bFreeze:
+db 0
+
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
         </CheatEntry>
         <CheatEntry>
           <ID>113957</ID>
@@ -2031,17 +1767,17 @@ db 0
 [ENABLE]
 
 
-aobscanmodule(aobSubTime,game.dll,F3 43 0F 11 84 F4 40 9C 04 00) // should be unique
+aobscanmodule(aobSubTime,game.dll,F3 0F 5C C7 F3 41 0F 5F C7) // should be unique
 
 aobSubTime:
-  nop A
+  nop 4
 
 registersymbol(aobSubTime)
 
 [DISABLE]
 
 aobSubTime:
-  db F3 43 0F 11 84 F4 40 9C 04 00
+  db F3 0F 5C C7
 
 unregistersymbol(aobSubTime)
 </AssemblerScript>
@@ -2507,160 +2243,6 @@ unregistersymbol(aob_CheckMissionBlip)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
-              <ID>117510</ID>
-              <Description>"Speedhack                                                                      (by cfemen)"</Description>
-              <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
-              <Color>C0C0C0</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript Async="1">{$lua}
-if syntaxcheck then return end
-openProcess("helldivers2.exe")
-Sleep(1000)
-{$asm}
-[ENABLE]
-globalalloc(pVars,128)
-
-label(fSpeed)
-registersymbol(fSpeed)
-
-pVars:
-fSpeed:
-dd (float)2
-
-
-[DISABLE]
-
-</AssemblerScript>
-              <CheatEntries>
-                <CheatEntry>
-                  <ID>117511</ID>
-                  <Description>"Speedhack"</Description>
-                  <Options moHideChildren="1"/>
-                  <Color>FF8000</Color>
-                  <VariableType>Auto Assembler Script</VariableType>
-                  <AssemblerScript>{ Game   : helldivers2.exe
-  Version: 
-  Date   : 2025-05-13
-  Author : cfemen
-
-  This script does blah blah blah
-}
-
-[ENABLE]
-
-
-aobscanmodule(AOB_Speed,game.dll,F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC) // should be unique
-alloc(newmem,$1000)
-
-label(code)
-label(return)
-label(bFreeze)
-registersymbol(bFreeze)
-newmem:
-
-code:
-  push rcx
-  lea rcx,[rsi+70]
-  cmp rbx,rcx // TransformArray[0] ?
-  je Player
-  mov rcx,712947D6712947D6 // Ship
-  cmp [r15],rcx
-  je Player
-  jmp Enemy
-Player:
-    mov rcx,fSpeed
-    mulss xmm1,[rcx]
-    mulss xmm1,[rbx+78]
-    mulss xmm1,[rbx+7C]
-    movaps xmm3,xmm1
-    subss xmm3,xmm4
-    pop rcx
-    jmp return
-Enemy:
-  pop rcx
-  cmp byte ptr[bFreeze],1
-  jne short @f
-   xorps xmm1,xmm1
-  @@:
-  mulss xmm1,[rbx+78]
-  mulss xmm1,[rbx+7C]
-  movaps xmm3,xmm1
-  subss xmm3,xmm4
-  jmp return
-bFreeze:
-db 0
-
-AOB_Speed:
-  jmp far newmem
-  nop 3
-return:
-registersymbol(AOB_Speed)
-
-[DISABLE]
-
-AOB_Speed:
-  db F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC
-
-unregistersymbol(AOB_Speed)
-dealloc(newmem)
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+731947
-
-game.dll+731913: 41 0F 28 F1              - movaps xmm6,xmm9
-game.dll+731917: F3 0F 5D F0              - minss xmm6,xmm0
-game.dll+73191B: EB 06                    - jmp game.dll+731923
-game.dll+73191D: F3 0F 10 7C 24 40        - movss xmm7,[rsp+40]
-game.dll+731923: F3 0F 10 4B 70           - movss xmm1,[rbx+70]
-game.dll+731928: F3 0F 59 4B 6C           - mulss xmm1,[rbx+6C]
-game.dll+73192D: F3 0F 10 A3 80 00 00 00  - movss xmm4,[rbx+00000080]
-game.dll+731935: F2 0F 10 2D 03 97 CA 00  - movsd xmm5,[game.dll+13DB040]
-game.dll+73193D: F3 0F 59 4B 74           - mulss xmm1,[rbx+74]
-game.dll+731942: F3 0F 10 53 30           - movss xmm2,[rbx+30]
-// ---------- INJECTING HERE ----------
-game.dll+731947: F3 0F 59 4B 78           - mulss xmm1,[rbx+78]
-// ---------- DONE INJECTING  ----------
-game.dll+73194C: F3 0F 59 4B 7C           - mulss xmm1,[rbx+7C]
-game.dll+731951: 0F 28 D9                 - movaps xmm3,xmm1
-game.dll+731954: F3 0F 5C DC              - subss xmm3,xmm4
-game.dll+731958: 0F 5A C3                 - cvtps2pd xmm0,xmm3
-game.dll+73195B: 0F 54 05 7E DC CA 00     - andps xmm0,[game.dll+13DF5E0]
-game.dll+731962: 66 0F 2F E8              - comisd xmm5,xmm0
-game.dll+731966: 77 20                    - ja game.dll+731988
-game.dll+731968: F3 0F 59 D7              - mulss xmm2,xmm7
-game.dll+73196C: 44 0F 2F E2              - comiss xmm12,xmm2
-game.dll+731970: 76 06                    - jna game.dll+731978
-}
-</AssemblerScript>
-                  <CheatEntries>
-                    <CheatEntry>
-                      <ID>117512</ID>
-                      <Description>"Speed:"</Description>
-                      <ShowAsSigned>0</ShowAsSigned>
-                      <VariableType>Float</VariableType>
-                      <Address>fSpeed</Address>
-                    </CheatEntry>
-                    <CheatEntry>
-                      <ID>117513</ID>
-                      <Description>"Freeze Non Player Characters"</Description>
-                      <VariableType>Auto Assembler Script</VariableType>
-                      <AssemblerScript>[ENABLE]
-bFreeze:
-db 1
-
- 
- 
-[DISABLE]
-bFreeze:
-db 0
-
-</AssemblerScript>
-                    </CheatEntry>
-                  </CheatEntries>
-                </CheatEntry>
-              </CheatEntries>
-            </CheatEntry>
-            <CheatEntry>
               <ID>113964</ID>
               <Description>"Instant Shuttle                                                                (by cfemen)"</Description>
               <Color>C0C0C0</Color>
@@ -2890,6 +2472,137 @@ dealloc(missionA_newmem)
 dealloc(missionB_newmem)
 dealloc(completeHiveBase_newmem)
 </AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117526</ID>
+              <Description>"Speedhack                                                                      (by gir489)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>C0C0C0</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">{ Game   : helldivers2.exe
+  Version:
+  Date   : 2025-05-13
+  Author : cfemen
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+
+aobscanmodule(AOB_Speed,game.dll,F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC) // should be unique
+alloc(newmem,$1000)
+alloc(fSpeed,4)
+registersymbol(fSpeed)
+
+fSpeed:
+db (float)1.25
+
+label(code)
+label(return)
+label(bFreeze)
+registersymbol(bFreeze)
+newmem:
+
+code:
+  push rcx
+  lea rcx,[rsi+70]
+  cmp rbx,rcx // TransformArray[0] ?
+  je Player
+  mov rcx,712947D6712947D6 // Ship
+  cmp [r15],rcx
+  je Player
+  jmp Enemy
+Player:
+    mov rcx,fSpeed
+    mulss xmm1,[rcx]
+    mulss xmm1,[rbx+78]
+    mulss xmm1,[rbx+7C]
+    movaps xmm3,xmm1
+    subss xmm3,xmm4
+    pop rcx
+    jmp return
+Enemy:
+  pop rcx
+  cmp byte ptr[bFreeze],1
+  jne short @f
+   xorps xmm1,xmm1
+  @@:
+  mulss xmm1,[rbx+78]
+  mulss xmm1,[rbx+7C]
+  movaps xmm3,xmm1
+  subss xmm3,xmm4
+  jmp return
+bFreeze:
+db 0
+
+AOB_Speed:
+  jmp far newmem
+  nop 3
+return:
+registersymbol(AOB_Speed)
+
+[DISABLE]
+
+AOB_Speed:
+  db F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC
+
+unregistersymbol(AOB_Speed)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+731947
+
+game.dll+731913: 41 0F 28 F1              - movaps xmm6,xmm9
+game.dll+731917: F3 0F 5D F0              - minss xmm6,xmm0
+game.dll+73191B: EB 06                    - jmp game.dll+731923
+game.dll+73191D: F3 0F 10 7C 24 40        - movss xmm7,[rsp+40]
+game.dll+731923: F3 0F 10 4B 70           - movss xmm1,[rbx+70]
+game.dll+731928: F3 0F 59 4B 6C           - mulss xmm1,[rbx+6C]
+game.dll+73192D: F3 0F 10 A3 80 00 00 00  - movss xmm4,[rbx+00000080]
+game.dll+731935: F2 0F 10 2D 03 97 CA 00  - movsd xmm5,[game.dll+13DB040]
+game.dll+73193D: F3 0F 59 4B 74           - mulss xmm1,[rbx+74]
+game.dll+731942: F3 0F 10 53 30           - movss xmm2,[rbx+30]
+// ---------- INJECTING HERE ----------
+game.dll+731947: F3 0F 59 4B 78           - mulss xmm1,[rbx+78]
+// ---------- DONE INJECTING  ----------
+game.dll+73194C: F3 0F 59 4B 7C           - mulss xmm1,[rbx+7C]
+game.dll+731951: 0F 28 D9                 - movaps xmm3,xmm1
+game.dll+731954: F3 0F 5C DC              - subss xmm3,xmm4
+game.dll+731958: 0F 5A C3                 - cvtps2pd xmm0,xmm3
+game.dll+73195B: 0F 54 05 7E DC CA 00     - andps xmm0,[game.dll+13DF5E0]
+game.dll+731962: 66 0F 2F E8              - comisd xmm5,xmm0
+game.dll+731966: 77 20                    - ja game.dll+731988
+game.dll+731968: F3 0F 59 D7              - mulss xmm2,xmm7
+game.dll+73196C: 44 0F 2F E2              - comiss xmm12,xmm2
+game.dll+731970: 76 06                    - jna game.dll+731978
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>117527</ID>
+                  <Description>"Speed:"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>Float</VariableType>
+                  <Address>fSpeed</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>117528</ID>
+                  <Description>"Freeze Non Player Characters"</Description>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+bFreeze:
+db 1
+
+ 
+ 
+[DISABLE]
+bFreeze:
+db 0
+
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
             </CheatEntry>
             <CheatEntry>
               <ID>113967</ID>
@@ -3291,24 +3004,24 @@ unregistersymbol(aobSprintWrite)
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
-// Executable Version: 1.8.22927.0
-// MD5 Signature     : 34B03C63A9B3946A71A77D7719475948
-// EXE Compile Date  : September 19, 2024 11:09 AM
-// Script Date       : September 24, 2024 06:58 PM
+// Executable Version: 1.8.27207.0
+// MD5 Signature     : 14C848EF74B1A8FEF0AC3DB6E396B3D2
+// EXE Compile Date  : January 28, 2025 10:15 AM
+// Script Date       : February 04, 2025 06:29 PM
 [ENABLE]
-aobscanmodule(aob_Syringes,game.dll, 43 8B 54 F7 ? 8B C8)
+aobscanmodule(aob_Syringes,game.dll, 41 8B 54 EE 04 8B C8)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
 label(return_Syringes)
 
 newmem_Syringes:
-  mov edx,[r15+r14*8+04]
+  mov edx,[r14+rbp*8+4]
   mov ecx,eax
   cmp edx, #1
   je short @f
     dec edx
   @@:
-  mov [r15+rcx*8+04],edx
+  mov [r14+rbp*8+4],edx
   jmp return_Syringes
 
 aob_Syringes:
@@ -3317,7 +3030,7 @@ return_Syringes:
 
 [DISABLE]
 aob_Syringes:
-  db 43 8B 54 F7 04 8B C8 FF CA 41 89 54 CF 04
+  db 41 8B 54 EE 04 8B C8 FF CA 41 89 54 CE 04
 
 unregistersymbol(aob_Syringes)
 dealloc(newmem_Syringes)
@@ -3533,39 +3246,13 @@ unregistersymbol(aob_CheckMissionBlip)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
-          <ID>117514</ID>
-          <Description>"Speedhack                                                                            (by cfemen)"</Description>
-          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <ID>117529</ID>
+          <Description>"Speedhack                                                                           (by cfemen)"</Description>
+          <Options moHideChildren="1"/>
           <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">{$lua}
-if syntaxcheck then return end
-openProcess("helldivers2.exe")
-Sleep(1000)
-{$asm}
-[ENABLE]
-globalalloc(pVars,128)
-
-label(fSpeed)
-registersymbol(fSpeed)
-
-pVars:
-fSpeed:
-dd (float)2
-
-
-[DISABLE]
-
-</AssemblerScript>
-          <CheatEntries>
-            <CheatEntry>
-              <ID>117515</ID>
-              <Description>"Speedhack"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FF8000</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>{ Game   : helldivers2.exe
-  Version: 
+          <AssemblerScript Async="1">{ Game   : helldivers2.exe
+  Version:
   Date   : 2025-05-13
   Author : cfemen
 
@@ -3577,6 +3264,11 @@ dd (float)2
 
 aobscanmodule(AOB_Speed,game.dll,F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC) // should be unique
 alloc(newmem,$1000)
+alloc(fSpeed,4)
+registersymbol(fSpeed)
+
+fSpeed:
+db (float)1.25
 
 label(code)
 label(return)
@@ -3658,19 +3350,19 @@ game.dll+73196C: 44 0F 2F E2              - comiss xmm12,xmm2
 game.dll+731970: 76 06                    - jna game.dll+731978
 }
 </AssemblerScript>
-              <CheatEntries>
-                <CheatEntry>
-                  <ID>117516</ID>
-                  <Description>"Speed:"</Description>
-                  <ShowAsSigned>0</ShowAsSigned>
-                  <VariableType>Float</VariableType>
-                  <Address>fSpeed</Address>
-                </CheatEntry>
-                <CheatEntry>
-                  <ID>117517</ID>
-                  <Description>"Freeze Non Player Characters"</Description>
-                  <VariableType>Auto Assembler Script</VariableType>
-                  <AssemblerScript>[ENABLE]
+          <CheatEntries>
+            <CheatEntry>
+              <ID>117530</ID>
+              <Description>"Speed:"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>fSpeed</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117531</ID>
+              <Description>"Freeze Non Player Characters"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
 bFreeze:
 db 1
 
@@ -3681,8 +3373,6 @@ bFreeze:
 db 0
 
 </AssemblerScript>
-                </CheatEntry>
-              </CheatEntries>
             </CheatEntry>
           </CheatEntries>
         </CheatEntry>
@@ -3909,22 +3599,23 @@ dmg_newmem:
     je dmg_Oneshot
   cmp [rcx+00], #324 // Hellpod impact fire damage
     je dmg_Oneshot
+
   cmp [rcx+00], #404 // Helldiver melee
-    je dmg_code
+    je dmg_Melee
   cmp [rcx+00], #409 // Helldiver melee Muscle Enhaced
-    je dmg_code
+    je dmg_Melee
   cmp [rcx+00], #411 // CQC-19 Stunning Spear
-    je dmg_code
+    je dmg_Melee
   cmp [rcx+00], #412 // CQC-30 Stunning Baton
-    je dmg_code
+    je dmg_Melee
   cmp [rcx+00], #406 // CQC-5 Combat axe
-    je dmg_code
+    je dmg_Melee
   cmp [rcx+00], #408 // Shovel Melee Attack
-    je dmg_code
+    je dmg_Melee
   cmp [rcx+00], #411 // ONE TRUE FLAG
-    je dmg_code
+    je dmg_Melee
   cmp [rcx+00], #467 // This is Democrazy emote
-    je dmg_code
+    je dmg_Melee
 
 
   cmp [dmg_toggle_enemyORdefault],#1
@@ -4591,7 +4282,7 @@ dmg_newmem:
     je dmg_code
   cmp [rcx+00], #291 // Napalm SEAF/Eagle Explosion
     je dmg_code
-  cmp [rcx+00], #387 // Napalm SEAF/Eagle heavy burn
+  cmp [rcx+00], #388 // Napalm SEAF/Eagle heavy burn
     je dmg_code
   //cmp [rcx+00], #? // Eagle smoke
   //  je dmg_code
@@ -4816,30 +4507,41 @@ dealloc(dmg_newmem)
 // EXE Compile Date  : June 05, 2024 09:54 AM
 // Script Date       : June 14, 2024 09:00 PM
 [ENABLE]
-aobscanmodule(aob_ShielDeezNutts,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1)
+aobscanmodule(aob_ShielDeezNutts,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E)
 registersymbol(aob_ShielDeezNutts)
-alloc(ShieldDeezNutts,1024)
+alloc(ShieldDeezNutts,1024,game.dll)
 label(ShieldDeezNutts_return)
+
 ShieldDeezNutts:
-  subss xmm1,xmm14
+  test rsi,rsi
+  je short @f
+  push rax
+  mov rax,12C8D71AC3897A5C
+  cmp [rsi],rax
+  jne short @f
   comiss xmm1, dword ptr [compare_shield]
   jbe short @f
-  movss xmm1, dword ptr [compare_shield]
+    movss xmm1, dword ptr [compare_shield]
 @@:
-  movss [r14+r15+8],xmm1
+  pop rax
+  subss xmm1,xmm14
+  movss [r14+r15+4C],xmm1
   movaps xmm2, xmm1
   jmp ShieldDeezNutts_return
 compare_shield:
-dd (float)4.0  // maximum shield cooldown duration in seconds
+dd (float)5.0  // maximum shield cooldown duration in seconds
+
 aob_ShielDeezNutts:
   jmp far ShieldDeezNutts
   nop
 ShieldDeezNutts_return:
+
 [DISABLE]
 dealloc(ShieldDeezNutts)
 unregistersymbol(aob_ShielDeezNutts)
+
 aob_ShielDeezNutts:
-  db F3 41 0F 5C CE F3 43 0F 11 4C 3E 08 0F 28 D1
+  db F3 41 0F 5C CE F3 43 0F 11 4C 3E 4C 0F 28 D1
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -5537,18 +5239,6 @@ blitzer_damage + 030:
 unregisterSymbol("blitzer_settings")
 unregisterSymbol("blitzer_damage")
 </AssemblerScript>
-                  <Hotkeys>
-                    <Hotkey>
-                      <Action>Toggle Activation</Action>
-                      <Keys>
-                        <Key>16</Key>
-                        <Key>39</Key>
-                      </Keys>
-                      <ID>0</ID>
-                      <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-                      <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-                    </Hotkey>
-                  </Hotkeys>
                 </CheatEntry>
                 <CheatEntry>
                   <ID>117469</ID>
@@ -5667,18 +5357,6 @@ unregisterSymbol("arcthrower_settings")
 unregisterSymbol("arcthrower_damage")
 
 </AssemblerScript>
-                  <Hotkeys>
-                    <Hotkey>
-                      <Action>Toggle Activation</Action>
-                      <Keys>
-                        <Key>16</Key>
-                        <Key>39</Key>
-                      </Keys>
-                      <ID>0</ID>
-                      <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-                      <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-                    </Hotkey>
-                  </Hotkeys>
                 </CheatEntry>
                 <CheatEntry>
                   <ID>117470</ID>
@@ -5819,18 +5497,6 @@ tesla_tower_damage + 030:
 unregisterSymbol("tesla_tower_settings")
 unregisterSymbol("tesla_tower_damage")
 </AssemblerScript>
-                  <Hotkeys>
-                    <Hotkey>
-                      <Action>Toggle Activation</Action>
-                      <Keys>
-                        <Key>16</Key>
-                        <Key>39</Key>
-                      </Keys>
-                      <ID>0</ID>
-                      <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
-                      <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
-                    </Hotkey>
-                  </Hotkeys>
                 </CheatEntry>
               </CheatEntries>
             </CheatEntry>
@@ -5916,33 +5582,29 @@ unregisterSymbol(Mortar_40mm_HE_expls)
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 {$lua}
-registerSymbol("eagle500kg_impact", '["game.dll" + 02114950] + A90')
-registerSymbol("eagle500kg_explosion", '["game.dll" + 02114950] + A90 + C')
+registerSymbol("eagle500kg_impact", '[game.dll + 0226AF38] + B5C')
+registerSymbol("eagle500kg_explosion", '[game.dll + 0226AF38] + B68')
 {$asm}
 
-// eagle 500kg bomb
 eagle500kg_impact: //explosion_type_on_impact
-  dd #190 // (220=500kg?) (190=SEAF Mini Nuke)
+  dd #207 //
 
-// eagle 500kg bomb
 eagle500kg_explosion: //explosion_type_expire
-  dd #190 // (184=500kg) (190=SEAF Mini Nuke)
+  dd #207 // (207=SEAF Mininuke was 199)
 
 [DISABLE]
-//eagle 500kg bomb
 eagle500kg_impact: //explosion_type_on_impact
-  dd #220 //
-unregisterSymbol("eagle500kg_impact")
+  dd #179 // (179=500kg impact was 132)
+//unregisterSymbol("eagle500kg_impact")
 
-//eagle 500kg bomb
 eagle500kg_explosion: //explosion_type_expire
-  dd #184 //
+  dd #198 //(198=500kg explosion was 190)
 unregisterSymbol("eagle500kg_explosion")
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
           <ID>117487</ID>
-          <Description>"WASP Swapper                                                                      (by fallout11)"</Description>
+          <Description>"WASP Swapper(outdated)                                                                      (by fallout11)"</Description>
           <Options moHideChildren="1"/>
           <Color>4080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
@@ -5960,75 +5622,6 @@ WASP_Launcher_explosion_type_on_impact:
   dd #245 //(245=normal Wasp round)
 unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
 </AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117429</ID>
-          <Description>"Semi weapons fire rate remover (outdated)                           (by impushingp)"</Description>
-          <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
-          <Color>0080FF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>[ENABLE]
-
-{$asm}
-alloc(firerateType,4)
-alloc(valuetochange,4)
-
-registersymbol(firerateType)
-registersymbol(valuetochange)
-
-valuetochange:
-  dq (float)45
-
-resetfloat:
-  dq (float)500
-
-
-[DISABLE]
-
-{$asm}
-unregistersymbol(firerateType)
-unregistersymbol(valuetochange)
-
-dealloc(firerateType,4)
-dealloc(valuetochange,4)
-
-</AssemblerScript>
-          <CheatEntries>
-            <CheatEntry>
-              <ID>117424</ID>
-              <Description>"Fire Rate Hack"</Description>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>{$lua}
-if syntaxcheck then return end
-[ENABLE]
-
-decodeFunction("c-n1K%MPLl0//SRlg:cYxy*sEPXye6q9UNEgoq+vD58QW8a46_6=rJ*17gzuFdw_zJ9F5{*{d0BRO)dq(rz}hbASKiZ?;QI+RS8ce+5.*bN;VUWWVIT^19LNv[Jj*gMP]exelAlLEm#/AohFiU%BtOpZ++9(33HNcKS)R-A]fg]?hG)^MBNW!gmSAZxL4.)_O)SDE}T!;/eF@.WyvB2s]f}!e.)*:PHLdbF$P@#/qA9quNU@PCAlC:0R+wcX1fMW2sgi3E=oEMwrvcM79=ecSzPXxaS+0+dUZx[k;y6ir_$bNm6}g;:lQaekAyUw^VO[_DHg=KwKRrU=vfb=Q$=w55lY(X9$Un!FVP2!))(O,T1L8eZ01#z(!M+0(.kO0J*:G#!1x8fM3lt[iz}v3CQ+oe,NotS=xVu=O:nSm}=akscHqe7?u@8[5.f=1n^u.n?z0[u4Uqk#XD#Mv;QvQusKxOVHxU9aj8^23(@MC+iPM];a{nvZ[$Lb/a/Q)^u(LsTS]0$V/zD4qnf1.hE)L+tqWI@(S)P}/4dqYM,N/KgUHu8X%yBA/}8K6ptFpw/(jkFxvBgr:=.1A)ox=j8}qxnR]3mU4NRG-JcVLh0g}8sWxx$.2Gy:N6bb5^$dW9pUJ%U@!:U7eQ2@O0Qq(u{ak8jQfeq[$21%a;WoSJmuj,PreK$Jiz4xjyZ!v]-Cp)g5p=p,Y!2XO,;{utR+RG1*aYB@t)^6#fWT0Ly5sbDCKiIqaA@Sr!m@g#{@zw#%xjSUcmk7M$$bs?FuF{cxHrTY[2WdQ+8lMXuzn2e?q5T/Apg@N)uNM4[E{@Egx5x)%p[u.i:jZgA+3q3Nw3XSC,Y1YH@P:T?cV8%!5lhpdd)fFZAEvsp[t?J5fYxI/Z//Dxj}jcpo[c,V=+)B)i9wI[f9%TW*w!KbJuhvVmV;YfWUib*a{e$AJ32_.qQ:}Q80VSB)?.NFwEMYb8z@[U4=JS-gR@(IW-HJ2o!K{lPu_qg,T,^it=YNM%A]tWg$z.7Pn8B5Hx/AHY6z/[I!8JcX:ioD;s^NSi*jCZNc%hmv}:Uv=G+1SuStzfE8pUFS}!zFv193?lfmGp[ETC3D*U=ruB.ZX9D6s?0!Uz/FeUf[um_%QG}931KD}=6Q:%h@/pM)]O3T[K!x8K]H=1($10}rc.e^VtO=whXyd?l!=cm7MGAp+NTiHq9VW};P(J+ZUOQ#%]TZoZ:[PDdro7=,KvEOf2H$?{KucMS6o1=x6v(pLHC9DSz).XKT?5}su9t@Wr^fG-n0h7/##65bA9sG0b.K*On+eE8sGo/Es*P(2r]3cX/F%34W)B-/S/B923G;%xVDWkf1-k(2pZ;eNS%e;L6R1Uhh@pfuLExHP.Q02x4pbxA.)Ik#SU4LH+D0OM[;Zo#DoHidOnq8z5JG=A[E#vo5b,VAr]M$0rfsjy[,VsI(%%E#kK%%p$]tbDdD%nKhqZ,{WN4O*xW8Yaxz)t}$S(LY=cFhvDaQPKXq5X0phuiwT;o:=xG7_L{7R%F?sZ_x2O}sL(6{^*Qb90PRqA.a#SYEr:/-WJw#UN)vP*1A^1zi!4d%AQ!F@dgay[E:kN]c3Fh3n{J8]vN%goRQi/[FTYFo$t,n!oW$?h.7*/ZW8QJ{ma+zX44Mt}boa^m{sC,R9QUN[piBR?2DAx5dw=hoJDPxg5J}z=^t?.W+,=I=nmzWAji23J5F)e9t:?tA0eC[hdJzP;+8NNzoK*Xg4$lZsTYI86(N-k$clD8+},;yC6gxU-)NRs:ow8ub#p)i:3}:T9KZ{pZBmeLT_=0ovq+O!z1VGFS-AR^^Vba1MU")()
-
-
-[DISABLE]
-
-decodeFunction("c-n1?NspQU0EKZfZS5pYFTJ!q8L$})5L^qTLk5L$DUJwks8OP9ijF9YED6c^hyKt0g=7;(dg+s}dEYy^uf1SB1U}:xaP#HnI)wbXMiby4w.]JW-o2LhfAs3jYrF,mpuqwF@a5lc[67I]yZ}3P]{IfN(;Y:p1xL-[Imb]GerEo?XxOn7:Nc/.M^+dYFj7d+2QbK}c$Ds2w.}q_BF;xj2WZePK*#:VO_-@8Y@mj[O}@Z$ILeFi!/N6*k%TjJLITYeF%%rJQnjI-JFe{wLrg}IYhx1Jx}p=fvDl/3I}HbX);PkgvQJRCLMcQl0(hJ{!pq8@cTX$x(i!69CIUSgaqdiBn)e}j$s2gpS?UjVK9yiJisTr,U+)0RrMfP9GD+u8dvs*%bGw3eo/ZkmT6rXG$ym^h9MZTxMcPjbujhl0-OCKwJf:0HCOm7/rgbWe?iYwGY9-k*#,_1,7:bZ4Y:OdojEgKtuqBQ$b7;P9[(G80/JeYNqH[#plP,WgN##J[clJ]F-0H*a)DS7FJ=Wqqa.JJwlIIr?R4RBHzf7rmLRn2RQd4$m)^mlYAnsVd[$Fn-q(HCAvp65R%sG}i2e92mB{b#@pdIj[*a:EcjVt?QQdFyp1Gem{ts$($$2:pH!{9@g]l.MiI?@/Snqox{SDd1Sb8z0nz^M8aK;G}vKYjzd*2fg")()
-
-
-</AssemblerScript>
-              <CheatEntries>
-                <CheatEntry>
-                  <ID>117425</ID>
-                  <Description>"Select Fire Rates(0---&gt;X)"</Description>
-                  <ShowAsSigned>0</ShowAsSigned>
-                  <VariableType>Float</VariableType>
-                  <Address>firerateType</Address>
-                </CheatEntry>
-                <CheatEntry>
-                  <ID>117426</ID>
-                  <Description>"Fire Rate To Change"</Description>
-                  <ShowAsSigned>0</ShowAsSigned>
-                  <VariableType>Float</VariableType>
-                  <Address>valuetochange</Address>
-                </CheatEntry>
-              </CheatEntries>
-            </CheatEntry>
-          </CheatEntries>
         </CheatEntry>
         <CheatEntry>
           <ID>117439</ID>
@@ -6153,12 +5746,12 @@ ObjectiveShellRackAddr+4:
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
 {$lua}
-local democracy_protects = getAddress("[[game.dll + 01A24878] + A8] + 1C") + 0x378 + 0x38
+local democracy_protects = getAddress("[[game.dll + 1CFF7C8] + B0] + 1C") + 0x400
 writeFloat(democracy_protects, 2.0)
 
 [DISABLE]
 {$lua}
-local democracy_protects = getAddress("[[game.dll + 01A24878] + A8] + 1C") + 0x378 + 0x38
+local democracy_protects = getAddress("[[game.dll + 1CFF7C8] + B0] + 1C") + 0x400
 writeFloat(democracy_protects, 1.5)
 </AssemblerScript>
         </CheatEntry>
@@ -6168,20 +5761,20 @@ writeFloat(democracy_protects, 1.5)
           <Color>C080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_nofall,game.dll,4C 8B DC 55 53 41 54 41 56)
-registersymbol(aob_nofall)
-alloc(newmem_nofall,1024,game.dll)
-label(return_nofall)
+aobscanmodule(aob_noFall,game.dll,4C 8B DC 55 53 41 56 49 8D AB A8)
+registersymbol(aob_noFall)
+alloc(newmem_noFall,1024,game.dll)
+label(return_noFall)
 alloc(base_attackID,8)
 
 registersymbol(base_attackID)
 
-newmem_nofall:
+newmem_noFall:
   mov [base_attackID],rsp
   push rbx
   mov rbx,[base_attackID]
-  lea rbx,[rbx-A18]
-  mov rbx,[rbx+00000A98]
+  lea rbx,[rbx-A58]
+  mov rbx,[rbx+00000AD8]
   cmp ebx,E32E9832
   pop rbx
   jne @f
@@ -6190,18 +5783,18 @@ newmem_nofall:
   mov r11,rsp
   push rbp
   push rbx
-  jmp return_nofall
+  jmp return_noFall
 
-aob_nofall:
-  jmp newmem_nofall
-return_nofall:
+aob_noFall:
+  jmp newmem_noFall
+return_noFall:
 
 [DISABLE]
-aob_nofall:
+aob_noFall:
   db 4C 8B DC 55 53
 
-unregistersymbol(aob_nofall)
-dealloc(newmem_nofall)
+unregistersymbol(aob_noFall)
+dealloc(newmem_noFall)
 unregistersymbol(base_attackID)
 dealloc(base_attackID)
 </AssemblerScript>
@@ -6248,11 +5841,11 @@ dealloc(newmem)
   <UserdefinedSymbols>
     <SymbolEntry>
       <Name>pVars</Name>
-      <Address>25806790000</Address>
+      <Address>146954B0000</Address>
     </SymbolEntry>
     <SymbolEntry>
-      <Name>newmem</Name>
-      <Address>257F3D10000</Address>
+      <Name>ObjectiveShellRackAddr</Name>
+      <Address>14915A68082</Address>
     </SymbolEntry>
   </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
