@@ -5576,7 +5576,7 @@ unregisterSymbol(Mortar_40mm_HE_expls)
         </CheatEntry>
         <CheatEntry>
           <ID>117475</ID>
-          <Description>"500kg expanded radius                                                         (by fallout11+Meowsisi)"</Description>
+          <Description>"500kg expanded radius(outdated)                                                         (by fallout11+Meowsisi)"</Description>
           <Options moHideChildren="1"/>
           <Color>4080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
@@ -5600,27 +5600,6 @@ eagle500kg_impact: //explosion_type_on_impact
 eagle500kg_explosion: //explosion_type_expire
   dd #198 //(198=500kg explosion was 190)
 unregisterSymbol("eagle500kg_explosion")
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117487</ID>
-          <Description>"WASP Swapper(outdated)                                                                      (by fallout11)"</Description>
-          <Options moHideChildren="1"/>
-          <Color>4080FF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
-{$asm}
-//
-
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
-[DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -5834,6 +5813,267 @@ ragdoll:
 unregistersymbol(ragdoll)
 dealloc(newmem)
 </AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117532</ID>
+          <Description>"Swappers"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FFFFFF</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>117487</ID>
+              <Description>"Mortar Sentry Swapper                                                     (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117534</ID>
+              <Description>"AutoCannon Sentry Swapper                                            (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117533</ID>
+              <Description>"AntiTank Emplacement Swapper                                      (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117535</ID>
+              <Description>"Rocket Sentry Swapper                                                    (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117537</ID>
+              <Description>"AutoCannon Swapper                                                      (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117536</ID>
+              <Description>"GR-8 Recoiless Rifle Swapper                                           (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117538</ID>
+              <Description>"FAF-14 Spear Swapper                                                     (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117539</ID>
+              <Description>"RL-77 Airburst Rocket Launcher Swapper                        (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117540</ID>
+              <Description>"W.A.S.P Launcher Swapper                                              (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117541</ID>
+              <Description>"Eagle Cluster Bomb Swapper                                           (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117542</ID>
+              <Description>"Oribtal Gatling Barrage Swapper                                      (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117543</ID>
+              <Description>"Eagle Airstrike Bomb Swapper                                         (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+{$asm}
+//
+
+WASP_Launcher_explosion_type_on_impact:
+  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+[DISABLE]
+//
+WASP_Launcher_explosion_type_on_impact:
+  dd #245 //(245=normal Wasp round)
+unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
         </CheatEntry>
       </CheatEntries>
     </CheatEntry>
