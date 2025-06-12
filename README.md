@@ -95,4 +95,6 @@ Fixed speedhack and weapon armory editor
 No fall dmg<br>
 Inf last stim<br>
 Shield CD<br>
-LoveMiku Swappers
+LoveMiku Swappers<br>
+500kg<br>
+IDs<br>
