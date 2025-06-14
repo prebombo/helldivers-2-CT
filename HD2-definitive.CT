@@ -5832,17 +5832,51 @@ dealloc(newmem)
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 {$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+registerSymbol("mortar_base", '["game.dll" + 022696B8]')
 {$asm}
-//
+//  A/M-12 MORTAR SENTRY
+mortar_base+4888: //projectile_nums
+  dd #3 //
+mortar_base+48FC: //explosion_type_on_impact
+  dd #212 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（212=Recoiless Rifle 85mm HE） （198=500kg）（67=Nuke）
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+//  A/M-12 MORTAR SENTRY
+mortar_base+4888: //projectile_nums
+  dd #1
+mortar_base+48FC: ////explosion_type_on_impact
+  dd #260
+unregisterSymbol("Mortar_base")
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117544</ID>
+              <Description>"Mortar Sentry EMS Swapper                                             (by LoveMiku)"</Description>
+              <Options moHideChildren="1"/>
+              <Color>FFFF00</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+{$lua}
+registerSymbol("mortar_base", '["game.dll" + 022696B8]')
+{$asm}
+//  A/M-23 EMS_Mortar_Sentry
+mortar_base+4998: //projectile_nums
+  dd #3
+mortar_base+4A0C: //explosion_type_on_impact
+  dd #29
+mortar_base+4A18: //explosion_type_expire
+  dd #29 //(29=Grenade 40mm Arc AoE)
+
+[DISABLE]
+//  A/M-23 EMS_Mortar_Sentry
+mortar_base+4998: //projectile_nums
+  dd #1
+mortar_base+4A0C: //explosion_type_on_impact
+  dd #106
+mortar_base+4A18: //explosion_type_expire
+  dd #129
+unregisterSymbol("Mortar_base")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -5853,17 +5887,23 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 {$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+registerSymbol("AC8autocannonSentry_projectile_speed", '["game.dll" + 022696B8] + 1ADC')
+registerSymbol("AC8autocannonSentry_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 1B4C')
 {$asm}
-//
+AC8autocannonSentry_projectile_speed:
+  dd (float)3000
+AC8autocannonSentry_projectile_explosion_type_on_impact:
+  dd #127 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+
+AC8autocannonSentry_projectile_speed:
+  dd (float)1021
+AC8autocannonSentry_projectile_explosion_type_on_impact:
+  dd #168
+
+unregisterSymbol("AC8autocannonSentry_projectile_speed")
+unregisterSymbol("AC8autocannonSentry_projectile_explosion_type_on_impact")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -5873,18 +5913,24 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <Color>FFFF00</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
-{$asm}
-//
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+{$lua}
+registerSymbol("EAT12_AntitankEmplacement__projectile_speed", '["game.dll" + 022696B8] + 4BBC')
+registerSymbol("EAT12_AntitankEmplacement__projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 4C2C')
+{$asm}
+EAT12_AntitankEmplacement__projectile_speed:
+  dd (float)3000
+EAT12_AntitankEmplacement__projectile_explosion_type_on_impact:
+  dd #216 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
+
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+EAT12_AntitankEmplacement__projectile_speed:
+  dd (float)625
+EAT12_AntitankEmplacement__projectile_explosion_type_on_impact:
+  dd #33
+
+unregisterSymbol("EAT12_AntitankEmplacement__projectile_speed")
+unregisterSymbol("EAT12_AntitankEmplacement__projectile_explosion_type_on_impact")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -5894,18 +5940,23 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <Color>FFFF00</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
-{$asm}
-//
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+{$lua}
+registerSymbol("Rocket_Sentry_projectile_speed", '["game.dll" + 022696B8] + E3AC')
+registerSymbol("Rocket_Sentry_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + E41C')
+{$asm}
+Rocket_Sentry_projectile_speed:
+  dd (float)3000
+Rocket_Sentry_projectile_explosion_type_on_impact:
+  dd #216 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+
+Rocket_Sentry_projectile_speed:
+  dd (float)100
+Rocket_Sentry_projectile_explosion_type_on_impact:
+  dd #228
+unregisterSymbol("Rocket_Sentry_projectile_speed")
+unregisterSymbol("Rocket_Sentry_projectile_explosion_type_on_impact")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -5915,18 +5966,35 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <Color>FFFF00</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
-{$asm}
-//
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+{$lua}
+registerSymbol("AC8autocannon20mmAPHET_projectile_speed", '["game.dll" + 022696B8] + 147C')
+registerSymbol("AC8autocannon20mmAPHET_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 14EC')
+registerSymbol("AC8autocannon_20mmFLAK_projectile_speed", '["game.dll" + 022696B8] + 158C')
+registerSymbol("AC8autocannon_20mmFLAK_Shrapnel_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 103FC')
+{$asm}
+AC8autocannon20mmAPHET_projectile_speed:
+  dd (float)14000
+AC8autocannon20mmAPHET_projectile_explosion_type_on_impact:
+  dd #139
+AC8autocannon_20mmFLAK_projectile_speed:
+  dd (float)14000
+AC8autocannon_20mmFLAK_Shrapnel_projectile_explosion_type_on_impact:
+  dd #212 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+AC8autocannon20mmAPHET_projectile_speed:
+  dd (float)820
+AC8autocannon20mmAPHET_projectile_explosion_type_on_impact:
+  dd #294
+AC8autocannon_20mmFLAK_projectile_speed:
+  dd (float)820
+AC8autocannon_20mmFLAK_Shrapnel_projectile_explosion_type_on_impact:
+  dd #0
+
+unregisterSymbol("AC8autocannon20mmAPHET_projectile_speed")
+unregisterSymbol("AC8autocannon20mmAPHET_projectile_explosion_type_on_impact")
+unregisterSymbol("AC8autocannon_20mmFLAK_projectile_speed")
+unregisterSymbol("AC8autocannon_20mmFLAK_Shrapnel_projectile_explosion_type_on_impact")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -5936,18 +6004,35 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <Color>FFFF00</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
-{$asm}
-//
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+{$lua}
+registerSymbol("recoilless_rifle_HEAT_speed", '["game.dll" + 022696B8] + 4EEC')
+registerSymbol("recoilless_rifle_HEAT", '["game.dll" + 022696B8] + 4F5C')
+registerSymbol("recoilless_rifle_HE_speed", '["game.dll" + 022696B8] + 4CCC')
+registerSymbol("recoilless_rifle_HE", '["game.dll" + 022696B8] + 4D3C')
+{$asm}
+recoilless_rifle_HEAT:
+  dd #245
+recoilless_rifle_HE:
+  dd #199 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb) （198=500kg）（67=Nuke）
+recoilless_rifle_HEAT_speed:
+  dd (float)14000
+recoilless_rifle_HE_speed:
+  dd (float)14000
+
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+recoilless_rifle_HEAT: //
+  dd #178
+recoilless_rifle_HE: //
+  dd #212
+recoilless_rifle_HEAT_speed:
+  dd (float)250
+recoilless_rifle_HE_speed:
+  dd (float)250
+unregisterSymbol("recoilless_rifle_HEAT")
+unregisterSymbol("recoilless_rifle_HE")
+unregisterSymbol("recoilless_rifle_HEAT_speed")
+unregisterSymbol("recoilless_rifle_HE_speed")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -5957,18 +6042,36 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <Color>FFFF00</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
-{$asm}
-//
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+{$lua}
+registerSymbol("Missile_Faf_projectile_speed", '["game.dll" + 022696B8] + 664C')
+registerSymbol("Missile_Faf_projectile_drag_factor", '["game.dll" + 022696B8] + 6654')
+registerSymbol("Missile_Faf_projectile_gravity_multipler", '["game.dll" + 022696B8] + 6658')
+registerSymbol("Missile_Faf_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 66BC')
+{$asm}
+Missile_Faf_projectile_speed:
+  dd (float)3000
+Missile_Faf_projectile_drag_factor:
+  dd (float)0
+Missile_Faf_projectile_gravity_multipler:
+  dd (float)0
+Missile_Faf_projectile_explosion_type_on_impact:
+  dd #245 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb) （198=500kg）（67=Nuke）
+
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+Missile_Faf_projectile_speed:
+  dd (float)70
+Missile_Faf_projectile_drag_factor:
+  dd (float)0.3
+Missile_Faf_projectile_gravity_multipler:
+  dd (float)1
+Missile_Faf_projectile_explosion_type_on_impact:
+  dd #218
+
+unregisterSymbol("Missile_Faf_projectile_speed")
+unregisterSymbol("Missile_Faf_projectile_drag_factor")
+unregisterSymbol("Missile_Faf_projectile_gravity_multipler")
+unregisterSymbol("Missile_Faf_projectile_explosion_type_on_impact")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -5978,18 +6081,35 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <Color>FFFF00</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
-{$asm}
-//
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+{$lua}
+registerSymbol("RL77_cluster_projectile_speed", '["game.dll" + 022696B8] + 510C')
+registerSymbol("RL77_cluster_bomb_projectile_speed", '["game.dll" + 022696B8] + 521C')
+registerSymbol("RL77_Cluster_FLAK_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 539C')
+registerSymbol("RL77_cluster_bomb_FLAK_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 54AC')
+{$asm}
+RL77_cluster_projectile_speed:
+  dd (float)3000
+RL77_cluster_bomb_projectile_speed:
+  dd (float)3000
+RL77_Cluster_FLAK_projectile_explosion_type_on_impact:
+  dd #212
+RL77_cluster_bomb_FLAK_projectile_explosion_type_on_impact:
+  dd #212 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
+
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+RL77_cluster_projectile_speed:
+  dd (float)250
+RL77_cluster_bomb_projectile_speed:
+  dd (float)250
+RL77_Cluster_FLAK_projectile_explosion_type_on_impact:
+  dd #5
+RL77_cluster_bomb_FLAK_projectile_explosion_type_on_impact:
+  dd #5
+unregisterSymbol("RL77_cluster_projectile_speed")
+unregisterSymbol("RL77_cluster_bomb_projectile_speed")
+unregisterSymbol("RL77_Cluster_FLAK_projectile_explosion_type_on_impact")
+unregisterSymbol("RL77_cluster_bomb_FLAK_projectile_explosion_type_on_impact")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -5999,17 +6119,23 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <Color>FFFF00</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
-{$asm}
-//
 
+{$lua}
+registerSymbol("WASP_Launcher_projectile_speed", '["game.dll" + 022696B8] + 686C')
+registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 022696B8] + 68DC')
+{$asm}
+WASP_Launcher_projectile_speed:
+  dd (float)3000
 WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+  dd #212 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb) （198=500kg）（67=Nuke）
+
 [DISABLE]
-//
+WASP_Launcher_projectile_speed:
+  dd (float)500
 WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
+  dd #269
+
+unregisterSymbol("WASP_Launcher_projectile_speed")
 unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
 </AssemblerScript>
             </CheatEntry>
@@ -6020,18 +6146,24 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <Color>FFFF00</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
-{$asm}
-//
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
+{$lua}
+registerSymbol("eagle_clusterbomb_flak_projectile_nums", '["game.dll" + 022696B8] + 158')
+registerSymbol("eagle_clusterbomb_flak_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 1CC')
+{$asm}
+eagle_clusterbomb_flak_projectile_nums:
+  dd #1
+eagle_clusterbomb_flak_projectile_explosion_type_on_impact:
+  dd #212 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
+
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+eagle_clusterbomb_flak_projectile_nums:
+  dd #1
+eagle_clusterbomb_flak_projectile_explosion_type_on_impact:
+  dd #117
+
+unregisterSymbol("eagle_clusterbomb_flak_projectile_nums")
+unregisterSymbol("eagle_clusterbomb_flak_projectile_explosion_type_on_impact")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -6042,17 +6174,15 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 {$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+registerSymbol("Cannon_23mm_Eagle_projectile_explosion_type_on_impact", '[game.dll + 022696B8] + 1F8C')
 {$asm}
-//
+Cannon_23mm_Eagle_projectile_explosion_type_on_impact:
+  dd #212 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb) （198=500kg）（67=Nuke）
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+Cannon_23mm_Eagle_projectile_explosion_type_on_impact:
+  dd #190
+unregisterSymbol("Cannon_23mm_Eagle_projectile_explosion_type_on_impact")
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -6063,17 +6193,15 @@ unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 {$lua}
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 02114950] + 5A90')
+registerSymbol("eagle_airstrike_bomb_base", '[game.dll + 022696B8] + 2DC')
 {$asm}
-//
+eagle_airstrike_bomb_base:
+  dd #216 // (198=500kg) （67=Nuke）(207=SEAF_MiniNuke) （174=Hellbomb）（216=380mm）
 
-WASP_Launcher_explosion_type_on_impact:
-  dd #27//(185=SEAF High Yield)  (27=SEAF Explosive) (185=SEAF High Yield)
 [DISABLE]
-//
-WASP_Launcher_explosion_type_on_impact:
-  dd #245 //(245=normal Wasp round)
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
+eagle_airstrike_bomb_base:
+  dd #139
+unregisterSymbol("eagle_airstrike_bomb_base")
 </AssemblerScript>
             </CheatEntry>
           </CheatEntries>
