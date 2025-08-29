@@ -162,7 +162,7 @@ dealloc(newmem_Syringes)
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 
-aobscanmodule(aobSyrige,game.dll,41 89 54 CF 04 41 8B 44 24 08) // should be unique
+aobscanmodule(aobSyrige,game.dll,41 89 54 CE 04 41 8B 45 08) // should be unique
 
 aobSyrige:
   db 90 90 90 90 90
@@ -172,7 +172,7 @@ registersymbol(aobSyrige)
 [DISABLE]
 
 aobSyrige:
-  db 41 89 54 CF 04
+  db 41 89 54 CE 04
 
 unregistersymbol(aobSyrige)
 
@@ -315,7 +315,7 @@ unregistersymbol(aobAmmo)
             </CheatEntry>
             <CheatEntry>
               <ID>57</ID>
-              <Description>"No ammo consume                                                       (by cfemen)"</Description>
+              <Description>"No bullets consume                                                       (by cfemen)"</Description>
               <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">[ENABLE]
@@ -335,7 +335,7 @@ unregistersymbol(aobReload)
             </CheatEntry>
             <CheatEntry>
               <ID>117441</ID>
-              <Description>"No bullets consume                                                       (by cfemen)"</Description>
+              <Description>"No ? consume                                                       (by cfemen)"</Description>
               <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">{ Game   : helldivers2.exe
@@ -784,155 +784,121 @@ unregistersymbol(aob_CheckMissionBlip)
         </CheatEntry>
         <CheatEntry>
           <ID>113959</ID>
-          <Description>"instant complete all missions RButton                                 (by cfemen)"</Description>
+          <Description>"instant complete all missions                                             (by cfemen)"</Description>
           <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">{ Game   : helldivers2.exe
-  Version:
-  Date   : 2024-04-05
-  Author : ZoDDeL
+          <AssemblerScript Async="1">[ENABLE]
 
-  This script does blah blah blah
-}
+aobscanmodule(aobInsta1,game.dll,45 8B 4A 18 48 8D 8D 48 01 00 00 41 8B D4) // should be unique
+alloc(newmem,$1000)
 
-[ENABLE]
-//aobscanmodule(aob_GetAsyncKeyState,USER32.dll,E9 ? ? ? ? 57 48 83 EC 20)
-aobscanmodule(missionA,game.dll,45 8B 4A ? 48 8D 8D) // should be unique
-registersymbol(missionA)
-alloc(missionA_newmem,$1000)
+label(code)
+label(return)
 
-label(missionA_code)
-label(missionA_return)
+newmem:
 
-missionA_newmem:
-  push rax
-  push rcx
-  push rdx
-  push r8
-  push r9
-  push r10
-  push r11
-  sub rsp,28
-  mov rcx,2  // checks for mouse 2
-  call USER32.GetAsyncKeyState
-  add rsp,28
-  pop r11
-  pop r10
-  pop r9
-  pop r8
-  pop rdx
-  pop rcx
-  //cmp ax,8001  // having problems with this so instead i check for not 0
-  cmp ax,0
-  pop rax
-  jne missionA_complete
-  jmp missionA_code
-
-missionA_complete:
-  mov [r10+18],#1
-  jmp missionA_code
-
-
-missionA_code:
+code:
+  mov [r10+18],1
   mov r9d,[r10+18]
-  lea rcx,[rbp+148]
-  mov edx, r13d
-  jmp missionA_return
+  lea rcx,[rbp+00000148]
+  mov edx,r12d
+  jmp return
 
-missionA:
-  jmp far missionA_newmem
-missionA_return:
+aobInsta1:
+  jmp far newmem
+return:
+registersymbol(aobInsta1)
 
+aobscanmodule(aobInsta2,game.dll,8B 46 20 83 E8 02 83 F8 01 41 8B 85 14 08 00 00) // should be unique
+alloc(newmem2,$1000)
 
-aobscanmodule(missionB,game.dll,8B 46 ? 83 E8 02 83 F8 01) // should be unique
-registersymbol(missionB)
-alloc(missionB_newmem,$1000)
+label(code2)
+label(return2)
 
-label(missionB_code)
-label(missionB_return)
+newmem2:
 
-missionB_newmem:
-  push rax
-  push rcx
-  push rdx
-  push r8
-  push r9
-  push r10
-  push r11
-  sub rsp,28
-  mov rcx,2  // checks for mouse 2
-  call USER32.GetAsyncKeyState
-  add rsp,28
-  pop r11
-  pop r10
-  pop r9
-  pop r8
-  pop rdx
-  pop rcx
-  //cmp ax,8001  // having problems with this so instead i check for not 0
-  cmp ax,0
-  pop rax
-  jne missionB_complete
-  jmp missionB_code
-
-missionB_complete:
-  mov [rsi+20],#2
-  jmp missionB_code
-
-
-missionB_code:
+code2:
+  mov [rsi+20],2
   mov eax,[rsi+20]
   sub eax,02
   cmp eax,01
-  mov eax,[r13+814]
-  jmp missionB_return
+  mov eax,[r13+00000814]
+  jmp return2
 
-missionB:
-  jmp far missionB_newmem
+aobInsta2:
+  jmp far newmem2
   nop 2
-missionB_return:
-
-aobscanmodule(completeHiveBase,game.dll,4C 69 DE ? ? ? ? 48 6B C6) // should be unique
-alloc(completeHiveBase_newmem,$1000)
-
-label(completeHiveBase_code)
-label(completeHiveBase_return)
-
-completeHiveBase_newmem:
-
-completeHiveBase_code:
-  imul r11, rsi, 2A8
-  imul rax, rsi, 38
-  add r11, [rbx+48]
-  add rax, [rbx+50]
-  mov byte ptr [rax+31], #1
-  jmp completeHiveBase_return
-
-completeHiveBase:
-  jmp far completeHiveBase_newmem
-  nop 5
-completeHiveBase_return:
-registersymbol(completeHiveBase)
-
+return2:
+registersymbol(aobInsta2)
 
 [DISABLE]
 
-missionA:
-db 45 8B 4A 18 48 8D 8D 48 01 00 00 41 8B D4 66 0F 1F 44 00 00
+aobInsta1:
+  db 45 8B 4A 18 48 8D 8D 48 01 00 00 41 8B D4
 
+unregistersymbol(aobInsta1)
+dealloc(newmem)
 
-missionB:
-db 8B 46 20 83 E8 02 83 F8 01 41 8B 85 14 08 00 00 76 16 8B 56 18
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+5DF5BC
 
-completeHiveBase:
-  db 4C 69 DE A8 02 00 00 48 6B C6 38 4C 03 5B 48 48 03 43 50
+game.dll+5DF59B: 44 03 F0              - add r14d,eax
+game.dll+5DF59E: FF C3                 - inc ebx
+game.dll+5DF5A0: 3B 5E 0C              - cmp ebx,[rsi+0C]
+game.dll+5DF5A3: 72 BB                 - jb game.dll+5DF560
+game.dll+5DF5A5: 4C 8B 54 24 68        - mov r10,[rsp+68]
+game.dll+5DF5AA: 44 38 A5 CC 09 00 00  - cmp [rbp+000009CC],r12b
+game.dll+5DF5B1: 74 09                 - je game.dll+5DF5BC
+game.dll+5DF5B3: 45 38 62 30           - cmp [r10+30],r12b
+game.dll+5DF5B7: 75 03                 - jne game.dll+5DF5BC
+game.dll+5DF5B9: 41 FF C6              - inc r14d
+// ---------- INJECTING HERE ----------
+game.dll+5DF5BC: 45 8B 4A 18           - mov r9d,[r10+18]
+// ---------- DONE INJECTING  ----------
+game.dll+5DF5C0: 48 8D 8D 48 01 00 00  - lea rcx,[rbp+00000148]
+game.dll+5DF5C7: 41 8B D4              - mov edx,r12d
+game.dll+5DF5CA: 66 0F 1F 44 00 00     - nop word ptr [rax+rax+00]
+game.dll+5DF5D0: 41 3B D1              - cmp edx,r9d
+game.dll+5DF5D3: 73 34                 - jae game.dll+5DF609
+game.dll+5DF5D5: 44 8B 81 F8 FE FF FF  - mov r8d,[rcx-00000108]
+game.dll+5DF5DC: 45 85 C0              - test r8d,r8d
+game.dll+5DF5DF: 74 28                 - je game.dll+5DF609
+game.dll+5DF5E1: 41 8D 40 FD           - lea eax,[r8-03]
+game.dll+5DF5E5: 83 F8 02              - cmp eax,02
+}
+aobInsta2:
+  db 8B 46 20 83 E8 02 83 F8 01 41 8B 85 14 08 00 00
 
-unregistersymbol(missionA)
-unregistersymbol(missionB)
-unregistersymbol(completeHiveBase)
-dealloc(missionA_newmem)
-dealloc(missionB_newmem)
-dealloc(completeHiveBase_newmem)
+unregistersymbol(aobInsta2)
+dealloc(newmem2)
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+5DF122
+
+game.dll+5DF0F5: 48 8D 54 24 70        - lea rdx,[rsp+70]
+game.dll+5DF0FA: 4D 69 E8 60 08 00 00  - imul r13,r8,00000860
+game.dll+5DF101: 49 6B F0 54           - imul rsi,r8,54
+game.dll+5DF105: 4D 03 6A 60           - add r13,[r10+60]
+game.dll+5DF109: 44 8B C7              - mov r8d,edi
+game.dll+5DF10C: 49 8B CA              - mov rcx,r10
+game.dll+5DF10F: 4C 89 6C 24 40        - mov [rsp+40],r13
+game.dll+5DF114: 49 03 72 68           - add rsi,[r10+68]
+game.dll+5DF118: 48 89 74 24 68        - mov [rsp+68],rsi
+game.dll+5DF11D: E8 0E 18 00 00        - call game.dll+5E0930
+// ---------- INJECTING HERE ----------
+game.dll+5DF122: 8B 46 20              - mov eax,[rsi+20]
+// ---------- DONE INJECTING  ----------
+game.dll+5DF125: 83 E8 02              - sub eax,02
+game.dll+5DF128: 83 F8 01              - cmp eax,01
+game.dll+5DF12B: 41 8B 85 14 08 00 00  - mov eax,[r13+00000814]
+game.dll+5DF132: 76 16                 - jna game.dll+5DF14A
+game.dll+5DF134: 8B 56 18              - mov edx,[rsi+18]
+game.dll+5DF137: 45 32 FF              - xor r15b,r15b
+game.dll+5DF13A: 89 54 24 30           - mov [rsp+30],edx
+game.dll+5DF13E: EB 14                 - jmp game.dll+5DF154
+game.dll+5DF140: 3B C7                 - cmp eax,edi
+game.dll+5DF142: 75 AC                 - jne game.dll+5DF0F0
+}
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -1028,8 +994,6 @@ game.dll+6530DA: EB 44           - jmp game.dll+653120
 }
 
 [ENABLE]
-
-
 aobscanmodule(AOB_Speed,game.dll,F3 0F 59 4B 78 F3 0F 59 4B 7C 0F 28 D9 F3 0F 5C DC) // should be unique
 alloc(newmem,$1000)
 alloc(fSpeed,4)
@@ -1165,8 +1129,8 @@ unregistersymbol(aob_ImmaChargingMahLasor)
         </CheatEntry>
         <CheatEntry>
           <ID>42</ID>
-          <Description>"Instant Railgun/Arc Ready                                                   (by gir489)"</Description>
-          <Color>0000FF</Color>
+          <Description>"Instant Railgun/Arc Ready(outdated)                                                   (by gir489)"</Description>
+          <Color>4080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -1252,8 +1216,8 @@ game.dll+58FE03: 80 7C 24 40 00           - cmp byte ptr [rsp+40],00
         </CheatEntry>
         <CheatEntry>
           <ID>113960</ID>
-          <Description>"Energy Shield Mod (edit your cd)                                        (by gir489)"</Description>
-          <Color>0000FF</Color>
+          <Description>"Energy Shield Mod (edit your cd)(outdated)                                        (by gir489)"</Description>
+          <Color>0080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -1892,7 +1856,7 @@ unregistersymbol(aobSprintWrite)
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>[ENABLE]
 
-aobscanmodule(aobSyrige,game.dll,41 89 54 CF 04 41 8B 44 24 08) // should be unique
+aobscanmodule(aobSyrige,game.dll,41 89 54 CE 04 41 8B 45 08) // should be unique
 
 aobSyrige:
   db 90 90 90 90 90
@@ -1902,7 +1866,7 @@ registersymbol(aobSyrige)
 [DISABLE]
 
 aobSyrige:
-  db 41 89 54 CF 04
+  db 41 89 54 CE 04
 
 unregistersymbol(aobSyrige)
 
@@ -2322,155 +2286,121 @@ game.dll+6530DA: EB 44           - jmp game.dll+653120
             </CheatEntry>
             <CheatEntry>
               <ID>117431</ID>
-              <Description>"instant complete all missions RButton                           (by cfemen)"</Description>
+              <Description>"instant complete all missions                                         (by cfemen)"</Description>
               <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript Async="1">{ Game   : helldivers2.exe
-  Version:
-  Date   : 2024-04-05
-  Author : ZoDDeL
+              <AssemblerScript Async="1">[ENABLE]
 
-  This script does blah blah blah
-}
+aobscanmodule(aobInsta1,game.dll,45 8B 4A 18 48 8D 8D 48 01 00 00 41 8B D4) // should be unique
+alloc(newmem,$1000)
 
-[ENABLE]
-//aobscanmodule(aob_GetAsyncKeyState,USER32.dll,E9 ? ? ? ? 57 48 83 EC 20)
-aobscanmodule(missionA,game.dll,45 8B 4A ? 48 8D 8D) // should be unique
-registersymbol(missionA)
-alloc(missionA_newmem,$1000)
+label(code)
+label(return)
 
-label(missionA_code)
-label(missionA_return)
+newmem:
 
-missionA_newmem:
-  push rax
-  push rcx
-  push rdx
-  push r8
-  push r9
-  push r10
-  push r11
-  sub rsp,28
-  mov rcx,2  // checks for mouse 2
-  call USER32.GetAsyncKeyState
-  add rsp,28
-  pop r11
-  pop r10
-  pop r9
-  pop r8
-  pop rdx
-  pop rcx
-  //cmp ax,8001  // having problems with this so instead i check for not 0
-  cmp ax,0
-  pop rax
-  jne missionA_complete
-  jmp missionA_code
-
-missionA_complete:
-  mov [r10+18],#1
-  jmp missionA_code
-
-
-missionA_code:
+code:
+  mov [r10+18],1
   mov r9d,[r10+18]
-  lea rcx,[rbp+148]
-  mov edx, r13d
-  jmp missionA_return
+  lea rcx,[rbp+00000148]
+  mov edx,r12d
+  jmp return
 
-missionA:
-  jmp far missionA_newmem
-missionA_return:
+aobInsta1:
+  jmp far newmem
+return:
+registersymbol(aobInsta1)
 
+aobscanmodule(aobInsta2,game.dll,8B 46 20 83 E8 02 83 F8 01 41 8B 85 14 08 00 00) // should be unique
+alloc(newmem2,$1000)
 
-aobscanmodule(missionB,game.dll,8B 46 ? 83 E8 02 83 F8 01) // should be unique
-registersymbol(missionB)
-alloc(missionB_newmem,$1000)
+label(code2)
+label(return2)
 
-label(missionB_code)
-label(missionB_return)
+newmem2:
 
-missionB_newmem:
-  push rax
-  push rcx
-  push rdx
-  push r8
-  push r9
-  push r10
-  push r11
-  sub rsp,28
-  mov rcx,2  // checks for mouse 2
-  call USER32.GetAsyncKeyState
-  add rsp,28
-  pop r11
-  pop r10
-  pop r9
-  pop r8
-  pop rdx
-  pop rcx
-  //cmp ax,8001  // having problems with this so instead i check for not 0
-  cmp ax,0
-  pop rax
-  jne missionB_complete
-  jmp missionB_code
-
-missionB_complete:
-  mov [rsi+20],#2
-  jmp missionB_code
-
-
-missionB_code:
+code2:
+  mov [rsi+20],2
   mov eax,[rsi+20]
   sub eax,02
   cmp eax,01
-  mov eax,[r13+814]
-  jmp missionB_return
+  mov eax,[r13+00000814]
+  jmp return2
 
-missionB:
-  jmp far missionB_newmem
+aobInsta2:
+  jmp far newmem2
   nop 2
-missionB_return:
-
-aobscanmodule(completeHiveBase,game.dll,4C 69 DE ? ? ? ? 48 6B C6) // should be unique
-alloc(completeHiveBase_newmem,$1000)
-
-label(completeHiveBase_code)
-label(completeHiveBase_return)
-
-completeHiveBase_newmem:
-
-completeHiveBase_code:
-  imul r11, rsi, 2A8
-  imul rax, rsi, 38
-  add r11, [rbx+48]
-  add rax, [rbx+50]
-  mov byte ptr [rax+31], #1
-  jmp completeHiveBase_return
-
-completeHiveBase:
-  jmp far completeHiveBase_newmem
-  nop 5
-completeHiveBase_return:
-registersymbol(completeHiveBase)
-
+return2:
+registersymbol(aobInsta2)
 
 [DISABLE]
 
-missionA:
-db 45 8B 4A 18 48 8D 8D 48 01 00 00 41 8B D4 66 0F 1F 44 00 00
+aobInsta1:
+  db 45 8B 4A 18 48 8D 8D 48 01 00 00 41 8B D4
 
+unregistersymbol(aobInsta1)
+dealloc(newmem)
 
-missionB:
-db 8B 46 20 83 E8 02 83 F8 01 41 8B 85 14 08 00 00 76 16 8B 56 18
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+5DF5BC
 
-completeHiveBase:
-  db 4C 69 DE A8 02 00 00 48 6B C6 38 4C 03 5B 48 48 03 43 50
+game.dll+5DF59B: 44 03 F0              - add r14d,eax
+game.dll+5DF59E: FF C3                 - inc ebx
+game.dll+5DF5A0: 3B 5E 0C              - cmp ebx,[rsi+0C]
+game.dll+5DF5A3: 72 BB                 - jb game.dll+5DF560
+game.dll+5DF5A5: 4C 8B 54 24 68        - mov r10,[rsp+68]
+game.dll+5DF5AA: 44 38 A5 CC 09 00 00  - cmp [rbp+000009CC],r12b
+game.dll+5DF5B1: 74 09                 - je game.dll+5DF5BC
+game.dll+5DF5B3: 45 38 62 30           - cmp [r10+30],r12b
+game.dll+5DF5B7: 75 03                 - jne game.dll+5DF5BC
+game.dll+5DF5B9: 41 FF C6              - inc r14d
+// ---------- INJECTING HERE ----------
+game.dll+5DF5BC: 45 8B 4A 18           - mov r9d,[r10+18]
+// ---------- DONE INJECTING  ----------
+game.dll+5DF5C0: 48 8D 8D 48 01 00 00  - lea rcx,[rbp+00000148]
+game.dll+5DF5C7: 41 8B D4              - mov edx,r12d
+game.dll+5DF5CA: 66 0F 1F 44 00 00     - nop word ptr [rax+rax+00]
+game.dll+5DF5D0: 41 3B D1              - cmp edx,r9d
+game.dll+5DF5D3: 73 34                 - jae game.dll+5DF609
+game.dll+5DF5D5: 44 8B 81 F8 FE FF FF  - mov r8d,[rcx-00000108]
+game.dll+5DF5DC: 45 85 C0              - test r8d,r8d
+game.dll+5DF5DF: 74 28                 - je game.dll+5DF609
+game.dll+5DF5E1: 41 8D 40 FD           - lea eax,[r8-03]
+game.dll+5DF5E5: 83 F8 02              - cmp eax,02
+}
+aobInsta2:
+  db 8B 46 20 83 E8 02 83 F8 01 41 8B 85 14 08 00 00
 
-unregistersymbol(missionA)
-unregistersymbol(missionB)
-unregistersymbol(completeHiveBase)
-dealloc(missionA_newmem)
-dealloc(missionB_newmem)
-dealloc(completeHiveBase_newmem)
+unregistersymbol(aobInsta2)
+dealloc(newmem2)
+
+{
+// ORIGINAL CODE - INJECTION POINT: game.dll+5DF122
+
+game.dll+5DF0F5: 48 8D 54 24 70        - lea rdx,[rsp+70]
+game.dll+5DF0FA: 4D 69 E8 60 08 00 00  - imul r13,r8,00000860
+game.dll+5DF101: 49 6B F0 54           - imul rsi,r8,54
+game.dll+5DF105: 4D 03 6A 60           - add r13,[r10+60]
+game.dll+5DF109: 44 8B C7              - mov r8d,edi
+game.dll+5DF10C: 49 8B CA              - mov rcx,r10
+game.dll+5DF10F: 4C 89 6C 24 40        - mov [rsp+40],r13
+game.dll+5DF114: 49 03 72 68           - add rsi,[r10+68]
+game.dll+5DF118: 48 89 74 24 68        - mov [rsp+68],rsi
+game.dll+5DF11D: E8 0E 18 00 00        - call game.dll+5E0930
+// ---------- INJECTING HERE ----------
+game.dll+5DF122: 8B 46 20              - mov eax,[rsi+20]
+// ---------- DONE INJECTING  ----------
+game.dll+5DF125: 83 E8 02              - sub eax,02
+game.dll+5DF128: 83 F8 01              - cmp eax,01
+game.dll+5DF12B: 41 8B 85 14 08 00 00  - mov eax,[r13+00000814]
+game.dll+5DF132: 76 16                 - jna game.dll+5DF14A
+game.dll+5DF134: 8B 56 18              - mov edx,[rsi+18]
+game.dll+5DF137: 45 32 FF              - xor r15b,r15b
+game.dll+5DF13A: 89 54 24 30           - mov [rsp+30],edx
+game.dll+5DF13E: EB 14                 - jmp game.dll+5DF154
+game.dll+5DF140: 3B C7                 - cmp eax,edi
+game.dll+5DF142: 75 AC                 - jne game.dll+5DF0F0
+}
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -2606,8 +2536,8 @@ db 0
             </CheatEntry>
             <CheatEntry>
               <ID>113967</ID>
-              <Description>"Instant Railgun/Arc Ready                                              (by gir489)"</Description>
-              <Color>0000FF</Color>
+              <Description>"Instant Railgun/Arc Ready(outdated)                                              (by gir489)"</Description>
+              <Color>0080FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -2775,39 +2705,6 @@ AvatarClimbAddr+4:
   dd (float)1.40
 
 unregistersymbol(AvatarClimbAddr)
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117472</ID>
-              <Description>"Inf last Bullet SENATOR(outdated)                                                   (by fallout11)"</Description>
-              <Color>07AFF8</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-aobscanmodule(LegitNoReload,game.dll,8B 4D 30 F3 48 0F 2C F8) // should be unique
-alloc(newmem,$1000,LegitNoReload)
-label(code)
-label(return)
-
-newmem:
-  cmp [rbp+30],1 // checks if ammo in gun is equal to or greater than this number
-  jge code
-  mov [rbp+30],3 // writes this number to gun ammo address if the previous check is false
-code:
-  mov ecx,[rbp+30]
-  cvttss2si rdi,xmm0
-  jmp return
-
-LegitNoReload:
-  jmp newmem
-  nop 3
-return:
-registersymbol(LegitNoReload)
-
-[DISABLE]
-LegitNoReload:
-  db 8B 4D 30 F3 48 0F 2C F8
-unregistersymbol(LegitNoReload)
-dealloc(newmem)
 </AssemblerScript>
             </CheatEntry>
           </CheatEntries>
@@ -3378,8 +3275,8 @@ db 0
         </CheatEntry>
         <CheatEntry>
           <ID>113966</ID>
-          <Description>"Instant Railgun/Arc Ready                                                    (by gir489)"</Description>
-          <Color>0000FF</Color>
+          <Description>"Instant Railgun/Arc Ready(outdated)                                                    (by gir489)"</Description>
+          <Color>0080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">// Game Executable   : helldivers2.exe
 // Author            : gir489
@@ -3558,65 +3455,77 @@ dmg_newmem:
 
 
   //  // whitelisted weapons that get super damage
-  cmp [rcx+00], #75 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
+  cmp [rcx+00], #80 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
+    je dmg_Machinegun
+  cmp [rcx+00], #79 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
+    je dmg_Machinegun
+  cmp [rcx+00], #103 // AR-MA5C5
     je dmg_Machinegun
 
-  cmp [rcx+00], #103 // R-63CS Diligence Counter Sniper
+  cmp [rcx+00], #109 // R-63CS Diligence Counter Sniper
     je dmg_RegularSniper
-  cmp [rcx+00], #100 // R-6 Deaddeye
+  cmp [rcx+00], #106 // R-6 Deaddeye
     je dmg_RegularSniper
-  cmp [rcx+00], #238 // Plas-39 Projectile
+  cmp [rcx+00], #248 // Plas-39 Projectile
     je dmg_Pistol
-  cmp [rcx+00], #239 // Plas-39 Explosion
+  cmp [rcx+00], #249 // Plas-39 Explosion
     je dmg_code
-  cmp [rcx+00], #156 // anti material rifle
+  cmp [rcx+00], #163 // anti material rifle
     je dmg_Sniper
 
-  cmp [rcx+00], #48 // Knight
+  cmp [rcx+00], #50 // Knight
+    je dmg_Pistol
+  cmp [rcx+00], #47 // Knight
     je dmg_Pistol
 
-  cmp [rcx+00], #133 // SG-225SP Breaker Spray&amp;Pray
+  cmp [rcx+00], #140 // SG-225SP Breaker Spray&amp;Pray
+    je dmg_Shotgun
+  cmp [rcx+00], #122 // SG-M90A
     je dmg_Shotgun
 
-  cmp [rcx+00], #64 // P-113 Verdict
+  cmp [rcx+00], #67 // P-113 Verdict
     je dmg_Pistol
-  cmp [rcx+00], #68 // P-4 Senator revolver
+  cmp [rcx+00], #68 // P-M6C/Socom
     je dmg_Pistol
-  cmp [rcx+00], #118 // SG-22 Bushwack &amp; SG-8 Punisher
+  cmp [rcx+00], #72 // P-4 Senator revolver
+    je dmg_Pistol
+  cmp [rcx+00], #125 // SG-22 Bushwack &amp; SG-8 Punisher
     je dmg_Shotgun
 
-  cmp [rcx+00], #489 // K-2 Throwing knife
+  cmp [rcx+00], #503 // K-2 Throwing knife
     je dmg_Oneshot
 
-  cmp [rcx+00], #147 // ARC-3 Arc Thrower
+  cmp [rcx+00], #154 // ARC-3 Arc Thrower
     je dmg_Arc
-  cmp [rcx+00], #149 // ARC-12 Blitzer
+  cmp [rcx+00], #156 // ARC-12 Blitzer
     je dmg_Arc
-  cmp [rcx+00], #389 // LAS-98
+  cmp [rcx+00], #401 // LAS-98
     je dmg_Arc
 
-  cmp [rcx+00], #333 // Hellpod impact damage
+  cmp [rcx+00], #344 // Hellpod impact damage
     je dmg_Oneshot
-  cmp [rcx+00], #334 // Hellpod impact fire damage
+  cmp [rcx+00], #345 // Hellpod impact fire damage
     je dmg_Oneshot
-  cmp [rcx+00], #335 // Hellpod impact stun damage
+  cmp [rcx+00], #346 // Hellpod impact stun damage
     je dmg_Oneshot
 
-  cmp [rcx+00], #420 // Helldiver melee
+  cmp [rcx+00], #432 // Helldiver melee
     je dmg_Melee
-  cmp [rcx+00], #425 // Helldiver melee Muscle Enhaced
+  cmp [rcx+00], #437 // Helldiver melee Muscle Enhaced
     je dmg_Melee
-  cmp [rcx+00], #427 // CQC-19 Stunning Spear
+  cmp [rcx+00], #439 // CQC-19 Stunning Spear
     je dmg_Melee
-  cmp [rcx+00], #428 // CQC-30 Stunning Baton
+  cmp [rcx+00], #440 // CQC-30 Stunning Baton
     je dmg_Melee
-  cmp [rcx+00], #422 // CQC-5 Combat axe
+  cmp [rcx+00], #434 // CQC-5 Combat axe
     je dmg_Melee
-  cmp [rcx+00], #424 // Shovel Melee Attack
+  cmp [rcx+00], #435 // CQC-2 Saber
     je dmg_Melee
-  cmp [rcx+00], #427 // ONE TRUE FLAG
+  cmp [rcx+00], #436 // Shovel Melee Attack
     je dmg_Melee
-  cmp [rcx+00], #483 // This is Democrazy emote
+  cmp [rcx+00], #439 // ONE TRUE FLAG
+    je dmg_Melee
+  cmp [rcx+00], #497 // This is Democrazy emote
     je dmg_Melee
 
 
@@ -3711,7 +3620,7 @@ dmg_Machinegun:
   mov [rcx+10],#777 // writes penetration value 2
   mov [rcx+14],#777 // writes penetration value 3
   mov [rcx+18],#777 // writes penetration value 4
-  mov [rcx+1C],#0 // writes demolition value
+  //mov [rcx+1C],#0 // writes demolition value
   //mov [rcx+20],#5 // writes pushback / stagger value
   //mov [rcx+24],#100 // writes ??? value
   movd xmm3,[rcx+04]
@@ -3902,111 +3811,117 @@ dmg_newmem:
 
   //Hellpod
 
-  cmp [rcx+00], #333 // Hellpod Impact
+  cmp [rcx+00], #344 // Hellpod Impact
     je dmg_code
-  cmp [rcx+00], #334 // Hellpod Fire Impact
+  cmp [rcx+00], #345 // Hellpod Fire Impact
     je dmg_code
-  cmp [rcx+00], #335 // Hellpod Stun Impact
+  cmp [rcx+00], #346 // Hellpod Stun Impact
     je dmg_code
 
   //Assault rifles
 
-  cmp [rcx+00], #75 // AR-23 Liberator
+  cmp [rcx+00], #80 // AR-23 Liberator
     je dmg_code
-  cmp [rcx+00], #72 // AR-23P Liberator Penetrator
+  cmp [rcx+00], #77 // AR-23P Liberator Penetrator
     je dmg_code
-  cmp [rcx+00], #74 // AR-23C Liberator Concussive
+  cmp [rcx+00], #79 // AR-23C Liberator Concussive
     je dmg_code
-  cmp [rcx+00], #83 // AR-32 Pacifier
+  cmp [rcx+00], #88 // AR-32 Pacifier
     je dmg_code
-  cmp [rcx+00], #75 // AR StA-52
+  cmp [rcx+00], #103 // AR-MA5C5
     je dmg_code
-  cmp [rcx+00], #75 // AR-23A Liberator Carabine
+  cmp [rcx+00], #80 // AR StA-52
     je dmg_code
-  cmp [rcx+00], #97 // AR-61 Tenderizer
+  cmp [rcx+00], #80 // AR-23A Liberator Carabine
     je dmg_code
-  cmp [rcx+00], #96 // BR-14 Adjudicator
+  cmp [rcx+00], #102 // AR-61 Tenderizer
+    je dmg_code
+  cmp [rcx+00], #101 // BR-14 Adjudicator
     je dmg_code
 
   //Sniper rifle
 
-  cmp [rcx+00], #99 // R-2 Amendment
+  cmp [rcx+00], #105 // R-2 Amendment
     je dmg_code
-  cmp [rcx+00], #98 // R-2124 Constitution
+  cmp [rcx+00], #104 // R-2124 Constitution
     je dmg_code
-  cmp [rcx+00], #100 // R-6 Deaddeye
+  cmp [rcx+00], #106 // R-6 Deaddeye
     je dmg_code
-  cmp [rcx+00], #102 // R-63 Diligence
+  cmp [rcx+00], #108 // R-63 Diligence
     je dmg_code
-  cmp [rcx+00], #103 // R-63CS Diligence Counter Sniper
+  cmp [rcx+00], #109 // R-63CS Diligence Counter Sniper
     je dmg_code
-  cmp [rcx+00], #156 // Anti material rifle
+  cmp [rcx+00], #163 // Anti material rifle
     je dmg_code
-  cmp [rcx+00], #96 // AR-20L Justice
+  cmp [rcx+00], #101 // AR-20L Justice
     je dmg_code
 
   //Submachine guns
 
-  cmp [rcx+00], #48 // MP-98 Knight
+  cmp [rcx+00], #50 // MP-98 Knight
     je dmg_code
-  cmp [rcx+00], #48 // SMG StA-11
+  cmp [rcx+00], #50 // SMG StA-11
     je dmg_code
-  cmp [rcx+00], #66 // SMG-32 Reprimand
+  cmp [rcx+00], #47 // SMG M7S
     je dmg_code
-  cmp [rcx+00], #56 // SMG-37 Defender
+  cmp [rcx+00], #70 // SMG-32 Reprimand
     je dmg_code
-  cmp [rcx+00], #63 // SMG-72 Pummeler
+  cmp [rcx+00], #59 // SMG-37 Defender
+    je dmg_code
+  cmp [rcx+00], #66 // SMG-72 Pummeler
     je dmg_code
 
   //Shotgun
 
-  cmp [rcx+00], #118 // SG-8 Punisher
+  cmp [rcx+00], #125 // SG-8 Punisher
     je dmg_code
-  cmp [rcx+00], #131 // SG-8S Slugger
+  cmp [rcx+00], #138 // SG-8S Slugger
     je dmg_code
-  cmp [rcx+00], #121 // SG-20 Halt (fletchette)
+  cmp [rcx+00], #128 // SG-20 Halt (fletchette)
     je dmg_code
-  cmp [rcx+00], #130 // SG-20 Halt stun)
+  cmp [rcx+00], #137 // SG-20 Halt stun)
     je dmg_code
-  cmp [rcx+00], #119 // SG-451 Cookout
+  cmp [rcx+00], #126 // SG-451 Cookout
     je dmg_code
-  cmp [rcx+00], #134 // SG-225 Breaker
+  cmp [rcx+00], #122 // SG-M90A
     je dmg_code
-  cmp [rcx+00], #133 // SG-225SP Breaker Spray&amp;Pray
+  cmp [rcx+00], #141 // SG-225 Breaker
     je dmg_code
-  cmp [rcx+00], #137 // SG-225IE Breaker Incendiary
+  cmp [rcx+00], #140 // SG-225SP Breaker Spray&amp;Pray
     je dmg_code
-  cmp [rcx+00], #136 // SG-225NS Breaker Nailspitter
+  cmp [rcx+00], #144 // SG-225IE Breaker Incendiary
     je dmg_code
-  cmp [rcx+00], #124 // Projectile_Break-Action Shotgun
+  //cmp [rcx+00], #143 // SG-225NS Breaker Nailspitter
+  //  je dmg_code
+  cmp [rcx+00], #131 // Projectile_Break-Action Shotgun
     je dmg_code
 
   //Explosive
 
-  cmp [rcx+00], #158 // CB-9 explosive crossbow Projectile
+  cmp [rcx+00], #165 // CB-9 explosive crossbow Projectile
     je dmg_code
-  cmp [rcx+00], #159 // CB-9 explosive crossbow Explosion
+  cmp [rcx+00], #166 // CB-9 explosive crossbow Explosion
     je dmg_code
-  cmp [rcx+00], #143 // R-36 Eruptor Shrapnel
+  cmp [rcx+00], #150 // R-36 Eruptor Shrapnel
     je dmg_code
-  cmp [rcx+00], #109 // R-36 Eruptor Projectile
+  cmp [rcx+00], #115 // R-36 Eruptor Projectile
     je dmg_code
-  cmp [rcx+00], #272 // R-36 Eruptor Explosion
+  cmp [rcx+00], #283 // R-36 Eruptor Explosion
     je dmg_code
 
   //Energy-based
 
   cmp [rcx+00], #38 // SG-8P Punisher Plasma Projectile
     je dmg_code
-  cmp [rcx+00], #241 // SG-8P Punisher Plasma Explosion
+  cmp [rcx+00], #251 // SG-8P Punisher Plasma Explosion
     je dmg_code
-  cmp [rcx+00], #238 // Plas-39 Accelerator rifle Projectile
+  cmp [rcx+00], #248 // Plas-39 Accelerator rifle Projectile
     je dmg_code
-  cmp [rcx+00], #239 // Plas-39 Accelerator rifle Explosion
+  cmp [rcx+00], #249 // Plas-39 Accelerator rifle Explosion
     je dmg_code
-  cmp [rcx+00], #149 // ARC-12 Blitzer
+  cmp [rcx+00], #156 // ARC-12 Blitzer
     je dmg_code
-  cmp [rcx+00], #384 // LAS-5 Scythe
+  cmp [rcx+00], #396 // LAS-5 Scythe
     je dmg_code
   cmp [rcx+00], #31 // LAS-16 Sickle
     je dmg_code
@@ -4018,120 +3933,132 @@ dmg_newmem:
     je dmg_code
   cmp [rcx+00], #37 // PLAS-1 Scorcher Projectile
     je dmg_code
-  cmp [rcx+00], #236 // PLAS-1 Scorcher Explosion
+  cmp [rcx+00], #246 // PLAS-1 Scorcher Explosion
     je dmg_code
-  cmp [rcx+00], #43 // PLAS-101 Purifier bullet
+  cmp [rcx+00], #44 // PLAS-101 Purifier bullet
     je dmg_code
-  cmp [rcx+00], #242 // PLAS-101 Purifier min charge
+  cmp [rcx+00], #252 // PLAS-101 Purifier min charge
     je dmg_code
-  cmp [rcx+00], #243 // PLAS-101 Purifier max charge
+  cmp [rcx+00], #253 // PLAS-101 Purifier max charge
     je dmg_code
 
   //Special
 
+  cmp [rcx+00], #52 // VG-70 Variable
+    je dmg_code
   cmp [rcx+00], #13 // FLAM-66 Torcher flame rifle Impact
     je dmg_code
-  cmp [rcx+00], #113 // JAR-5 Dominator
+  cmp [rcx+00], #119 // JAR-5 Dominator
     je dmg_code
 
   //Pistol
 
-  cmp [rcx+00], #65 // P-92 Warrant
+  cmp [rcx+00], #69 // P-92 Warrant
     je dmg_code
-  cmp [rcx+00], #49 // P-2 Peacemaker
+  cmp [rcx+00], #51 // P-2 Peacemaker
     je dmg_code
-  cmp [rcx+00], #47 // P-19 Redeemer
+  cmp [rcx+00], #49 // P-19 Redeemer
     je dmg_code
-  cmp [rcx+00], #64 // P-113 Verdict
+  cmp [rcx+00], #67 // P-113 Verdict
     je dmg_code
-  cmp [rcx+00], #68 // P-4 Senator
+  cmp [rcx+00], #68 // P-M6C/Socom
+    je dmg_code
+  cmp [rcx+00], #72 // P-4 Senator
     je dmg_code
 
   //Melee
 
-  cmp [rcx+00], #420 // Helldiver melee
+  cmp [rcx+00], #432 // Helldiver melee
     je dmg_code
-  cmp [rcx+00], #425 // Helldiver melee Muscle Enhaced
+  cmp [rcx+00], #437 // Helldiver melee Muscle Enhaced
     je dmg_code
-  cmp [rcx+00], #427 // CQC-19 Stunning Spear
+  cmp [rcx+00], #439 // CQC-19 Stunning Spear
     je dmg_code
-  cmp [rcx+00], #423 // CQC-2 Saber
+  cmp [rcx+00], #435 // CQC-2 Saber
     je dmg_code
-  cmp [rcx+00], #428 // CQC-30 Stunning Baton
+  cmp [rcx+00], #440 // CQC-30 Stunning Baton
     je dmg_code
-  cmp [rcx+00], #422 // CQC-5 Combat axe
+  cmp [rcx+00], #434 // CQC-5 Combat axe
     je dmg_code
-  cmp [rcx+00], #427 // ONE TRUE FLAG
+  cmp [rcx+00], #439 // ONE TRUE FLAG
     je dmg_code
-  cmp [rcx+00], #424 // Shovel Melee Attack
+  cmp [rcx+00], #436 // Shovel Melee Attack
     je dmg_code
-  cmp [rcx+00], #426 // Helldiver Bayonet
+  cmp [rcx+00], #438 // Helldiver Bayonet
     je dmg_code
-  cmp [rcx+00], #483 // This is Democrazy emote
+  cmp [rcx+00], #497 // This is Democrazy emote
     je dmg_code
+  cmp [rcx+00], #382 // LIFT-182 Tp backpack
+    je dmg_code
+  //cmp [rcx+00], #? // LIFT-182 Tp backpack
+  //  je dmg_code
 
   //Special
 
   //cmp [rcx+00], #? // P-11 Stims Pistol
   //  je dmg_code
-  cmp [rcx+00], #118 // SG-22 Bushwack
+  cmp [rcx+00], #125 // SG-22 Bushwack
     je dmg_code
   cmp [rcx+00], #35 // LAS-58 Talon
     je dmg_code
   cmp [rcx+00], #14 // P-72 Crisper
     je dmg_code
-  cmp [rcx+00], #169 // GP-31 grenade pistol Projectile
+  cmp [rcx+00], #177 // GP-31 grenade pistol Projectile
     je dmg_code
-  cmp [rcx+00], #293 // GP-31 grenade pistol Explosion
+  cmp [rcx+00], #304 // GP-31 grenade pistol Explosion
     je dmg_code
-  cmp [rcx+00], #383 // LAS-7 Dagger
+  cmp [rcx+00], #395 // LAS-7 Dagger
     je dmg_code
   cmp [rcx+00], #18 // GP-31 Ultimatum Impact
     je dmg_code
-  cmp [rcx+00], #347 // GP-31 Ultimatum Explosion
+  cmp [rcx+00], #358 // GP-31 Ultimatum Explosion
     je dmg_code
   cmp [rcx+00], #36 // PLAS-15 Projectile Min
     je dmg_code
-  cmp [rcx+00], #39 // PLAS-15 Projectile Max
+  cmp [rcx+00], #43 // PLAS-15 Projectile Max
     je dmg_code
-  cmp [rcx+00], #244 // PLAS-15 Explosion Min
+  cmp [rcx+00], #254 // PLAS-15 Explosion Min
     je dmg_code
-  cmp [rcx+00], #245 // PLAS-15 Explosion Max
+  cmp [rcx+00], #255 // PLAS-15 Explosion Max
     je dmg_code
 
   //Grenades
 
-  cmp [rcx+00], #284 // TED-63 Dynamite
+  cmp [rcx+00], #295 // TED-63 Dynamite
     je dmg_code
-  cmp [rcx+00], #264 // G-6 Frag
+  cmp [rcx+00], #275 // G-6 Frag
     je dmg_code
-  cmp [rcx+00], #281 // G-12 High Explosive
+  cmp [rcx+00], #292 // G-12 High Explosive
     je dmg_code
-  cmp [rcx+00], #266 // G-10 Incendiary Impact
+  cmp [rcx+00], #277 // G-10 Incendiary Impact
     je dmg_code
-  cmp [rcx+00], #396 // G-10 Incendiary Fire
+  cmp [rcx+00], #408 // G-10 Incendiary Fire
     je dmg_code
-  cmp [rcx+00], #282 // G-16 Impact
+  cmp [rcx+00], #169 // G-31 ARC ARC
     je dmg_code
-  cmp [rcx+00], #267 // G-13 Incendiary Impact Impact
+  cmp [rcx+00], #296 // G-31 ARC Explosion
     je dmg_code
-  cmp [rcx+00], #396 // G-13 Incendiary Impact Fire
+  cmp [rcx+00], #293 // G-16 Impact
     je dmg_code
-  cmp [rcx+00], #215 // G-23 Stun
+  cmp [rcx+00], #278 // G-13 Incendiary Impact Impact
     je dmg_code
-  cmp [rcx+00], #350 // G-4 Gas Grenade Impact
+  cmp [rcx+00], #408 // G-13 Incendiary Impact Fire
     je dmg_code
-  cmp [rcx+00], #407 // G-4 Gas Grenade Gas
+  cmp [rcx+00], #225 // G-23 Stun
     je dmg_code
-  cmp [rcx+00], #282 // G-50 Seeker Drone
+  cmp [rcx+00], #361 // G-4 Gas Grenade Impact
+    je dmg_code
+  cmp [rcx+00], #419 // G-4 Gas Grenade Gas
+    je dmg_code
+  cmp [rcx+00], #293 // G-50 Seeker Drone
     je dmg_code
   //cmp [rcx+00], #? // G-3 Smoke
   //  je dmg_code
-  cmp [rcx+00], #397 // G-123 Thermite (burn)
+  cmp [rcx+00], #409 // G-123 Thermite (burn)
     je dmg_code
-  cmp [rcx+00], #216 // G-109 Urchin
+  cmp [rcx+00], #226 // G-109 Urchin
     je dmg_code
-  cmp [rcx+00], #489 // K-2 Throwing knife
+  cmp [rcx+00], #503 // K-2 Throwing knife
     je dmg_code
   cmp [rcx+00], #16 // G-142 Pyrotech Speen
     je dmg_code
@@ -4140,24 +4067,24 @@ dmg_newmem:
 
   //EXOs
 
-  cmp [rcx+00], #90 // EXO-45 Gatling
+  cmp [rcx+00], #95 // EXO-45 Gatling
     je dmg_code
-  cmp [rcx+00], #183 // EXO-45 rocket Projectile
+  cmp [rcx+00], #191 // EXO-45 rocket Projectile
     je dmg_code
-  cmp [rcx+00], #307 // EXO-45 rocket Explosion
+  cmp [rcx+00], #318 // EXO-45 rocket Explosion
     je dmg_code
-  cmp [rcx+00], #164 // Emancipator exo gun Projectile
+  cmp [rcx+00], #172 // Emancipator exo gun Projectile
     je dmg_code
-  cmp [rcx+00], #290 // Emancipator exo gun Explosion
+  cmp [rcx+00], #301 // Emancipator exo gun Explosion
     je dmg_code
 
   //Machine guns
 
-  cmp [rcx+00], #90 // MG-43
+  cmp [rcx+00], #95 // MG-43
     je dmg_code
-  cmp [rcx+00], #75 // M-105 Stalwart
+  cmp [rcx+00], #80 // M-105 Stalwart
     je dmg_code
-  cmp [rcx+00], #155 // MG-206 HMG
+  cmp [rcx+00], #162 // MG-206 HMG
     je dmg_code
 
   //Flame thrower
@@ -4166,7 +4093,7 @@ dmg_newmem:
     je dmg_code
   cmp [rcx+00], #13 // FLAM-66 Torcher
     je dmg_code
-  cmp [rcx+00], #396 // Flamethrower ground fire
+  cmp [rcx+00], #408 // Flamethrower ground fire
     je dmg_code
 
   //Gas
@@ -4176,195 +4103,209 @@ dmg_newmem:
 
   //Rocket launchers
 
-  cmp [rcx+00], #171 // EAT-17 Projectile
+  cmp [rcx+00], #179 // EAT-17 Projectile
     je dmg_code
-  cmp [rcx+00], #299 // EAT-17 Explosion
+  cmp [rcx+00], #310 // EAT-17 Explosion
     je dmg_code
-  cmp [rcx+00], #172 // GR-8 recoil-less rifle (regular) Projectile
+  cmp [rcx+00], #180 // GR-8 recoil-less rifle (regular) Projectile
     je dmg_code
-  cmp [rcx+00], #298 // GR-8 recoil-less rifle (regular) Explosion
+  cmp [rcx+00], #309 // GR-8 recoil-less rifle (regular) Explosion
     je dmg_code
-  cmp [rcx+00], #152 // AC-8 Autocannon (flak) 1 impact
+  cmp [rcx+00], #159 // AC-8 Autocannon (flak) 1 impact
     je dmg_code
-  cmp [rcx+00], #162 // AC-8 Autocannon Projectile
+  cmp [rcx+00], #170 // AC-8 Autocannon Projectile
     je dmg_code
-  cmp [rcx+00], #289 // AC-8 Autocannon Explosion
+  cmp [rcx+00], #300 // AC-8 Autocannon Explosion
     je dmg_code
-  cmp [rcx+00], #297 // RL-77 airburst rocket launcher Projectile
+  cmp [rcx+00], #308 // RL-77 airburst rocket launcher Projectile
     je dmg_code
-  cmp [rcx+00], #264 // RL-77 airburst rocket launcher MiniCluster
+  cmp [rcx+00], #275 // RL-77 airburst rocket launcher MiniCluster
     je dmg_code
-  cmp [rcx+00], #264 // RL-77 airburst rocket launcher Explosion
+  cmp [rcx+00], #276 // RL-77 airburst rocket launcher Cluster
     je dmg_code
-  cmp [rcx+00], #176 // MLS-4X Commando Projectile
+  cmp [rcx+00], #184 // MLS-4X Commando Projectile
     je dmg_code
-  cmp [rcx+00], #305 // MLS-4X Commando Explosion
-    je dmg_code
-  cmp [rcx+00], #44 // RS-422 railgun Safe
+  cmp [rcx+00], #316 // MLS-4X Commando Explosion
     je dmg_code
   cmp [rcx+00], #45 // RS-422 railgun Safe
     je dmg_code
-  cmp [rcx+00], #186 // FAF-14 Spear 1 shell
+  cmp [rcx+00], #46 // RS-422 railgun Safe
     je dmg_code
-  cmp [rcx+00], #310 // FAF-14 Spear 2 Explosion
+  cmp [rcx+00], #287 // Railgun Overcharge Explosion
     je dmg_code
-  cmp [rcx+00], #185 // WASP Impact
+  cmp [rcx+00], #194 // FAF-14 Spear 1 shell
     je dmg_code
-  cmp [rcx+00], #309 // WASP Explopsion
+  cmp [rcx+00], #321 // FAF-14 Spear 2 Explosion
     je dmg_code
-  cmp [rcx+00], #188 // Stinger Projectile
+  cmp [rcx+00], #193 // WASP Impact
     je dmg_code
-  cmp [rcx+00], #312 // Stinger Explosion
+  cmp [rcx+00], #321 // WASP Explopsion
+    je dmg_code
+  cmp [rcx+00], #196 // Stinger Projectile
+    je dmg_code
+  cmp [rcx+00], #324 // Stinger Explosion
     je dmg_code
   cmp [rcx+00], #21 // GL-21 Grenade Launcher Projectile
     je dmg_code
-  cmp [rcx+00], #293 // GL-21 Grenade Launcher Explosion
+  cmp [rcx+00], #304 // GL-21 Grenade Launcher Explosion
     je dmg_code
   //cmp [rcx+00], #? // Stun grenade launcher
   //  je dmg_code
-  cmp [rcx+00], #269 // Incendiary grenade launcher
+  cmp [rcx+00], #280 // Incendiary grenade launcher
     je dmg_code
-  cmp [rcx+00], #300 // LAS-99 quasar Projectile
+  cmp [rcx+00], #311 // LAS-99 quasar Projectile
     je dmg_code
-  cmp [rcx+00], #301 // LAS-99 quasar Explosion
+  cmp [rcx+00], #312 // LAS-99 quasar Explosion
     je dmg_code
-  cmp [rcx+00], #151 // GL-52 De-Escalator
+  cmp [rcx+00], #21 // GL-52 De-Escalator Impact
+    je dmg_code
+  cmp [rcx+00], #158 // GL-52 De-Escalator ARC
+    je dmg_code
+  cmp [rcx+00], #297 // GL-52 De-Escalator Explosion
+    je dmg_code
+  cmp [rcx+00], #39 // PLAS-45 Epoch Plasma Cannon 1 Impact min charge
+    je dmg_code
+  cmp [rcx+00], #40 // PLAS-45 Epoch Plasma Cannon 1 Impact max charge
+    je dmg_code
+  cmp [rcx+00], #41 // PLAS-45 Epoch Plasma Cannon 2 Impact min charge
+    je dmg_code
+  cmp [rcx+00], #42 // PLAS-45 Epoch Plasma Cannon 2 Impact max charge
     je dmg_code
 
   //Laser
 
-  cmp [rcx+00], #389 // LAS-98
+  cmp [rcx+00], #401 // LAS-98
     je dmg_code
-  cmp [rcx+00], #147 // ARC-3 Arc Thrower
+  cmp [rcx+00], #154 // ARC-3 Arc Thrower
     je dmg_code
 
   //Orbital Canons
 
-  cmp [rcx+00], #167 // Orbital gatling barrage Projectile
+  cmp [rcx+00], #175 // Orbital gatling barrage Projectile
     je dmg_code
-  cmp [rcx+00], #287 // Orbital gatling barrage Explosion
+  cmp [rcx+00], #298 // Orbital gatling barrage Explosion
     je dmg_code
-  cmp [rcx+00], #302 // Orbital airburst Strike Projectile
+  cmp [rcx+00], #314 // Orbital airburst Strike Projectile
     je dmg_code
-  cmp [rcx+00], #144 // Orbital airburst Strike Shrapnel
+  cmp [rcx+00], #151 // Orbital airburst Strike Shrapnel
     je dmg_code
-  cmp [rcx+00], #202 // Orbital 120MM HE barrage Projectile
+  cmp [rcx+00], #210 // Orbital 120MM HE barrage Projectile
     je dmg_code
-  cmp [rcx+00], #348 // Orbital 120MM HE barrage Explosion
+  cmp [rcx+00], #359 // Orbital 120MM HE barrage Explosion
     je dmg_code
-  cmp [rcx+00], #203 // Orbital 380MM HE barrage Projectile
+  cmp [rcx+00], #211 // Orbital 380MM HE barrage Projectile
     je dmg_code
-  cmp [rcx+00], #347 // Orbital 380MM HE barrage Explosion
+  cmp [rcx+00], #359 // Orbital 380MM HE barrage Explosion
     je dmg_code
-  cmp [rcx+00], #347 // Orbital walking impact
+  cmp [rcx+00], #359 // Orbital walking impact
     je dmg_code
-  cmp [rcx+00], #392 // Orbital Laser
+  cmp [rcx+00], #404 // Orbital Laser
     je dmg_code
-  cmp [rcx+00], #204 // Orbital Napalm Barrage Impact
+  cmp [rcx+00], #212 // Orbital Napalm Barrage Impact
     je dmg_code
-  cmp [rcx+00], #205 // Orbital Napalm Barrage Explosion
+  cmp [rcx+00], #213 // Orbital Napalm Barrage Explosion
     je dmg_code
-  cmp [rcx+00], #206 // Orbital railcannon Projectile
+  cmp [rcx+00], #214 // Orbital railcannon Projectile
     je dmg_code
-  cmp [rcx+00], #346 // Orbital railcannon Explosion
+  cmp [rcx+00], #358 // Orbital railcannon Explosion
     je dmg_code
 
   //Hangar
 
-  cmp [rcx+00], #167 // Eagle strafing run Projectile
+  cmp [rcx+00], #175 // Eagle strafing run Projectile
     je dmg_code
-  cmp [rcx+00], #287 // Eagle strafing run Explosion
+  cmp [rcx+00], #298 // Eagle strafing run Explosion
     je dmg_code
-  cmp [rcx+00], #330 // Eagle Airstrike Projectile
+  cmp [rcx+00], #339 // Eagle Airstrike Projectile
     je dmg_code
-  cmp [rcx+00], #331 // Eagle Airstrike Explosion
+  cmp [rcx+00], #341 // Eagle Airstrike Explosion
     je dmg_code
-  cmp [rcx+00], #144 // Eagle Clusterbomb Projectile
+  cmp [rcx+00], #151 // Eagle Clusterbomb Projectile
     je dmg_code
-  cmp [rcx+00], #302 // Eagle Clusterbomb Explosion
+  cmp [rcx+00], #314 // Eagle Clusterbomb Explosion
     je dmg_code
-  cmp [rcx+00], #304 // Napalm SEAF/Eagle Explosion
+  cmp [rcx+00], #316 // Napalm SEAF/Eagle Explosion
     je dmg_code
-  cmp [rcx+00], #402 // Napalm SEAF/Eagle heavy burn
+  cmp [rcx+00], #414 // Napalm SEAF/Eagle heavy burn
     je dmg_code
   //cmp [rcx+00], #? // Eagle smoke
   //  je dmg_code
-  cmp [rcx+00], #189 // Eagle 110MM rocket Projectile
+  cmp [rcx+00], #197 // Eagle 110MM rocket Projectile
     je dmg_code
-  cmp [rcx+00], #315 // Eagle 110MM rocket Explosion
+  cmp [rcx+00], #326 // Eagle 110MM rocket Explosion
     je dmg_code
-  cmp [rcx+00], #330 // 500KG bomb Projectile
+  cmp [rcx+00], #339 // 500KG bomb Projectile
     je dmg_code
-  cmp [rcx+00], #355 // 500KG Bomb Explosion
+  cmp [rcx+00], #366 // 500KG Bomb Explosion
     je dmg_code
 
   //Bridge
 
-  cmp [rcx+00], #203 // Orbital precison strike Projectile
+  cmp [rcx+00], #211 // Orbital precison strike Projectile
     je dmg_code
-  cmp [rcx+00], #347 // Orbital precison strike Explosion
+  cmp [rcx+00], #358 // Orbital precison strike Explosion
     je dmg_code
-  cmp [rcx+00], #201 // Orbital Gas Impact
+  cmp [rcx+00], #209 // Orbital Gas Impact
     je dmg_code
-  cmp [rcx+00], #349 // Orbital Gas Explosion
+  cmp [rcx+00], #360 // Orbital Gas Explosion
     je dmg_code
-  cmp [rcx+00], #407 // Orbital Gas
+  cmp [rcx+00], #419 // Orbital Gas
     je dmg_code
-  cmp [rcx+00], #207 // Orbital ems Projectile
-    je dmg_code
-  cmp [rcx+00], #353 // Orbital ems Explosion
+  //cmp [rcx+00], #? // Orbital ems Projectile
+  //  je dmg_code
+  cmp [rcx+00], #365 // Orbital ems Explosion
     je dmg_code
   //cmp [rcx+00], #? // Orbital smoke
   //  je dmg_code
 
   //Turrets
 
-  cmp [rcx+00], #154 // HMG Emplacement
+  cmp [rcx+00], #161 // HMG Emplacement
     je dmg_code
-  cmp [rcx+00], #161 // Tesla tower
+  cmp [rcx+00], #168 // Tesla tower
     je dmg_code
-  cmp [rcx+00], #90 // Gatling Turret
+  cmp [rcx+00], #95 // Gatling Turret
     je dmg_code
-  cmp [rcx+00], #175 // Mortar turret Projectile
+  cmp [rcx+00], #183 // Mortar turret Projectile
     je dmg_code
-  cmp [rcx+00], #296 // Mortar turret Explosion
+  cmp [rcx+00], #307 // Mortar turret Explosion
     je dmg_code
-  cmp [rcx+00], #165 // Autocannon Sentry Projectile
+  cmp [rcx+00], #173 // Autocannon Sentry Projectile
     je dmg_code
-  cmp [rcx+00], #292 // Autocannon sentry Explosion
+  cmp [rcx+00], #303 // Autocannon sentry Explosion
     je dmg_code
-  cmp [rcx+00], #176 // Rocket sentry turret Projectile
+  cmp [rcx+00], #184 // Rocket sentry turret Projectile
     je dmg_code
-  cmp [rcx+00], #313 // Rocket sentry turret Explosion
+  cmp [rcx+00], #324 // Rocket sentry turret Explosion
     je dmg_code
-  cmp [rcx+00], #280 // A/M-23 EMS Mortar Sentry Impact
+  cmp [rcx+00], #291 // A/M-23 EMS Mortar Sentry Impact
     je dmg_code
-  cmp [rcx+00], #353 // A/M-23 EMS Mortar Sentry Explosion
+  cmp [rcx+00], #365 // A/M-23 EMS Mortar Sentry Explosion
     je dmg_code
-  cmp [rcx+00], #356 // Mini Missile Silo 2 explosion
+  cmp [rcx+00], #367 // Mini Missile Silo 2 explosion
     je dmg_code
 
   //Mines
 
-  cmp [rcx+00], #317 // Anti personnel mines
+  cmp [rcx+00], #329 // Anti personnel mines
     je dmg_code
-  cmp [rcx+00], #318 // Incendiary mines Explosion
+  cmp [rcx+00], #330 // Incendiary mines Explosion
     je dmg_code
-  cmp [rcx+00], #319 // Anti tank mines
+  cmp [rcx+00], #330 // Anti tank mines
     je dmg_code
 
   //Guard dogs
 
-  cmp [rcx+00], #385 // LAS-5 "Guard Dog" Rover
+  cmp [rcx+00], #397 // LAS-5 "Guard Dog" Rover
     je dmg_code
-  cmp [rcx+00], #72 // Rifle "Guard Dog" Rover
+  cmp [rcx+00], #77 // Rifle "Guard Dog" Rover
     je dmg_code
   cmp [rcx+00], #20 // AX/TX-13 Guard Dog "Dog Breath"
     je dmg_code
-  cmp [rcx+00], #150 // K-9 Guard Dog
+  cmp [rcx+00], #157 // K-9 Guard Dog
     je dmg_code
 
-  cmp [rcx+00], #370 // Hellbomb / SEAF Mini-Nuke
+  cmp [rcx+00], #381 // Hellbomb / SEAF Mini-Nuke
     je dmg_code
 
 
@@ -4498,55 +4439,6 @@ dealloc(dmg_newmem)
       <Options moHideChildren="1"/>
       <GroupHeader>1</GroupHeader>
       <CheatEntries>
-        <CheatEntry>
-          <ID>113961</ID>
-          <Description>"Energy Shield Mod (edit your cd)                                          (by gir489)"</Description>
-          <Color>0000FF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>// Game Executable   : helldivers2.exe
-// Author            : gir489
-// Executable Version: 1.8.20424.0
-// MD5 Signature     : 714FB37A355B892081B500B0148D8A2B
-// EXE Compile Date  : June 05, 2024 09:54 AM
-// Script Date       : June 14, 2024 09:00 PM
-[ENABLE]
-aobscanmodule(aob_ShielDeezNutts,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E)
-registersymbol(aob_ShielDeezNutts)
-alloc(ShieldDeezNutts,1024,game.dll)
-label(ShieldDeezNutts_return)
-
-ShieldDeezNutts:
-  test rsi,rsi
-  je short @f
-  push rax
-  mov rax,12C8D71AC3897A5C
-  cmp [rsi],rax
-  jne short @f
-  comiss xmm1, dword ptr [compare_shield]
-  jbe short @f
-    movss xmm1, dword ptr [compare_shield]
-@@:
-  pop rax
-  subss xmm1,xmm14
-  movss [r14+r15+4C],xmm1
-  movaps xmm2, xmm1
-  jmp ShieldDeezNutts_return
-compare_shield:
-dd (float)5.0  // maximum shield cooldown duration in seconds
-
-aob_ShielDeezNutts:
-  jmp far ShieldDeezNutts
-  nop
-ShieldDeezNutts_return:
-
-[DISABLE]
-dealloc(ShieldDeezNutts)
-unregistersymbol(aob_ShielDeezNutts)
-
-aob_ShielDeezNutts:
-  db F3 41 0F 5C CE F3 43 0F 11 4C 3E 4C 0F 28 D1
-</AssemblerScript>
-        </CheatEntry>
         <CheatEntry>
           <ID>138</ID>
           <Description>"OnClick Armory Weapon Editor                                            (by cfemen)"</Description>
@@ -5002,88 +4894,321 @@ game.dll+E1E0A9: FF C7                    - inc edi
           <Description>"No bullets consume                                                               (by cfemen)"</Description>
           <Color>C0C0C0</Color>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">{ Game   : helldivers2.exe
-  Version:
-  Date   : 2024-10-31
-  Author : cfemen
+          <AssemblerScript Async="1">[ENABLE]
 
-  This script does blah blah blah
-}
+aobscanmodule(aobReload,game.dll,44 89 74 01 04 4D 8B 42 50 49 8B 42 38) // should be unique
+registersymbol(aobReload)
+aobReload:
+  nop 5
+[DISABLE]
 
+aobReload:
+ db 44 89 74 01 04
+
+unregistersymbol(aobReload)
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117439</ID>
+          <Description>"Temp Unlock Armor, Weapons, Strategems                          (by cfemen)"</Description>
+          <Color>C0C0C0</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+
+// stragem:
+aobscanmodule(aobUnlock1,game.dll,48 89 5C 24 08 48 8B D9 85 D2 75 09)
+registersymbol(aobUnlock1)
+
+// weapon:
+aobscanmodule(aobUnlock2,game.dll,83 B9 ?? ?? ?? ?? ?? 76 ?? 85 D2 74 ?? 44 8B 89 ?? ?? ?? ?? 45 33 C0 45 85 C9 74 ?? 48 8D 81 ?? ?? ?? ?? 39 50 ?? 74 ?? 41 FF C0 48 83 C0 18 45 3B C1 72 ?? 32 C0 C3 8B 00 48 69 C8 B8 00 00 00)
+registersymbol(aobUnlock2)
+
+// armor:
+aobscanmodule(aobUnlock3,game.dll,48 83 EC 08 44 8B 49 04 45 33 C0 8B 01)
+registersymbol(aobUnlock3)
+
+aobUnlock1:
+  db b0 01 c3
+
+aobUnlock2:
+  db b0 01 c3
+
+aobUnlock3:
+  db b0 01 c3
+
+[DISABLE]
+
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117477</ID>
+          <Description>"Instant drop                                                                           (by fallout11)"</Description>
+          <Color>60ACDF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+aobscanmodule(instantstratdrop,game.dll,F3 0F 11 04 06 48 8B 47 60 4C 8B 47 78 4C 03 C6 4A 8B 0C F8) // should be unique
+alloc(newmem,$1000,instantstratdrop)
+alloc(stratMax,8)
+
+registersymbol(stratMax)
+
+label(code)
+label(return)
+
+stratMax:
+dd (float)0.1
+
+newmem:
+  push edx
+  movd edx,xmm0
+  cmp edx,[stratMax]
+  jle code
+  mov edx,[stratMax]
+  movd xmm0,edx
+code:
+  pop edx
+  movss [rsi+rax],xmm0
+  jmp return
+
+instantstratdrop:
+  jmp newmem
+return:
+registersymbol(instantstratdrop)
+
+[DISABLE]
+
+instantstratdrop:
+  db F3 0F 11 04 06 48 8B 47 60 4C 8B 47 78 4C 03 C6 4A 8B 0C F0
+
+unregistersymbol(stratMax)
+unregistersymbol(instantstratdrop)
+dealloc(stratMax)
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117483</ID>
+          <Description>"100% Democracy (armor passive)                                         (by Dottie)"</Description>
+          <Color>000000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+{$lua}
+local democracy_protects = getAddress("[[game.dll + 1CFF7C8] + B0] + 1C") + 0x400
+writeFloat(democracy_protects, 2.0)
+
+[DISABLE]
+{$lua}
+local democracy_protects = getAddress("[[game.dll + 1CFF7C8] + B0] + 1C") + 0x400
+writeFloat(democracy_protects, 1.5)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117484</ID>
+          <Description>"No fall damage                                                                      (by impushingp)"</Description>
+          <Color>C080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+aobscanmodule(aob_No_Fall,game.dll,4C 8B DC 55 53 41 56 49 8D AB D8)
+registersymbol(aob_No_Fall)
+alloc(newmem_No_Fall,1024,game.dll)
+label(return_No_Fall)
+alloc(base_attackID,8)
+
+registersymbol(base_attackID)
+
+newmem_No_Fall:
+  mov [base_attackID],rsp
+  push rbx
+  mov rbx,[base_attackID]
+  lea rbx,[rbx-A28]
+  mov rbx,[rbx+00000AA8]
+  cmp ebx,E32E9832
+  pop rbx
+  jne @f
+      ret
+  @@:
+  mov r11,rsp
+  push rbp
+  push rbx
+  jmp return_No_Fall
+
+aob_No_Fall:
+  jmp newmem_No_Fall
+return_No_Fall:
+
+[DISABLE]
+aob_No_Fall:
+  db 4C 8B DC 55 53
+
+unregistersymbol(aob_No_Fall)
+dealloc(newmem_No_Fall)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>113961</ID>
+          <Description>"Energy Shield Mod (edit your cd)(outdated)                                          (by gir489)"</Description>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>// Game Executable   : helldivers2.exe
+// Author            : gir489
+// Executable Version: 1.8.20424.0
+// MD5 Signature     : 714FB37A355B892081B500B0148D8A2B
+// EXE Compile Date  : June 05, 2024 09:54 AM
+// Script Date       : June 14, 2024 09:00 PM
 [ENABLE]
+aobscanmodule(aob_ShielDeezNutts,game.dll,F3 41 0F 5C CE F3 43 0F 11 4C 3E)
+registersymbol(aob_ShielDeezNutts)
+alloc(ShieldDeezNutts,1024,game.dll)
+label(ShieldDeezNutts_return)
 
+ShieldDeezNutts:
+  test rsi,rsi
+  je short @f
+  push rax
+  mov rax,12C8D71AC3897A5C
+  cmp [rsi],rax
+  jne short @f
+  comiss xmm1, dword ptr [compare_shield]
+  jbe short @f
+    movss xmm1, dword ptr [compare_shield]
+@@:
+  pop rax
+  subss xmm1,xmm14
+  movss [r14+r15+4C],xmm1
+  movaps xmm2, xmm1
+  jmp ShieldDeezNutts_return
+compare_shield:
+dd (float)5.0  // maximum shield cooldown duration in seconds
 
-aobscanmodule(aobShoot,game.dll,48 89 4C 24 08 53 55 56 57 41 55 41 56 41 57 48 83 EC 30 4C 8B 2D) // should be unique
-alloc(newmem,$1000)
+aob_ShielDeezNutts:
+  jmp far ShieldDeezNutts
+  nop
+ShieldDeezNutts_return:
+
+[DISABLE]
+dealloc(ShieldDeezNutts)
+unregistersymbol(aob_ShielDeezNutts)
+
+aob_ShielDeezNutts:
+  db F3 41 0F 5C CE F3 43 0F 11 4C 3E 4C 0F 28 D1
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117486</ID>
+          <Description>"No ragdoll(outdated)                                                                             (by Rei)"</Description>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule(ragdoll,game.dll,40 57 48 83 EC ? 3B 15 ? ? ? ? 41 8B F8 4C 89 7C 24) // should be unique
+alloc(newmem,$1000,ragdoll)
 
 label(code)
 label(return)
 
 newmem:
-
+  mov eax,1
+  ret
 code:
-  cmp rcx,0
-  jne short @f
-   ret
-  @@:
-  mov [rsp+08],rcx
-  push rbx
-  push rbp
-  push rsi
   push rdi
-  push r13
-  push r14
-  push r15
+  sub rsp,30
   jmp return
 
-aobShoot:
-  jmp far newmem
+ragdoll:
+  jmp newmem
   nop
 return:
-registersymbol(aobShoot)
+registersymbol(ragdoll)
 
 [DISABLE]
 
-aobShoot:
-  db 48 89 4C 24 08 53 55 56 57 41 55 41 56 41 57
+ragdoll:
+  db 40 57 48 83 EC 30
 
-unregistersymbol(aobShoot)
+unregistersymbol(ragdoll)
 dealloc(newmem)
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+4B6560
-
-game.dll+4B6552: E9 3C FE FF FF        - jmp game.dll+4B6393
-game.dll+4B6557: CC                    - int 3
-game.dll+4B6558: CC                    - int 3
-game.dll+4B6559: CC                    - int 3
-game.dll+4B655A: CC                    - int 3
-game.dll+4B655B: CC                    - int 3
-game.dll+4B655C: CC                    - int 3
-game.dll+4B655D: CC                    - int 3
-game.dll+4B655E: CC                    - int 3
-game.dll+4B655F: CC                    - int 3
-// ---------- INJECTING HERE ----------
-game.dll+4B6560: 48 89 4C 24 08        - mov [rsp+08],rcx
-// ---------- DONE INJECTING  ----------
-game.dll+4B6565: 53                    - push rbx
-game.dll+4B6566: 55                    - push rbp
-game.dll+4B6567: 56                    - push rsi
-game.dll+4B6568: 57                    - push rdi
-game.dll+4B6569: 41 55                 - push r13
-game.dll+4B656B: 41 56                 - push r14
-game.dll+4B656D: 41 57                 - push r15
-game.dll+4B656F: 48 83 EC 30           - sub rsp,30
-game.dll+4B6573: 4C 8B 2D D6 E9 57 01  - mov r13,[game.dll+1A34F50]
-game.dll+4B657A: 45 33 FF              - xor r15d,r15d
-}
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
-          <ID>117474</ID>
-          <Description>"Electrical scripts"</Description>
+          <ID>117481</ID>
+          <Description>"Customize Seaf(outdated)                                                                      (by sakuno)"</Description>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+{
+  Alias      : 𝗦𝗘𝗔𝗙𝗦𝗵𝗲𝗹𝗹𝗥𝗮𝗰𝗸𝗠𝗼𝗱
+  Game       : Helldiver 2
+  Version    : any game version
+  Date       : 2024-10-05
+  Author     : (Discord)Sakuno
+
+  Function: Increasing SEAF Artillery shell spawn chance/count.
+}
+{$lua}
+function ObjectiveShellRackDataReplacer()
+  gObjectiveShellRackAddr=AOBScan("00 00 C0 3F 07 00 00 00 01", '-W')
+    if (gObjectiveShellRackAddr == nil or gObjectiveShellRackAddr.Count &gt; 1) then
+       return
+    end
+    registerSymbol("ObjectiveShellRackAddr", gObjectiveShellRackAddr[0])
+  gObjectiveShellRackAddr.destroy()
+end
+ObjectiveShellRackDataReplacer()
+
+{$asm}
+
+ObjectiveShellRackAddr+4:
+  dd #30
+
+[DISABLE]
+
+ObjectiveShellRackAddr+4:
+  dd #7
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117459</ID>
+          <Description>"Mortar_Proj_Mod(outdated)                                                                   (by sakuno+fallout11)"</Description>
           <Options moHideChildren="1"/>
-          <Color>00FFFF</Color>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{$lua}
+registerSymbol("Mortar_40mm_HE_nproj", '["game.dll" + 02114950] + 3F1C')
+registerSymbol("Mortar_40mm_HE_expls", '["game.dll" + 02114950] + 3F90')
+{$asm}
+
+//A/M-12 MORTAR SENTRY
+Mortar_40mm_HE_nproj: //num_projectiles
+  dd #1 //1
+Mortar_40mm_HE_expls: //explosion_type_on_impact (explosive ID)
+  dd #27 //(27=SEAF Explosive) (185=SEAF High Yield) (190=SEAF Mininuke)
+
+[DISABLE]
+Mortar_40mm_HE_nproj:
+  dd #1
+Mortar_40mm_HE_expls:
+  dd #238 //(238=Regular 40mm Mortar round)
+unregisterSymbol(Mortar_40mm_HE_nproj)
+unregisterSymbol(Mortar_40mm_HE_expls)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1</ID>
+              <Description>" (default = 1)"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Mortar_40mm_HE</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117474</ID>
+          <Description>"Electrical scripts(outdated)"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript Async="1">[ENABLE]
 {
@@ -5542,46 +5667,10 @@ unregistersymbol('arc_resistance')
           </CheatEntries>
         </CheatEntry>
         <CheatEntry>
-          <ID>117459</ID>
-          <Description>"Mortar_Proj_Mod                                                                   (by sakuno+fallout11)"</Description>
-          <Options moHideChildren="1"/>
-          <Color>FF8000</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("Mortar_40mm_HE_nproj", '["game.dll" + 02114950] + 3F1C')
-registerSymbol("Mortar_40mm_HE_expls", '["game.dll" + 02114950] + 3F90')
-{$asm}
-
-//A/M-12 MORTAR SENTRY
-Mortar_40mm_HE_nproj: //num_projectiles
-  dd #1 //1
-Mortar_40mm_HE_expls: //explosion_type_on_impact (explosive ID)
-  dd #27 //(27=SEAF Explosive) (185=SEAF High Yield) (190=SEAF Mininuke)
-
-[DISABLE]
-Mortar_40mm_HE_nproj:
-  dd #1
-Mortar_40mm_HE_expls:
-  dd #238 //(238=Regular 40mm Mortar round)
-unregisterSymbol(Mortar_40mm_HE_nproj)
-unregisterSymbol(Mortar_40mm_HE_expls)
-</AssemblerScript>
-          <CheatEntries>
-            <CheatEntry>
-              <ID>1</ID>
-              <Description>" (default = 1)"</Description>
-              <ShowAsSigned>0</ShowAsSigned>
-              <VariableType>4 Bytes</VariableType>
-              <Address>Mortar_40mm_HE</Address>
-            </CheatEntry>
-          </CheatEntries>
-        </CheatEntry>
-        <CheatEntry>
           <ID>117475</ID>
-          <Description>"500kg expanded radius                                                         (by fallout11+Meowsisi)"</Description>
+          <Description>"500kg expanded radius(outdated)                                                         (by fallout11+Meowsisi)"</Description>
           <Options moHideChildren="1"/>
-          <Color>4080FF</Color>
+          <Color>0080FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>[ENABLE]
 {$lua}
@@ -5605,611 +5694,15 @@ eagle500kg_explosion: //explosion_type_expire
 unregisterSymbol("eagle500kg_explosion")
 </AssemblerScript>
         </CheatEntry>
-        <CheatEntry>
-          <ID>117439</ID>
-          <Description>"Temp Unlock Armor, Weapons, Strategems                          (by cfemen)"</Description>
-          <Color>C0C0C0</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
-
-// stragem:
-aobscanmodule(aobUnlock1,game.dll,48 89 5C 24 08 48 8B D9 85 D2 75 09)
-registersymbol(aobUnlock1)
-
-// weapon:
-aobscanmodule(aobUnlock2,game.dll,83 B9 ?? ?? ?? ?? ?? 76 ?? 85 D2 74 ?? 44 8B 89 ?? ?? ?? ?? 45 33 C0 45 85 C9 74 ?? 48 8D 81 ?? ?? ?? ?? 39 50 ?? 74 ?? 41 FF C0 48 83 C0 18 45 3B C1 72 ?? 32 C0 C3 8B 00 48 69 C8 B8 00 00 00)
-registersymbol(aobUnlock2)
-
-// armor:
-aobscanmodule(aobUnlock3,game.dll,48 83 EC 08 44 8B 49 04 45 33 C0 8B 01)
-registersymbol(aobUnlock3)
-
-aobUnlock1:
-  db b0 01 c3
-
-aobUnlock2:
-  db b0 01 c3
-
-aobUnlock3:
-  db b0 01 c3
-
-[DISABLE]
-
-
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117477</ID>
-          <Description>"Instant drop                                                                           (by fallout11)"</Description>
-          <Color>60ACDF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(instantstratdrop,game.dll,F3 0F 11 04 06 48 8B 47 60 4C 8B 47 78 4C 03 C6 4A 8B 0C F8) // should be unique
-alloc(newmem,$1000,instantstratdrop)
-alloc(stratMax,8)
-
-registersymbol(stratMax)
-
-label(code)
-label(return)
-
-stratMax:
-dd (float)0.1
-
-newmem:
-  push edx
-  movd edx,xmm0
-  cmp edx,[stratMax]
-  jle code
-  mov edx,[stratMax]
-  movd xmm0,edx
-code:
-  pop edx
-  movss [rsi+rax],xmm0
-  jmp return
-
-instantstratdrop:
-  jmp newmem
-return:
-registersymbol(instantstratdrop)
-
-[DISABLE]
-
-instantstratdrop:
-  db F3 0F 11 04 06 48 8B 47 60 4C 8B 47 78 4C 03 C6 4A 8B 0C F0
-
-unregistersymbol(stratMax)
-unregistersymbol(instantstratdrop)
-dealloc(stratMax)
-dealloc(newmem)
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117481</ID>
-          <Description>"Customize Seaf                                                                      (by sakuno)"</Description>
-          <Color>C080FF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
-{
-  Alias      : 𝗦𝗘𝗔𝗙𝗦𝗵𝗲𝗹𝗹𝗥𝗮𝗰𝗸𝗠𝗼𝗱
-  Game       : Helldiver 2
-  Version    : any game version
-  Date       : 2024-10-05
-  Author     : (Discord)Sakuno
-
-  Function: Increasing SEAF Artillery shell spawn chance/count.
-}
-{$lua}
-function ObjectiveShellRackDataReplacer()
-  gObjectiveShellRackAddr=AOBScan("00 00 C0 3F 07 00 00 00 01", '-W')
-    if (gObjectiveShellRackAddr == nil or gObjectiveShellRackAddr.Count &gt; 1) then
-       return
-    end
-    registerSymbol("ObjectiveShellRackAddr", gObjectiveShellRackAddr[0])
-  gObjectiveShellRackAddr.destroy()
-end
-ObjectiveShellRackDataReplacer()
-
-{$asm}
-
-ObjectiveShellRackAddr+4:
-  dd #30
-
-[DISABLE]
-
-ObjectiveShellRackAddr+4:
-  dd #7
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117483</ID>
-          <Description>"100% Democracy (armor passive)                                         (by Dottie)"</Description>
-          <Color>000000</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
-{$lua}
-local democracy_protects = getAddress("[[game.dll + 1CFF7C8] + B0] + 1C") + 0x400
-writeFloat(democracy_protects, 2.0)
-
-[DISABLE]
-{$lua}
-local democracy_protects = getAddress("[[game.dll + 1CFF7C8] + B0] + 1C") + 0x400
-writeFloat(democracy_protects, 1.5)
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117484</ID>
-          <Description>"No fall damage                                                                      (by impushingp)"</Description>
-          <Color>C080FF</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
-aobscanmodule(aob_noFall,game.dll,4C 8B DC 55 53 41 56 49 8D AB A8)
-registersymbol(aob_noFall)
-alloc(newmem_noFall,1024,game.dll)
-label(return_noFall)
-alloc(base_attackID,8)
-
-registersymbol(base_attackID)
-
-newmem_noFall:
-  mov [base_attackID],rsp
-  push rbx
-  mov rbx,[base_attackID]
-  lea rbx,[rbx-A58]
-  mov rbx,[rbx+00000AD8]
-  cmp ebx,E32E9832
-  pop rbx
-  jne @f
-      ret
-  @@:
-  mov r11,rsp
-  push rbp
-  push rbx
-  jmp return_noFall
-
-aob_noFall:
-  jmp newmem_noFall
-return_noFall:
-
-[DISABLE]
-aob_noFall:
-  db 4C 8B DC 55 53
-
-unregistersymbol(aob_noFall)
-dealloc(newmem_noFall)
-unregistersymbol(base_attackID)
-dealloc(base_attackID)
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117486</ID>
-          <Description>"No ragdoll                                                                             (by Rei)"</Description>
-          <Color>FF8080</Color>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript Async="1">[ENABLE]
-
-aobscanmodule(ragdoll,game.dll,40 57 48 83 EC ? 3B 15 ? ? ? ? 41 8B F8 4C 89 7C 24) // should be unique
-alloc(newmem,$1000,ragdoll)
-
-label(code)
-label(return)
-
-newmem:
-  mov eax,1
-  ret
-code:
-  push rdi
-  sub rsp,30
-  jmp return
-
-ragdoll:
-  jmp newmem
-  nop
-return:
-registersymbol(ragdoll)
-
-[DISABLE]
-
-ragdoll:
-  db 40 57 48 83 EC 30
-
-unregistersymbol(ragdoll)
-dealloc(newmem)
-</AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>117532</ID>
-          <Description>"Swappers"</Description>
-          <Options moHideChildren="1"/>
-          <Color>FFFFFF</Color>
-          <GroupHeader>1</GroupHeader>
-          <CheatEntries>
-            <CheatEntry>
-              <ID>117487</ID>
-              <Description>"Mortar Sentry Swapper                                                     (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("mortar_base", '["game.dll" + 022696B8]')
-{$asm}
-//  A/M-12 MORTAR SENTRY
-mortar_base+4888: //projectile_nums
-  dd #3 //
-mortar_base+48FC: //explosion_type_on_impact
-  dd #212 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（212=Recoiless Rifle 85mm HE） （198=500kg）（67=Nuke）
-
-[DISABLE]
-//  A/M-12 MORTAR SENTRY
-mortar_base+4888: //projectile_nums
-  dd #1
-mortar_base+48FC: ////explosion_type_on_impact
-  dd #260
-unregisterSymbol("Mortar_base")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117544</ID>
-              <Description>"Mortar Sentry EMS Swapper                                             (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-
-{$lua}
-registerSymbol("mortar_base", '["game.dll" + 022696B8]')
-{$asm}
-//  A/M-23 EMS_Mortar_Sentry
-mortar_base+4998: //projectile_nums
-  dd #3
-mortar_base+4A0C: //explosion_type_on_impact
-  dd #29
-mortar_base+4A18: //explosion_type_expire
-  dd #29 //(29=Grenade 40mm Arc AoE)
-
-[DISABLE]
-//  A/M-23 EMS_Mortar_Sentry
-mortar_base+4998: //projectile_nums
-  dd #1
-mortar_base+4A0C: //explosion_type_on_impact
-  dd #106
-mortar_base+4A18: //explosion_type_expire
-  dd #129
-unregisterSymbol("Mortar_base")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117534</ID>
-              <Description>"AutoCannon Sentry Swapper                                            (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("AC8autocannonSentry_projectile_speed", '["game.dll" + 022696B8] + 1ADC')
-registerSymbol("AC8autocannonSentry_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 1B4C')
-{$asm}
-AC8autocannonSentry_projectile_speed:
-  dd (float)3000
-AC8autocannonSentry_projectile_explosion_type_on_impact:
-  dd #127 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
-
-[DISABLE]
-
-AC8autocannonSentry_projectile_speed:
-  dd (float)1021
-AC8autocannonSentry_projectile_explosion_type_on_impact:
-  dd #168
-
-unregisterSymbol("AC8autocannonSentry_projectile_speed")
-unregisterSymbol("AC8autocannonSentry_projectile_explosion_type_on_impact")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117533</ID>
-              <Description>"AntiTank Emplacement Swapper                                      (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-
-{$lua}
-registerSymbol("EAT12_AntitankEmplacement__projectile_speed", '["game.dll" + 022696B8] + 4BBC')
-registerSymbol("EAT12_AntitankEmplacement__projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 4C2C')
-{$asm}
-EAT12_AntitankEmplacement__projectile_speed:
-  dd (float)3000
-EAT12_AntitankEmplacement__projectile_explosion_type_on_impact:
-  dd #216 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
-
-[DISABLE]
-EAT12_AntitankEmplacement__projectile_speed:
-  dd (float)625
-EAT12_AntitankEmplacement__projectile_explosion_type_on_impact:
-  dd #33
-
-unregisterSymbol("EAT12_AntitankEmplacement__projectile_speed")
-unregisterSymbol("EAT12_AntitankEmplacement__projectile_explosion_type_on_impact")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117535</ID>
-              <Description>"Rocket Sentry Swapper                                                    (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-
-{$lua}
-registerSymbol("Rocket_Sentry_projectile_speed", '["game.dll" + 022696B8] + E3AC')
-registerSymbol("Rocket_Sentry_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + E41C')
-{$asm}
-Rocket_Sentry_projectile_speed:
-  dd (float)3000
-Rocket_Sentry_projectile_explosion_type_on_impact:
-  dd #216 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
-[DISABLE]
-
-Rocket_Sentry_projectile_speed:
-  dd (float)100
-Rocket_Sentry_projectile_explosion_type_on_impact:
-  dd #228
-unregisterSymbol("Rocket_Sentry_projectile_speed")
-unregisterSymbol("Rocket_Sentry_projectile_explosion_type_on_impact")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117537</ID>
-              <Description>"AutoCannon Swapper                                                      (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-
-{$lua}
-registerSymbol("AC8autocannon20mmAPHET_projectile_speed", '["game.dll" + 022696B8] + 147C')
-registerSymbol("AC8autocannon20mmAPHET_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 14EC')
-registerSymbol("AC8autocannon_20mmFLAK_projectile_speed", '["game.dll" + 022696B8] + 158C')
-registerSymbol("AC8autocannon_20mmFLAK_Shrapnel_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 103FC')
-{$asm}
-AC8autocannon20mmAPHET_projectile_speed:
-  dd (float)14000
-AC8autocannon20mmAPHET_projectile_explosion_type_on_impact:
-  dd #139
-AC8autocannon_20mmFLAK_projectile_speed:
-  dd (float)14000
-AC8autocannon_20mmFLAK_Shrapnel_projectile_explosion_type_on_impact:
-  dd #212 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
-[DISABLE]
-AC8autocannon20mmAPHET_projectile_speed:
-  dd (float)820
-AC8autocannon20mmAPHET_projectile_explosion_type_on_impact:
-  dd #294
-AC8autocannon_20mmFLAK_projectile_speed:
-  dd (float)820
-AC8autocannon_20mmFLAK_Shrapnel_projectile_explosion_type_on_impact:
-  dd #0
-
-unregisterSymbol("AC8autocannon20mmAPHET_projectile_speed")
-unregisterSymbol("AC8autocannon20mmAPHET_projectile_explosion_type_on_impact")
-unregisterSymbol("AC8autocannon_20mmFLAK_projectile_speed")
-unregisterSymbol("AC8autocannon_20mmFLAK_Shrapnel_projectile_explosion_type_on_impact")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117536</ID>
-              <Description>"GR-8 Recoiless Rifle Swapper                                           (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-
-{$lua}
-registerSymbol("recoilless_rifle_HEAT_speed", '["game.dll" + 022696B8] + 4EEC')
-registerSymbol("recoilless_rifle_HEAT", '["game.dll" + 022696B8] + 4F5C')
-registerSymbol("recoilless_rifle_HE_speed", '["game.dll" + 022696B8] + 4CCC')
-registerSymbol("recoilless_rifle_HE", '["game.dll" + 022696B8] + 4D3C')
-{$asm}
-recoilless_rifle_HEAT:
-  dd #245
-recoilless_rifle_HE:
-  dd #199 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb) （198=500kg）（67=Nuke）
-recoilless_rifle_HEAT_speed:
-  dd (float)14000
-recoilless_rifle_HE_speed:
-  dd (float)14000
-
-[DISABLE]
-recoilless_rifle_HEAT: //
-  dd #178
-recoilless_rifle_HE: //
-  dd #212
-recoilless_rifle_HEAT_speed:
-  dd (float)250
-recoilless_rifle_HE_speed:
-  dd (float)250
-unregisterSymbol("recoilless_rifle_HEAT")
-unregisterSymbol("recoilless_rifle_HE")
-unregisterSymbol("recoilless_rifle_HEAT_speed")
-unregisterSymbol("recoilless_rifle_HE_speed")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117538</ID>
-              <Description>"FAF-14 Spear Swapper                                                     (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-
-{$lua}
-registerSymbol("Missile_Faf_projectile_speed", '["game.dll" + 022696B8] + 664C')
-registerSymbol("Missile_Faf_projectile_drag_factor", '["game.dll" + 022696B8] + 6654')
-registerSymbol("Missile_Faf_projectile_gravity_multipler", '["game.dll" + 022696B8] + 6658')
-registerSymbol("Missile_Faf_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 66BC')
-{$asm}
-Missile_Faf_projectile_speed:
-  dd (float)3000
-Missile_Faf_projectile_drag_factor:
-  dd (float)0
-Missile_Faf_projectile_gravity_multipler:
-  dd (float)0
-Missile_Faf_projectile_explosion_type_on_impact:
-  dd #245 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb) （198=500kg）（67=Nuke）
-
-[DISABLE]
-Missile_Faf_projectile_speed:
-  dd (float)70
-Missile_Faf_projectile_drag_factor:
-  dd (float)0.3
-Missile_Faf_projectile_gravity_multipler:
-  dd (float)1
-Missile_Faf_projectile_explosion_type_on_impact:
-  dd #218
-
-unregisterSymbol("Missile_Faf_projectile_speed")
-unregisterSymbol("Missile_Faf_projectile_drag_factor")
-unregisterSymbol("Missile_Faf_projectile_gravity_multipler")
-unregisterSymbol("Missile_Faf_projectile_explosion_type_on_impact")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117539</ID>
-              <Description>"RL-77 Airburst Rocket Launcher Swapper                        (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-
-{$lua}
-registerSymbol("RL77_cluster_projectile_speed", '["game.dll" + 022696B8] + 510C')
-registerSymbol("RL77_cluster_bomb_projectile_speed", '["game.dll" + 022696B8] + 521C')
-registerSymbol("RL77_Cluster_FLAK_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 539C')
-registerSymbol("RL77_cluster_bomb_FLAK_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 54AC')
-{$asm}
-RL77_cluster_projectile_speed:
-  dd (float)3000
-RL77_cluster_bomb_projectile_speed:
-  dd (float)3000
-RL77_Cluster_FLAK_projectile_explosion_type_on_impact:
-  dd #212
-RL77_cluster_bomb_FLAK_projectile_explosion_type_on_impact:
-  dd #212 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
-
-[DISABLE]
-RL77_cluster_projectile_speed:
-  dd (float)250
-RL77_cluster_bomb_projectile_speed:
-  dd (float)250
-RL77_Cluster_FLAK_projectile_explosion_type_on_impact:
-  dd #5
-RL77_cluster_bomb_FLAK_projectile_explosion_type_on_impact:
-  dd #5
-unregisterSymbol("RL77_cluster_projectile_speed")
-unregisterSymbol("RL77_cluster_bomb_projectile_speed")
-unregisterSymbol("RL77_Cluster_FLAK_projectile_explosion_type_on_impact")
-unregisterSymbol("RL77_cluster_bomb_FLAK_projectile_explosion_type_on_impact")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117540</ID>
-              <Description>"W.A.S.P Launcher Swapper                                              (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-
-{$lua}
-registerSymbol("WASP_Launcher_projectile_speed", '["game.dll" + 022696B8] + 686C')
-registerSymbol("WASP_Launcher_explosion_type_on_impact", '["game.dll" + 022696B8] + 68DC')
-{$asm}
-WASP_Launcher_projectile_speed:
-  dd (float)3000
-WASP_Launcher_explosion_type_on_impact:
-  dd #212 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb) （198=500kg）（67=Nuke）
-
-[DISABLE]
-WASP_Launcher_projectile_speed:
-  dd (float)500
-WASP_Launcher_explosion_type_on_impact:
-  dd #269
-
-unregisterSymbol("WASP_Launcher_projectile_speed")
-unregisterSymbol("WASP_Launcher_explosion_type_on_impact")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117541</ID>
-              <Description>"Eagle Cluster Bomb Swapper                                           (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-
-{$lua}
-registerSymbol("eagle_clusterbomb_flak_projectile_nums", '["game.dll" + 022696B8] + 158')
-registerSymbol("eagle_clusterbomb_flak_projectile_explosion_type_on_impact", '["game.dll" + 022696B8] + 1CC')
-{$asm}
-eagle_clusterbomb_flak_projectile_nums:
-  dd #1
-eagle_clusterbomb_flak_projectile_explosion_type_on_impact:
-  dd #212 //（127=AntiTankMine）（239=SAM_Missile）（144=Thermite）（126=Gas_Grenade）（245=GP_31_Ultimatum_AoE）(30=SEAF_Gun_Explosive) (67=Nuke)(207=SEAF_MiniNuke)( 216=380mm ) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb)（178=Recoiless Rifle 85mm HEAT）（212=Recoiless Rifle 85mm HE）（218=FaF_Missile）（48=Laser_Pulse）
-
-[DISABLE]
-eagle_clusterbomb_flak_projectile_nums:
-  dd #1
-eagle_clusterbomb_flak_projectile_explosion_type_on_impact:
-  dd #117
-
-unregisterSymbol("eagle_clusterbomb_flak_projectile_nums")
-unregisterSymbol("eagle_clusterbomb_flak_projectile_explosion_type_on_impact")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117542</ID>
-              <Description>"Oribtal Gatling Barrage Swapper                                      (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("Cannon_23mm_Eagle_projectile_explosion_type_on_impact", '[game.dll + 022696B8] + 1F8C')
-{$asm}
-Cannon_23mm_Eagle_projectile_explosion_type_on_impact:
-  dd #212 //(30=SEAF_Gun_Explosive)（245=GP_31_Ultimatum_AoE） (207=SEAF_MiniNuke) (199=SEAF_HighYield_Explosive) (139=Eagle_airstrike_bomb) （198=500kg）（67=Nuke）
-
-[DISABLE]
-Cannon_23mm_Eagle_projectile_explosion_type_on_impact:
-  dd #190
-unregisterSymbol("Cannon_23mm_Eagle_projectile_explosion_type_on_impact")
-</AssemblerScript>
-            </CheatEntry>
-            <CheatEntry>
-              <ID>117543</ID>
-              <Description>"Eagle Airstrike Bomb Swapper                                         (by LoveMiku)"</Description>
-              <Options moHideChildren="1"/>
-              <Color>FFFF00</Color>
-              <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>[ENABLE]
-{$lua}
-registerSymbol("eagle_airstrike_bomb_base", '[game.dll + 022696B8] + 2DC')
-{$asm}
-eagle_airstrike_bomb_base:
-  dd #216 // (198=500kg) （67=Nuke）(207=SEAF_MiniNuke) （174=Hellbomb）（216=380mm）
-
-[DISABLE]
-eagle_airstrike_bomb_base:
-  dd #139
-unregisterSymbol("eagle_airstrike_bomb_base")
-</AssemblerScript>
-            </CheatEntry>
-          </CheatEntries>
-        </CheatEntry>
       </CheatEntries>
     </CheatEntry>
   </CheatEntries>
-  <UserdefinedSymbols/>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>AvatarClimbAddr</Name>
+      <Address>2369A5F454C</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
   <LuaScript>if not syntaxcheck then
 
   function cycleFullCompact( sender, force )
