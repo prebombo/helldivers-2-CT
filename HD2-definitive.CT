@@ -121,13 +121,7 @@ unregistersymbol(aobSprintWrite)
               <Description>"Inf last stim                                                                    (by gir489)"</Description>
               <Color>0000FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>// Game Executable   : helldivers2.exe
-// Author            : gir489
-// Executable Version: 1.8.27207.0
-// MD5 Signature     : 14C848EF74B1A8FEF0AC3DB6E396B3D2
-// EXE Compile Date  : January 28, 2025 10:15 AM
-// Script Date       : February 04, 2025 06:29 PM
-[ENABLE]
+              <AssemblerScript>[ENABLE]
 aobscanmodule(aob_Syringes,game.dll, 41 8B 54 EE 04 8B C8)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
@@ -184,13 +178,7 @@ unregistersymbol(aobSyrige)
               <Description>"Inf last grenade                                                              (by gir489)"</Description>
               <Color>0000FF</Color>
               <VariableType>Auto Assembler Script</VariableType>
-              <AssemblerScript>// Game Executable   : helldivers2.exe
-// Author            : gir489
-// Executable Version: 1.8.18735.0
-// MD5 Signature     : E087C5451277E6CC21E544AB6FE4932B
-// EXE Compile Date  : April 25, 2024 04:05 AM
-// Script Date       : April 29, 2024 11:13 AM
-[ENABLE]
+              <AssemblerScript>[ENABLE]
 aobscanmodule(aob_Grenades,game.dll,42 FF 0C E0)
 registersymbol(aob_Grenades)
 alloc(newmem_Grenades,1024)
@@ -217,54 +205,6 @@ aob_Grenades:
 
 unregistersymbol(aob_Grenades)
 dealloc(newmem_Grenades)
-
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+61FE6B
-
-game.dll+61FE26: 84 C0                       - test al,al
-game.dll+61FE28: 74 0A                       - je game.dll+61FE34
-game.dll+61FE2A: 8B D3                       - mov edx,ebx
-game.dll+61FE2C: 49 8B CF                    - mov rcx,r15
-game.dll+61FE2F: E8 8C 77 DF FF              - call game.dll+4175C0
-game.dll+61FE34: 44 0F B6 A4 24 88 00 00 00  - movzx r12d,byte ptr [rsp+00000088]
-game.dll+61FE3D: 44 8B C3                    - mov r8d,ebx
-game.dll+61FE40: 8B D7                       - mov edx,edi
-game.dll+61FE42: E8 B9 BD DE FF              - call game.dll+40BC00
-game.dll+61FE47: 44 8B F8                    - mov r15d,eax
-game.dll+61FE4A: 45 84 E4                    - test r12b,r12b
-game.dll+61FE4D: 74 37                       - je game.dll+61FE86
-game.dll+61FE4F: 48 8B 4D 40                 - mov rcx,[rbp+40]
-game.dll+61FE53: 4A 8B 14 E9                 - mov rdx,[rcx+r13*8]
-game.dll+61FE57: 48 85 D2                    - test rdx,rdx
-game.dll+61FE5A: 74 2A                       - je game.dll+61FE86
-game.dll+61FE5C: F6 42 14 01                 - test byte ptr [rdx+14],01
-game.dll+61FE60: 74 24                       - je game.dll+61FE86
-game.dll+61FE62: 48 8B 45 58                 - mov rax,[rbp+58]
-game.dll+61FE66: BA F9 82 20 D9              - mov edx,D92082F9
-// ---------- INJECTING HERE ----------
-game.dll+61FE6B: 41 FF 0C 06                 - dec [r14+rax]
-// ---------- DONE INJECTING  ----------
-game.dll+61FE6F: 48 8B 45 40                 - mov rax,[rbp+40]
-game.dll+61FE73: 4C 8B 45 58                 - mov r8,[rbp+58]
-game.dll+61FE77: 4D 03 C6                    - add r8,r14
-game.dll+61FE7A: 4A 8B 0C E8                 - mov rcx,[rax+r13*8]
-game.dll+61FE7E: 8B 49 10                    - mov ecx,[rcx+10]
-game.dll+61FE81: E8 9A A0 47 00              - call game.dll+A99F20
-game.dll+61FE86: 48 C7 44 24 70 00 00 00 00  - mov qword ptr [rsp+70],00000000
-game.dll+61FE8F: 41 B1 01                    - mov r9b,01
-game.dll+61FE92: 48 8B 44 24 70              - mov rax,[rsp+70]
-game.dll+61FE97: 44 8B C7                    - mov r8d,edi
-game.dll+61FE9A: 48 89 44 24 28              - mov [rsp+28],rax
-game.dll+61FE9F: 8B D6                       - mov edx,esi
-game.dll+61FEA1: C6 44 24 20 00              - mov byte ptr [rsp+20],00
-game.dll+61FEA6: E8 75 6F 06 00              - call game.dll+686E20
-game.dll+61FEAB: 48 8B 0D A6 90 28 01        - mov rcx,[game.dll+18A8F58]
-game.dll+61FEB2: 45 33 C0                    - xor r8d,r8d
-game.dll+61FEB5: 41 83 FF FF                 - cmp r15d,-01
-game.dll+61FEB9: C7 44 24 20 00 00 00 00     - mov [rsp+20],00000000
-game.dll+61FEC1: 44 8B CE                    - mov r9d,esi
-game.dll+61FEC4: 8B D7                       - mov edx,edi
-}
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -314,6 +254,40 @@ unregistersymbol(aobAmmo)
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
+              <ID>117533</ID>
+              <Description>"Inf last mag                                                                    (by gir489)"</Description>
+              <Color>0000FF</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+aobscanmodule(aob_SubtractAmmo,game.dll,8B D7 4C 8D 04 52 42 83 2C 81 01 48 8B 45)
+registersymbol(aob_SubtractAmmo)
+alloc(newmem_SubtractAmmo,1024)
+label(return_SubtractAmmo)
+
+newmem_SubtractAmmo:
+  mov edx,edi
+  lea r8,[rdx+rdx*2]
+  cmp [rcx+r8*4], #2
+  jle short @f
+    sub [rcx+r8*4], #1
+  @@:
+  mov rax,[rbp+38]
+  jmp return_SubtractAmmo
+
+aob_SubtractAmmo:
+  jmp far newmem_SubtractAmmo
+  nop
+return_SubtractAmmo:
+
+[DISABLE]
+aob_SubtractAmmo:
+  db 8B D7 4C 8D 04 52 42 83 2C 81 01 48 8B 45 38
+
+unregistersymbol(aob_SubtractAmmo)
+dealloc(newmem_SubtractAmmo)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
               <ID>57</ID>
               <Description>"No bullets consume                                                       (by cfemen)"</Description>
               <Color>C0C0C0</Color>
@@ -335,7 +309,7 @@ unregistersymbol(aobReload)
             </CheatEntry>
             <CheatEntry>
               <ID>117441</ID>
-              <Description>"No ? consume                                                       (by cfemen)"</Description>
+              <Description>"No reload                                                                       (by cfemen)"</Description>
               <Color>C0C0C0</Color>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript Async="1">{ Game   : helldivers2.exe
@@ -347,7 +321,20 @@ unregistersymbol(aobReload)
 }
 
 [ENABLE]
+aobscanmodule(aobReload,game.dll,44 89 74 01 04 4D 8B 42 50 49 8B 42 38) // should be unique
+registersymbol(aobReload)
+aobReload:
+  nop 5
 
+
+aobscanmodule(aobStaticP,game.dll,48 8B 15 ?? ?? ?? ?? 8B CE 44 8B 8A F0 00 00 00)
+registersymbol(aobStaticP)
+
+label(pStaticW)
+registersymbol(pStaticW)
+
+aobStaticP+7+(DWORD)[aobStaticP+3]:
+pStaticW:
 
 aobscanmodule(aobShoot,game.dll,48 89 4C 24 08 53 55 56 57 41 55 41 56 41 57 48 83 EC 30 4C 8B 2D) // should be unique
 alloc(newmem,$1000)
@@ -358,7 +345,9 @@ label(return)
 newmem:
 
 code:
-  cmp rcx,0
+  mov rax,pStaticW
+  mov rax,[rax]
+  cmp rcx,rax
   jne short @f
    ret
   @@:
@@ -379,40 +368,15 @@ return:
 registersymbol(aobShoot)
 
 [DISABLE]
+aobReload:
+ db 44 89 74 01 04
 
 aobShoot:
   db 48 89 4C 24 08 53 55 56 57 41 55 41 56 41 57
 
-unregistersymbol(aobShoot)
+unregistersymbol(*)
 dealloc(newmem)
 
-{
-// ORIGINAL CODE - INJECTION POINT: game.dll+4B6560
-
-game.dll+4B6552: E9 3C FE FF FF        - jmp game.dll+4B6393
-game.dll+4B6557: CC                    - int 3
-game.dll+4B6558: CC                    - int 3
-game.dll+4B6559: CC                    - int 3
-game.dll+4B655A: CC                    - int 3
-game.dll+4B655B: CC                    - int 3
-game.dll+4B655C: CC                    - int 3
-game.dll+4B655D: CC                    - int 3
-game.dll+4B655E: CC                    - int 3
-game.dll+4B655F: CC                    - int 3
-// ---------- INJECTING HERE ----------
-game.dll+4B6560: 48 89 4C 24 08        - mov [rsp+08],rcx
-// ---------- DONE INJECTING  ----------
-game.dll+4B6565: 53                    - push rbx
-game.dll+4B6566: 55                    - push rbp
-game.dll+4B6567: 56                    - push rsi
-game.dll+4B6568: 57                    - push rdi
-game.dll+4B6569: 41 55                 - push r13
-game.dll+4B656B: 41 56                 - push r14
-game.dll+4B656D: 41 57                 - push r15
-game.dll+4B656F: 48 83 EC 30           - sub rsp,30
-game.dll+4B6573: 4C 8B 2D D6 E9 57 01  - mov r13,[game.dll+1A34F50]
-game.dll+4B657A: 45 33 FF              - xor r15d,r15d
-}
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
@@ -469,6 +433,7 @@ test rsi,rsi
      movaps xmm2,xmm1
   jmp return
   @@:
+  pop rax
   subss xmm1,xmm14
   movss [r14+r15+4C],xmm1
   movaps xmm2,xmm1
@@ -908,7 +873,7 @@ game.dll+5DF142: 75 AC                 - jne game.dll+5DF0F0
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{ Game   : helldivers2.exe
   Version:
-  Date   : 2025-05-13
+  Date   : 2025-09-02
   Author : cfemen
 
   This script does blah blah blah
@@ -916,21 +881,19 @@ game.dll+5DF142: 75 AC                 - jne game.dll+5DF0F0
 
 [ENABLE]
 
-
-aobscanmodule(aobSubTimer,game.dll,F3 0F 5C C4 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
+aobscanmodule(aobSubTimer,game.dll,F3 0F 5C C3 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
 alloc(newmem,$1000)
 
 label(code)
 label(return)
 
 newmem:
-
-code:
-  subss xmm0,xmm4
   ucomiss xmm0, DWORD [compare_float_check]
   jbe short @f
     movss xmm0, DWORD [compare_float_check]
   @@:
+code:
+  subss xmm0,xmm3
   mov edx,6109F766
   movss [rcx+rax],xmm0
   jmp return
@@ -945,37 +908,37 @@ registersymbol(aobSubTimer)
 [DISABLE]
 
 aobSubTimer:
-  db F3 0F 5C C4 BA 66 F7 09 61 F3 0F 11 04 01
+  db F3 0F 5C C3 BA 66 F7 09 61 F3 0F 11 04 01
 
 unregistersymbol(aobSubTimer)
 dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: game.dll+6530B2
+// ORIGINAL CODE - INJECTION POINT: game.dll+687E82
 
-game.dll+653096: 32 DB           - xor bl,bl
-game.dll+653098: FF C1           - inc ecx
-game.dll+65309A: 48 83 C2 1C     - add rdx,1C
-game.dll+65309E: 41 3B C8        - cmp ecx,r8d
-game.dll+6530A1: 72 DD           - jb game.dll+653080
-game.dll+6530A3: 84 DB           - test bl,bl
-game.dll+6530A5: 75 35           - jne game.dll+6530DC
-game.dll+6530A7: 48 8B 47 78     - mov rax,[rdi+78]
-game.dll+6530AB: 0F 28 C6        - movaps xmm0,xmm6
-game.dll+6530AE: 49 6B CF 3C     - imul rcx,r15,3C
+game.dll+687E66: 32 DB           - xor bl,bl
+game.dll+687E68: FF C1           - inc ecx
+game.dll+687E6A: 48 83 C2 1C     - add rdx,1C
+game.dll+687E6E: 41 3B C8        - cmp ecx,r8d
+game.dll+687E71: 72 DD           - jb game.dll+687E50
+game.dll+687E73: 84 DB           - test bl,bl
+game.dll+687E75: 75 35           - jne game.dll+687EAC
+game.dll+687E77: 48 8B 47 78     - mov rax,[rdi+78]
+game.dll+687E7B: 0F 28 C6        - movaps xmm0,xmm6
+game.dll+687E7E: 49 6B CF 3C     - imul rcx,r15,3C
 // ---------- INJECTING HERE ----------
-game.dll+6530B2: F3 0F 5C C4     - subss xmm0,xmm4
+game.dll+687E82: F3 0F 5C C3     - subss xmm0,xmm3
 // ---------- DONE INJECTING  ----------
-game.dll+6530B6: BA 66 F7 09 61  - mov edx,6109F766
-game.dll+6530BB: F3 0F 11 04 01  - movss [rcx+rax],xmm0
-game.dll+6530C0: 48 8B 47 60     - mov rax,[rdi+60]
-game.dll+6530C4: 4C 8B 47 78     - mov r8,[rdi+78]
-game.dll+6530C8: 4C 03 C1        - add r8,rcx
-game.dll+6530CB: 4A 8B 0C F8     - mov rcx,[rax+r15*8]
-game.dll+6530CF: 8B 49 10        - mov ecx,[rcx+10]
-game.dll+6530D2: E8 B9 06 5E 00  - call game.dll+C33790
-game.dll+6530D7: 49 8B D7        - mov rdx,r15
-game.dll+6530DA: EB 44           - jmp game.dll+653120
+game.dll+687E86: BA 66 F7 09 61  - mov edx,6109F766
+game.dll+687E8B: F3 0F 11 04 01  - movss [rcx+rax],xmm0
+game.dll+687E90: 48 8B 47 60     - mov rax,[rdi+60]
+game.dll+687E94: 4C 8B 47 78     - mov r8,[rdi+78]
+game.dll+687E98: 4C 03 C1        - add r8,rcx
+game.dll+687E9B: 4A 8B 0C F8     - mov rcx,[rax+r15*8]
+game.dll+687E9F: 8B 49 10        - mov ecx,[rcx+10]
+game.dll+687EA2: E8 A9 1B 62 00  - call game.dll+CA9A50
+game.dll+687EA7: 49 8B D7        - mov rdx,r15
+game.dll+687EAA: EB 44           - jmp game.dll+687EF0
 }
 </AssemblerScript>
         </CheatEntry>
@@ -2008,6 +1971,7 @@ test rsi,rsi
      movaps xmm2,xmm1
   jmp return
   @@:
+  pop rax
   subss xmm1,xmm14
   movss [r14+r15+4C],xmm1
   movaps xmm2,xmm1
@@ -2213,7 +2177,7 @@ unregistersymbol(aob_CheckMissionBlip)
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>{ Game   : helldivers2.exe
   Version:
-  Date   : 2025-05-13
+  Date   : 2025-09-02
   Author : cfemen
 
   This script does blah blah blah
@@ -2221,21 +2185,19 @@ unregistersymbol(aob_CheckMissionBlip)
 
 [ENABLE]
 
-
-aobscanmodule(aobSubTimer,game.dll,F3 0F 5C C4 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
+aobscanmodule(aobSubTimer,game.dll,F3 0F 5C C3 BA 66 F7 09 61 F3 0F 11 04 01) // should be unique
 alloc(newmem,$1000)
 
 label(code)
 label(return)
 
 newmem:
-
-code:
-  subss xmm0,xmm4
   ucomiss xmm0, DWORD [compare_float_check]
   jbe short @f
     movss xmm0, DWORD [compare_float_check]
   @@:
+code:
+  subss xmm0,xmm3
   mov edx,6109F766
   movss [rcx+rax],xmm0
   jmp return
@@ -2250,37 +2212,37 @@ registersymbol(aobSubTimer)
 [DISABLE]
 
 aobSubTimer:
-  db F3 0F 5C C4 BA 66 F7 09 61 F3 0F 11 04 01
+  db F3 0F 5C C3 BA 66 F7 09 61 F3 0F 11 04 01
 
 unregistersymbol(aobSubTimer)
 dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: game.dll+6530B2
+// ORIGINAL CODE - INJECTION POINT: game.dll+687E82
 
-game.dll+653096: 32 DB           - xor bl,bl
-game.dll+653098: FF C1           - inc ecx
-game.dll+65309A: 48 83 C2 1C     - add rdx,1C
-game.dll+65309E: 41 3B C8        - cmp ecx,r8d
-game.dll+6530A1: 72 DD           - jb game.dll+653080
-game.dll+6530A3: 84 DB           - test bl,bl
-game.dll+6530A5: 75 35           - jne game.dll+6530DC
-game.dll+6530A7: 48 8B 47 78     - mov rax,[rdi+78]
-game.dll+6530AB: 0F 28 C6        - movaps xmm0,xmm6
-game.dll+6530AE: 49 6B CF 3C     - imul rcx,r15,3C
+game.dll+687E66: 32 DB           - xor bl,bl
+game.dll+687E68: FF C1           - inc ecx
+game.dll+687E6A: 48 83 C2 1C     - add rdx,1C
+game.dll+687E6E: 41 3B C8        - cmp ecx,r8d
+game.dll+687E71: 72 DD           - jb game.dll+687E50
+game.dll+687E73: 84 DB           - test bl,bl
+game.dll+687E75: 75 35           - jne game.dll+687EAC
+game.dll+687E77: 48 8B 47 78     - mov rax,[rdi+78]
+game.dll+687E7B: 0F 28 C6        - movaps xmm0,xmm6
+game.dll+687E7E: 49 6B CF 3C     - imul rcx,r15,3C
 // ---------- INJECTING HERE ----------
-game.dll+6530B2: F3 0F 5C C4     - subss xmm0,xmm4
+game.dll+687E82: F3 0F 5C C3     - subss xmm0,xmm3
 // ---------- DONE INJECTING  ----------
-game.dll+6530B6: BA 66 F7 09 61  - mov edx,6109F766
-game.dll+6530BB: F3 0F 11 04 01  - movss [rcx+rax],xmm0
-game.dll+6530C0: 48 8B 47 60     - mov rax,[rdi+60]
-game.dll+6530C4: 4C 8B 47 78     - mov r8,[rdi+78]
-game.dll+6530C8: 4C 03 C1        - add r8,rcx
-game.dll+6530CB: 4A 8B 0C F8     - mov rcx,[rax+r15*8]
-game.dll+6530CF: 8B 49 10        - mov ecx,[rcx+10]
-game.dll+6530D2: E8 B9 06 5E 00  - call game.dll+C33790
-game.dll+6530D7: 49 8B D7        - mov rdx,r15
-game.dll+6530DA: EB 44           - jmp game.dll+653120
+game.dll+687E86: BA 66 F7 09 61  - mov edx,6109F766
+game.dll+687E8B: F3 0F 11 04 01  - movss [rcx+rax],xmm0
+game.dll+687E90: 48 8B 47 60     - mov rax,[rdi+60]
+game.dll+687E94: 4C 8B 47 78     - mov r8,[rdi+78]
+game.dll+687E98: 4C 03 C1        - add r8,rcx
+game.dll+687E9B: 4A 8B 0C F8     - mov rcx,[rax+r15*8]
+game.dll+687E9F: 8B 49 10        - mov ecx,[rcx+10]
+game.dll+687EA2: E8 A9 1B 62 00  - call game.dll+CA9A50
+game.dll+687EA7: 49 8B D7        - mov rdx,r15
+game.dll+687EAA: EB 44           - jmp game.dll+687EF0
 }
 </AssemblerScript>
             </CheatEntry>
@@ -2899,13 +2861,7 @@ unregistersymbol(aobSprintWrite)
           <Description>"Inf last Stim                                                                         (by gir489)"</Description>
           <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>// Game Executable   : helldivers2.exe
-// Author            : gir489
-// Executable Version: 1.8.27207.0
-// MD5 Signature     : 14C848EF74B1A8FEF0AC3DB6E396B3D2
-// EXE Compile Date  : January 28, 2025 10:15 AM
-// Script Date       : February 04, 2025 06:29 PM
-[ENABLE]
+          <AssemblerScript>[ENABLE]
 aobscanmodule(aob_Syringes,game.dll, 41 8B 54 EE 04 8B C8)
 registersymbol(aob_Syringes)
 alloc(newmem_Syringes,1024)
@@ -2938,15 +2894,7 @@ dealloc(newmem_Syringes)
           <Description>"Inf grenade                                                                          (by gir489)"</Description>
           <Color>0000FF</Color>
           <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>{ Game   : helldivers2.exe
-  Version: 
-  Date   : 2024-04-29
-  Author : ZoDDeL
-
-  This script does blah blah blah
-}
-
-[ENABLE]
+          <AssemblerScript>[ENABLE]
 aobscanmodule(aob_Grenades,game.dll,42 FF 0C E0)
 registersymbol(aob_Grenades)
 alloc(newmem_Grenades,1024)
@@ -3455,77 +3403,79 @@ dmg_newmem:
 
 
   //  // whitelisted weapons that get super damage
-  cmp [rcx+00], #80 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
+  cmp [rcx+00], #88 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
     je dmg_Machinegun
-  cmp [rcx+00], #79 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
+  cmp [rcx+00], #87 // AR-23 Liberator / AR-22C Patriot / AR-48 Truth Whisperer / M-105 Stalwart / AR-61 Tenderizer / Guard Dog
     je dmg_Machinegun
-  cmp [rcx+00], #103 // AR-MA5C5
+  cmp [rcx+00], #112 // AR-MA5C5
     je dmg_Machinegun
 
-  cmp [rcx+00], #109 // R-63CS Diligence Counter Sniper
+  cmp [rcx+00], #118 // R-63CS Diligence Counter Sniper
     je dmg_RegularSniper
-  cmp [rcx+00], #106 // R-6 Deaddeye
+  cmp [rcx+00], #115 // R-6 Deaddeye
     je dmg_RegularSniper
-  cmp [rcx+00], #248 // Plas-39 Projectile
+  cmp [rcx+00], #260 // Plas-39 Projectile
     je dmg_Pistol
-  cmp [rcx+00], #249 // Plas-39 Explosion
+  cmp [rcx+00], #261 // Plas-39 Explosion
     je dmg_code
-  cmp [rcx+00], #163 // anti material rifle
+  cmp [rcx+00], #172 // anti material rifle
     je dmg_Sniper
 
-  cmp [rcx+00], #50 // Knight
+  cmp [rcx+00], #58 // Knight
     je dmg_Pistol
-  cmp [rcx+00], #47 // Knight
+  cmp [rcx+00], #55 // Knight
     je dmg_Pistol
 
-  cmp [rcx+00], #140 // SG-225SP Breaker Spray&amp;Pray
+  cmp [rcx+00], #149 // SG-225SP Breaker Spray&amp;Pray
     je dmg_Shotgun
-  cmp [rcx+00], #122 // SG-M90A
-    je dmg_Shotgun
-
-  cmp [rcx+00], #67 // P-113 Verdict
-    je dmg_Pistol
-  cmp [rcx+00], #68 // P-M6C/Socom
-    je dmg_Pistol
-  cmp [rcx+00], #72 // P-4 Senator revolver
-    je dmg_Pistol
-  cmp [rcx+00], #125 // SG-22 Bushwack &amp; SG-8 Punisher
+  cmp [rcx+00], #131 // SG-M90A
     je dmg_Shotgun
 
-  cmp [rcx+00], #503 // K-2 Throwing knife
+  cmp [rcx+00], #75 // P-113 Verdict
+    je dmg_Pistol
+  cmp [rcx+00], #76 // P-M6C/Socom
+    je dmg_Pistol
+  cmp [rcx+00], #80 // P-4 Senator revolver
+    je dmg_Pistol
+  cmp [rcx+00], #134 // SG-22 Bushwack &amp; SG-8 Punisher
+    je dmg_Shotgun
+
+  cmp [rcx+00], #525 // K-2 Throwing knife
     je dmg_Oneshot
 
-  cmp [rcx+00], #154 // ARC-3 Arc Thrower
+  cmp [rcx+00], #163 // ARC-3 Arc Thrower
     je dmg_Arc
-  cmp [rcx+00], #156 // ARC-12 Blitzer
+  cmp [rcx+00], #165 // ARC-12 Blitzer
     je dmg_Arc
-  cmp [rcx+00], #401 // LAS-98
+  cmp [rcx+00], #420 // LAS-98
     je dmg_Arc
 
-  cmp [rcx+00], #344 // Hellpod impact damage
+  cmp [rcx+00], #358 // Hellpod impact damage
     je dmg_Oneshot
-  cmp [rcx+00], #345 // Hellpod impact fire damage
+  cmp [rcx+00], #359 // Hellpod impact fire damage
     je dmg_Oneshot
-  cmp [rcx+00], #346 // Hellpod impact stun damage
+  cmp [rcx+00], #360 // Hellpod impact stun damage
     je dmg_Oneshot
 
-  cmp [rcx+00], #432 // Helldiver melee
+  cmp [rcx+00], #451 // Helldiver melee
     je dmg_Melee
-  cmp [rcx+00], #437 // Helldiver melee Muscle Enhaced
+  cmp [rcx+00], #457 // Helldiver melee Muscle Enhaced
     je dmg_Melee
-  cmp [rcx+00], #439 // CQC-19 Stunning Spear
+  cmp [rcx+00], #459 // CQC-19 Stunning Spear
     je dmg_Melee
-  cmp [rcx+00], #440 // CQC-30 Stunning Baton
+  cmp [rcx+00], #460 // CQC-30 Stunning Baton
     je dmg_Melee
-  cmp [rcx+00], #434 // CQC-5 Combat axe
+  cmp [rcx+00], #453 // CQC-5 Combat axe
     je dmg_Melee
-  cmp [rcx+00], #435 // CQC-2 Saber
+  cmp [rcx+00], #455 // CQC-42 Machete
     je dmg_Melee
-  cmp [rcx+00], #436 // Shovel Melee Attack
+  cmp [rcx+00], #454 // CQC-2 Saber
     je dmg_Melee
-  cmp [rcx+00], #439 // ONE TRUE FLAG
+  cmp [rcx+00], #456 // Shovel Melee Attack
     je dmg_Melee
-  cmp [rcx+00], #497 // This is Democrazy emote
+  cmp [rcx+00], #459 // ONE TRUE FLAG
+    je dmg_Melee
+  cmp [rcx+00], #519 // This is Democrazy emote
     je dmg_Melee
 
 
@@ -3811,280 +3761,288 @@ dmg_newmem:
 
   //Hellpod
 
-  cmp [rcx+00], #344 // Hellpod Impact
+  cmp [rcx+00], #358 // Hellpod Impact
     je dmg_code
-  cmp [rcx+00], #345 // Hellpod Fire Impact
+  cmp [rcx+00], #359 // Hellpod Fire Impact
     je dmg_code
-  cmp [rcx+00], #346 // Hellpod Stun Impact
+  cmp [rcx+00], #360 // Hellpod Stun Impact
     je dmg_code
 
   //Assault rifles
 
-  cmp [rcx+00], #80 // AR-23 Liberator
+  cmp [rcx+00], #88 // AR-23 Liberator
     je dmg_code
-  cmp [rcx+00], #77 // AR-23P Liberator Penetrator
+  cmp [rcx+00], #85 // AR-23P Liberator Penetrator
     je dmg_code
-  cmp [rcx+00], #79 // AR-23C Liberator Concussive
+  cmp [rcx+00], #87 // AR-23C Liberator Concussive
     je dmg_code
-  cmp [rcx+00], #88 // AR-32 Pacifier
+  cmp [rcx+00], #96 // AR-32 Pacifier
     je dmg_code
-  cmp [rcx+00], #103 // AR-MA5C5
+  cmp [rcx+00], #97 // AR-2 Coyote
     je dmg_code
-  cmp [rcx+00], #80 // AR StA-52
+  cmp [rcx+00], #112 // AR-MA5C5
     je dmg_code
-  cmp [rcx+00], #80 // AR-23A Liberator Carabine
+  cmp [rcx+00], #88 // AR StA-52
     je dmg_code
-  cmp [rcx+00], #102 // AR-61 Tenderizer
+  cmp [rcx+00], #88 // AR-23A Liberator Carabine
     je dmg_code
-  cmp [rcx+00], #101 // BR-14 Adjudicator
+  cmp [rcx+00], #111 // AR-61 Tenderizer
+    je dmg_code
+  cmp [rcx+00], #110 // BR-14 Adjudicator
     je dmg_code
 
   //Sniper rifle
 
-  cmp [rcx+00], #105 // R-2 Amendment
+  cmp [rcx+00], #114 // R-2 Amendment
     je dmg_code
-  cmp [rcx+00], #104 // R-2124 Constitution
+  cmp [rcx+00], #113 // R-2124 Constitution
     je dmg_code
-  cmp [rcx+00], #106 // R-6 Deaddeye
+  cmp [rcx+00], #115 // R-6 Deaddeye
     je dmg_code
-  cmp [rcx+00], #108 // R-63 Diligence
+  cmp [rcx+00], #117 // R-63 Diligence
     je dmg_code
-  cmp [rcx+00], #109 // R-63CS Diligence Counter Sniper
+  cmp [rcx+00], #118 // R-63CS Diligence Counter Sniper
     je dmg_code
-  cmp [rcx+00], #163 // Anti material rifle
+  cmp [rcx+00], #172 // Anti material rifle
     je dmg_code
-  cmp [rcx+00], #101 // AR-20L Justice
+  cmp [rcx+00], #110 // AR-20L Justice
     je dmg_code
 
   //Submachine guns
 
-  cmp [rcx+00], #50 // MP-98 Knight
+  cmp [rcx+00], #58 // MP-98 Knight
     je dmg_code
-  cmp [rcx+00], #50 // SMG StA-11
+  cmp [rcx+00], #58 // SMG StA-11
     je dmg_code
-  cmp [rcx+00], #47 // SMG M7S
+  cmp [rcx+00], #55 // SMG M7S
     je dmg_code
-  cmp [rcx+00], #70 // SMG-32 Reprimand
+  cmp [rcx+00], #78 // SMG-32 Reprimand
     je dmg_code
-  cmp [rcx+00], #59 // SMG-37 Defender
+  cmp [rcx+00], #67 // SMG-37 Defender
     je dmg_code
-  cmp [rcx+00], #66 // SMG-72 Pummeler
+  cmp [rcx+00], #74 // SMG-72 Pummeler
     je dmg_code
 
   //Shotgun
 
-  cmp [rcx+00], #125 // SG-8 Punisher
+  cmp [rcx+00], #134 // SG-8 Punisher
     je dmg_code
-  cmp [rcx+00], #138 // SG-8S Slugger
+  cmp [rcx+00], #147 // SG-8S Slugger
     je dmg_code
-  cmp [rcx+00], #128 // SG-20 Halt (fletchette)
+  cmp [rcx+00], #137 // SG-20 Halt (fletchette)
     je dmg_code
-  cmp [rcx+00], #137 // SG-20 Halt stun)
+  cmp [rcx+00], #146 // SG-20 Halt stun)
     je dmg_code
-  cmp [rcx+00], #126 // SG-451 Cookout
+  cmp [rcx+00], #135 // SG-451 Cookout
     je dmg_code
-  cmp [rcx+00], #122 // SG-M90A
+  cmp [rcx+00], #131 // SG-M90A
     je dmg_code
-  cmp [rcx+00], #141 // SG-225 Breaker
+  cmp [rcx+00], #150 // SG-225 Breaker
     je dmg_code
-  cmp [rcx+00], #140 // SG-225SP Breaker Spray&amp;Pray
+  cmp [rcx+00], #149 // SG-225SP Breaker Spray&amp;Pray
     je dmg_code
-  cmp [rcx+00], #144 // SG-225IE Breaker Incendiary
+  cmp [rcx+00], #153 // SG-225IE Breaker Incendiary
     je dmg_code
-  //cmp [rcx+00], #143 // SG-225NS Breaker Nailspitter
+  //cmp [rcx+00], #152 // SG-225NS Breaker Nailspitter
   //  je dmg_code
-  cmp [rcx+00], #131 // Projectile_Break-Action Shotgun
+  cmp [rcx+00], #140 // Projectile_Break-Action Shotgun
     je dmg_code
 
   //Explosive
 
-  cmp [rcx+00], #165 // CB-9 explosive crossbow Projectile
+  cmp [rcx+00], #174 // CB-9 explosive crossbow Projectile
     je dmg_code
-  cmp [rcx+00], #166 // CB-9 explosive crossbow Explosion
+  cmp [rcx+00], #175 // CB-9 explosive crossbow Explosion
     je dmg_code
-  cmp [rcx+00], #150 // R-36 Eruptor Shrapnel
+  cmp [rcx+00], #159 // R-36 Eruptor Shrapnel
     je dmg_code
-  cmp [rcx+00], #115 // R-36 Eruptor Projectile
+  cmp [rcx+00], #124 // R-36 Eruptor Projectile
     je dmg_code
-  cmp [rcx+00], #283 // R-36 Eruptor Explosion
+  cmp [rcx+00], #297 // R-36 Eruptor Explosion
     je dmg_code
 
   //Energy-based
 
-  cmp [rcx+00], #38 // SG-8P Punisher Plasma Projectile
+  cmp [rcx+00], #43 // SG-8P Punisher Plasma Projectile
     je dmg_code
-  cmp [rcx+00], #251 // SG-8P Punisher Plasma Explosion
+  cmp [rcx+00], #263 // SG-8P Punisher Plasma Explosion
     je dmg_code
-  cmp [rcx+00], #248 // Plas-39 Accelerator rifle Projectile
+  cmp [rcx+00], #260 // Plas-39 Accelerator rifle Projectile
     je dmg_code
-  cmp [rcx+00], #249 // Plas-39 Accelerator rifle Explosion
+  cmp [rcx+00], #261 // Plas-39 Accelerator rifle Explosion
     je dmg_code
-  cmp [rcx+00], #156 // ARC-12 Blitzer
+  cmp [rcx+00], #165 // ARC-12 Blitzer
     je dmg_code
-  cmp [rcx+00], #396 // LAS-5 Scythe
+  cmp [rcx+00], #415 // LAS-5 Scythe
     je dmg_code
-  cmp [rcx+00], #31 // LAS-16 Sickle
+  cmp [rcx+00], #37 // LAS-16 Sickle
     je dmg_code
-  cmp [rcx+00], #32 // LAS-17 Double-Edged Sickle
+  cmp [rcx+00], #38 // LAS-17 Double-Edged Sickle
     je dmg_code
-  cmp [rcx+00], #33 // LAS-17 Double-Edged Sickle
+  cmp [rcx+00], #39 // LAS-17 Double-Edged Sickle
     je dmg_code
-  cmp [rcx+00], #34 // LAS-17 Double-Edged Sickle
+  cmp [rcx+00], #40 // LAS-17 Double-Edged Sickle
     je dmg_code
-  cmp [rcx+00], #37 // PLAS-1 Scorcher Projectile
+  cmp [rcx+00], #43 // PLAS-1 Scorcher Projectile
     je dmg_code
-  cmp [rcx+00], #246 // PLAS-1 Scorcher Explosion
+  cmp [rcx+00], #258 // PLAS-1 Scorcher Explosion
     je dmg_code
-  cmp [rcx+00], #44 // PLAS-101 Purifier bullet
+  cmp [rcx+00], #50 // PLAS-101 Purifier bullet
     je dmg_code
-  cmp [rcx+00], #252 // PLAS-101 Purifier min charge
+  cmp [rcx+00], #264 // PLAS-101 Purifier min charge
     je dmg_code
-  cmp [rcx+00], #253 // PLAS-101 Purifier max charge
+  cmp [rcx+00], #265 // PLAS-101 Purifier max charge
     je dmg_code
 
   //Special
 
-  cmp [rcx+00], #52 // VG-70 Variable
+  cmp [rcx+00], #60 // VG-70 Variable
     je dmg_code
   cmp [rcx+00], #13 // FLAM-66 Torcher flame rifle Impact
     je dmg_code
-  cmp [rcx+00], #119 // JAR-5 Dominator
+  cmp [rcx+00], #128 // JAR-5 Dominator
     je dmg_code
 
   //Pistol
 
-  cmp [rcx+00], #69 // P-92 Warrant
+  cmp [rcx+00], #77 // P-92 Warrant
     je dmg_code
-  cmp [rcx+00], #51 // P-2 Peacemaker
+  cmp [rcx+00], #59 // P-2 Peacemaker
     je dmg_code
-  cmp [rcx+00], #49 // P-19 Redeemer
+  cmp [rcx+00], #57 // P-19 Redeemer
     je dmg_code
-  cmp [rcx+00], #67 // P-113 Verdict
+  cmp [rcx+00], #75 // P-113 Verdict
     je dmg_code
-  cmp [rcx+00], #68 // P-M6C/Socom
+  cmp [rcx+00], #76 // P-M6C/Socom
     je dmg_code
-  cmp [rcx+00], #72 // P-4 Senator
+  cmp [rcx+00], #80 // P-4 Senator
     je dmg_code
 
   //Melee
 
-  cmp [rcx+00], #432 // Helldiver melee
+  cmp [rcx+00], #451 // Helldiver melee
     je dmg_code
-  cmp [rcx+00], #437 // Helldiver melee Muscle Enhaced
+  cmp [rcx+00], #457 // Helldiver melee Muscle Enhaced
     je dmg_code
-  cmp [rcx+00], #439 // CQC-19 Stunning Spear
+  cmp [rcx+00], #459 // CQC-19 Stunning Spear
     je dmg_code
-  cmp [rcx+00], #435 // CQC-2 Saber
+  cmp [rcx+00], #454 // CQC-2 Saber
     je dmg_code
-  cmp [rcx+00], #440 // CQC-30 Stunning Baton
+  cmp [rcx+00], #460 // CQC-30 Stunning Baton
     je dmg_code
-  cmp [rcx+00], #434 // CQC-5 Combat axe
+  cmp [rcx+00], #453 // CQC-5 Combat axe
     je dmg_code
-  cmp [rcx+00], #439 // ONE TRUE FLAG
+  cmp [rcx+00], #455 // CQC-42 Machete
     je dmg_code
-  cmp [rcx+00], #436 // Shovel Melee Attack
+  cmp [rcx+00], #459 // ONE TRUE FLAG
     je dmg_code
-  cmp [rcx+00], #438 // Helldiver Bayonet
+  cmp [rcx+00], #456 // Shovel Melee Attack
     je dmg_code
-  cmp [rcx+00], #497 // This is Democrazy emote
+  cmp [rcx+00], #458 // Helldiver Bayonet
     je dmg_code
-  cmp [rcx+00], #382 // LIFT-182 Tp backpack
+  cmp [rcx+00], #519 // This is Democrazy emote
     je dmg_code
-  //cmp [rcx+00], #? // LIFT-182 Tp backpack
-  //  je dmg_code
+  cmp [rcx+00], #400 // LIFT-182 Tp backpack black hole orb
+    je dmg_code
+  cmp [rcx+00], #401 // LIFT-182 Tp backpack overload explosion
+    je dmg_code
 
   //Special
 
   //cmp [rcx+00], #? // P-11 Stims Pistol
   //  je dmg_code
-  cmp [rcx+00], #125 // SG-22 Bushwack
+  cmp [rcx+00], #134 // SG-22 Bushwack
     je dmg_code
-  cmp [rcx+00], #35 // LAS-58 Talon
+  cmp [rcx+00], #41 // LAS-58 Talon
     je dmg_code
   cmp [rcx+00], #14 // P-72 Crisper
     je dmg_code
-  cmp [rcx+00], #177 // GP-31 grenade pistol Projectile
+  cmp [rcx+00], #186 // GP-31 grenade pistol Projectile
     je dmg_code
-  cmp [rcx+00], #304 // GP-31 grenade pistol Explosion
+  cmp [rcx+00], #318 // GP-31 grenade pistol Explosion
     je dmg_code
-  cmp [rcx+00], #395 // LAS-7 Dagger
+  cmp [rcx+00], #414 // LAS-7 Dagger
     je dmg_code
-  cmp [rcx+00], #18 // GP-31 Ultimatum Impact
+  cmp [rcx+00], #24 // GP-31 Ultimatum Impact
     je dmg_code
-  cmp [rcx+00], #358 // GP-31 Ultimatum Explosion
+  cmp [rcx+00], #372 // GP-31 Ultimatum Explosion
     je dmg_code
-  cmp [rcx+00], #36 // PLAS-15 Projectile Min
+  cmp [rcx+00], #42 // PLAS-15 Projectile Min
     je dmg_code
-  cmp [rcx+00], #43 // PLAS-15 Projectile Max
+  cmp [rcx+00], #49 // PLAS-15 Projectile Max
     je dmg_code
-  cmp [rcx+00], #254 // PLAS-15 Explosion Min
+  cmp [rcx+00], #266 // PLAS-15 Explosion Min
     je dmg_code
-  cmp [rcx+00], #255 // PLAS-15 Explosion Max
+  cmp [rcx+00], #267 // PLAS-15 Explosion Max
     je dmg_code
 
   //Grenades
 
-  cmp [rcx+00], #295 // TED-63 Dynamite
+  cmp [rcx+00], #309 // TED-63 Dynamite
     je dmg_code
-  cmp [rcx+00], #275 // G-6 Frag
+  cmp [rcx+00], #287 // G-6 Frag
     je dmg_code
-  cmp [rcx+00], #292 // G-12 High Explosive
+  cmp [rcx+00], #288 // G-7 Pineapple Explosion 1 Explosion
     je dmg_code
-  cmp [rcx+00], #277 // G-10 Incendiary Impact
+  cmp [rcx+00], #289 // G-7 Pineapple Explosion 1 Shrapnel
     je dmg_code
-  cmp [rcx+00], #408 // G-10 Incendiary Fire
+  cmp [rcx+00], #306 // G-12 High Explosive
     je dmg_code
-  cmp [rcx+00], #169 // G-31 ARC ARC
+  cmp [rcx+00], #290 // G-10 Incendiary Impact
     je dmg_code
-  cmp [rcx+00], #296 // G-31 ARC Explosion
+  cmp [rcx+00], #427 // G-10 Incendiary Fire
     je dmg_code
-  cmp [rcx+00], #293 // G-16 Impact
+  cmp [rcx+00], #178 // G-31 ARC ARC
     je dmg_code
-  cmp [rcx+00], #278 // G-13 Incendiary Impact Impact
+  cmp [rcx+00], #310 // G-31 ARC Explosion
     je dmg_code
-  cmp [rcx+00], #408 // G-13 Incendiary Impact Fire
+  cmp [rcx+00], #307 // G-16 Impact
     je dmg_code
-  cmp [rcx+00], #225 // G-23 Stun
+  cmp [rcx+00], #291 // G-13 Incendiary Impact Impact
     je dmg_code
-  cmp [rcx+00], #361 // G-4 Gas Grenade Impact
+  cmp [rcx+00], #427 // G-13 Incendiary Impact Fire
     je dmg_code
-  cmp [rcx+00], #419 // G-4 Gas Grenade Gas
+  cmp [rcx+00], #235 // G-23 Stun
     je dmg_code
-  cmp [rcx+00], #293 // G-50 Seeker Drone
+  cmp [rcx+00], #375 // G-4 Gas Grenade Impact
+    je dmg_code
+  cmp [rcx+00], #438 // G-4 Gas Grenade Gas
+    je dmg_code
+  cmp [rcx+00], #307 // G-50 Seeker Drone
     je dmg_code
   //cmp [rcx+00], #? // G-3 Smoke
   //  je dmg_code
-  cmp [rcx+00], #409 // G-123 Thermite (burn)
+  cmp [rcx+00], #428 // G-123 Thermite (burn)
     je dmg_code
-  cmp [rcx+00], #226 // G-109 Urchin
+  cmp [rcx+00], #236 // G-109 Urchin
     je dmg_code
-  cmp [rcx+00], #503 // K-2 Throwing knife
+  cmp [rcx+00], #525 // K-2 Throwing knife
     je dmg_code
-  cmp [rcx+00], #16 // G-142 Pyrotech Speen
+  cmp [rcx+00], #21 // G-142 Pyrotech Speen
     je dmg_code
-  cmp [rcx+00], #17 // G-142 Pyrotech Explosion
+  cmp [rcx+00], #22 // G-142 Pyrotech Explosion
     je dmg_code
 
   //EXOs
 
-  cmp [rcx+00], #95 // EXO-45 Gatling
+  cmp [rcx+00], #104 // EXO-45 Gatling
     je dmg_code
-  cmp [rcx+00], #191 // EXO-45 rocket Projectile
+  cmp [rcx+00], #200 // EXO-45 rocket Projectile
     je dmg_code
-  cmp [rcx+00], #318 // EXO-45 rocket Explosion
+  cmp [rcx+00], #332 // EXO-45 rocket Explosion
     je dmg_code
-  cmp [rcx+00], #172 // Emancipator exo gun Projectile
+  cmp [rcx+00], #181 // Emancipator exo gun Projectile
     je dmg_code
-  cmp [rcx+00], #301 // Emancipator exo gun Explosion
+  cmp [rcx+00], #315 // Emancipator exo gun Explosion
     je dmg_code
 
   //Machine guns
 
-  cmp [rcx+00], #95 // MG-43
+  cmp [rcx+00], #104 // MG-43
     je dmg_code
-  cmp [rcx+00], #80 // M-105 Stalwart
+  cmp [rcx+00], #88 // M-105 Stalwart
     je dmg_code
-  cmp [rcx+00], #162 // MG-206 HMG
+  cmp [rcx+00], #171 // MG-206 HMG
     je dmg_code
 
   //Flame thrower
@@ -4093,219 +4051,229 @@ dmg_newmem:
     je dmg_code
   cmp [rcx+00], #13 // FLAM-66 Torcher
     je dmg_code
-  cmp [rcx+00], #408 // Flamethrower ground fire
+  cmp [rcx+00], #427 // Flamethrower ground fire
     je dmg_code
 
   //Gas
 
-  cmp [rcx+00], #19 // TX-41 Sterilizer
+  cmp [rcx+00], #25 // TX-41 Sterilizer
     je dmg_code
 
   //Rocket launchers
 
-  cmp [rcx+00], #179 // EAT-17 Projectile
+  cmp [rcx+00], #52 // S-11 Speargun 1 Impact
     je dmg_code
-  cmp [rcx+00], #310 // EAT-17 Explosion
+  cmp [rcx+00], #53 // S-11 Speargun 2 Gas
     je dmg_code
-  cmp [rcx+00], #180 // GR-8 recoil-less rifle (regular) Projectile
+  cmp [rcx+00], #188 // EAT-17 Projectile
     je dmg_code
-  cmp [rcx+00], #309 // GR-8 recoil-less rifle (regular) Explosion
+  cmp [rcx+00], #324 // EAT-17 Explosion
     je dmg_code
-  cmp [rcx+00], #159 // AC-8 Autocannon (flak) 1 impact
+  cmp [rcx+00], #230 // EAT-700 Expendable Napalm Launcher Impact
     je dmg_code
-  cmp [rcx+00], #170 // AC-8 Autocannon Projectile
+  cmp [rcx+00], #268 // EAT-700 Expendable Napalm Launcher Explosion
     je dmg_code
-  cmp [rcx+00], #300 // AC-8 Autocannon Explosion
+  cmp [rcx+00], #232 // EAT-700 Expendable Napalm Launcher Cluster
     je dmg_code
-  cmp [rcx+00], #308 // RL-77 airburst rocket launcher Projectile
+  cmp [rcx+00], #189 // GR-8 recoil-less rifle (regular) Projectile
     je dmg_code
-  cmp [rcx+00], #275 // RL-77 airburst rocket launcher MiniCluster
+  cmp [rcx+00], #323 // GR-8 recoil-less rifle (regular) Explosion
     je dmg_code
-  cmp [rcx+00], #276 // RL-77 airburst rocket launcher Cluster
+  cmp [rcx+00], #168 // AC-8 Autocannon (flak) 1 impact
     je dmg_code
-  cmp [rcx+00], #184 // MLS-4X Commando Projectile
+  cmp [rcx+00], #179 // AC-8 Autocannon Projectile
     je dmg_code
-  cmp [rcx+00], #316 // MLS-4X Commando Explosion
+  cmp [rcx+00], #314 // AC-8 Autocannon Explosion
     je dmg_code
-  cmp [rcx+00], #45 // RS-422 railgun Safe
+  cmp [rcx+00], #322 // RL-77 airburst rocket launcher Projectile
     je dmg_code
-  cmp [rcx+00], #46 // RS-422 railgun Safe
+  cmp [rcx+00], #287 // RL-77 airburst rocket launcher MiniCluster
     je dmg_code
-  cmp [rcx+00], #287 // Railgun Overcharge Explosion
+  cmp [rcx+00], #233 // RL-77 airburst rocket launcher Cluster
     je dmg_code
-  cmp [rcx+00], #194 // FAF-14 Spear 1 shell
+  cmp [rcx+00], #193 // MLS-4X Commando Projectile
     je dmg_code
-  cmp [rcx+00], #321 // FAF-14 Spear 2 Explosion
+  cmp [rcx+00], #330 // MLS-4X Commando Explosion
     je dmg_code
-  cmp [rcx+00], #193 // WASP Impact
+  cmp [rcx+00], #51 // RS-422 railgun Safe
     je dmg_code
-  cmp [rcx+00], #321 // WASP Explopsion
+  cmp [rcx+00], #54 // RS-422 railgun Safe
     je dmg_code
-  cmp [rcx+00], #196 // Stinger Projectile
+  cmp [rcx+00], #301 // Railgun Overcharge Explosion
     je dmg_code
-  cmp [rcx+00], #324 // Stinger Explosion
+  cmp [rcx+00], #203 // FAF-14 Spear 1 shell
     je dmg_code
-  cmp [rcx+00], #21 // GL-21 Grenade Launcher Projectile
+  cmp [rcx+00], #335 // FAF-14 Spear 2 Explosion
     je dmg_code
-  cmp [rcx+00], #304 // GL-21 Grenade Launcher Explosion
+  cmp [rcx+00], #202 // WASP Impact
+    je dmg_code
+  cmp [rcx+00], #335 // WASP Explopsion
+    je dmg_code
+  cmp [rcx+00], #205 // Stinger Projectile
+    je dmg_code
+  cmp [rcx+00], #338 // Stinger Explosion
+    je dmg_code
+  cmp [rcx+00], #27 // GL-21 Grenade Launcher Projectile
+    je dmg_code
+  cmp [rcx+00], #318 // GL-21 Grenade Launcher Explosion
     je dmg_code
   //cmp [rcx+00], #? // Stun grenade launcher
   //  je dmg_code
-  cmp [rcx+00], #280 // Incendiary grenade launcher
+  cmp [rcx+00], #293 // Incendiary grenade launcher
     je dmg_code
-  cmp [rcx+00], #311 // LAS-99 quasar Projectile
+  cmp [rcx+00], #325 // LAS-99 quasar Projectile
     je dmg_code
-  cmp [rcx+00], #312 // LAS-99 quasar Explosion
+  cmp [rcx+00], #326 // LAS-99 quasar Explosion
     je dmg_code
-  cmp [rcx+00], #21 // GL-52 De-Escalator Impact
+  cmp [rcx+00], #27 // GL-52 De-Escalator Impact
     je dmg_code
-  cmp [rcx+00], #158 // GL-52 De-Escalator ARC
+  cmp [rcx+00], #167 // GL-52 De-Escalator ARC
     je dmg_code
-  cmp [rcx+00], #297 // GL-52 De-Escalator Explosion
+  cmp [rcx+00], #311 // GL-52 De-Escalator Explosion
     je dmg_code
-  cmp [rcx+00], #39 // PLAS-45 Epoch Plasma Cannon 1 Impact min charge
+  cmp [rcx+00], #45 // PLAS-45 Epoch Plasma Cannon 1 Impact min charge
     je dmg_code
-  cmp [rcx+00], #40 // PLAS-45 Epoch Plasma Cannon 1 Impact max charge
+  cmp [rcx+00], #46 // PLAS-45 Epoch Plasma Cannon 1 Impact max charge
     je dmg_code
-  cmp [rcx+00], #41 // PLAS-45 Epoch Plasma Cannon 2 Impact min charge
+  cmp [rcx+00], #47 // PLAS-45 Epoch Plasma Cannon 2 Impact min charge
     je dmg_code
-  cmp [rcx+00], #42 // PLAS-45 Epoch Plasma Cannon 2 Impact max charge
+  cmp [rcx+00], #48 // PLAS-45 Epoch Plasma Cannon 2 Impact max charge
     je dmg_code
 
   //Laser
 
-  cmp [rcx+00], #401 // LAS-98
+  cmp [rcx+00], #420 // LAS-98
     je dmg_code
-  cmp [rcx+00], #154 // ARC-3 Arc Thrower
+  cmp [rcx+00], #163 // ARC-3 Arc Thrower
     je dmg_code
 
   //Orbital Canons
 
-  cmp [rcx+00], #175 // Orbital gatling barrage Projectile
+  cmp [rcx+00], #184 // Orbital gatling barrage Projectile
     je dmg_code
-  cmp [rcx+00], #298 // Orbital gatling barrage Explosion
+  cmp [rcx+00], #312 // Orbital gatling barrage Explosion
     je dmg_code
-  cmp [rcx+00], #314 // Orbital airburst Strike Projectile
+  cmp [rcx+00], #328 // Orbital airburst Strike Projectile
     je dmg_code
-  cmp [rcx+00], #151 // Orbital airburst Strike Shrapnel
+  cmp [rcx+00], #160 // Orbital airburst Strike Shrapnel
     je dmg_code
-  cmp [rcx+00], #210 // Orbital 120MM HE barrage Projectile
+  cmp [rcx+00], #219 // Orbital 120MM HE barrage Projectile
     je dmg_code
-  cmp [rcx+00], #359 // Orbital 120MM HE barrage Explosion
+  cmp [rcx+00], #373 // Orbital 120MM HE barrage Explosion
     je dmg_code
-  cmp [rcx+00], #211 // Orbital 380MM HE barrage Projectile
+  cmp [rcx+00], #220 // Orbital 380MM HE barrage Projectile
     je dmg_code
-  cmp [rcx+00], #359 // Orbital 380MM HE barrage Explosion
+  cmp [rcx+00], #373 // Orbital 380MM HE barrage Explosion
     je dmg_code
-  cmp [rcx+00], #359 // Orbital walking impact
+  cmp [rcx+00], #373 // Orbital walking impact
     je dmg_code
-  cmp [rcx+00], #404 // Orbital Laser
+  cmp [rcx+00], #423 // Orbital Laser
     je dmg_code
-  cmp [rcx+00], #212 // Orbital Napalm Barrage Impact
+  cmp [rcx+00], #221 // Orbital Napalm Barrage Impact
     je dmg_code
-  cmp [rcx+00], #213 // Orbital Napalm Barrage Explosion
+  cmp [rcx+00], #222 // Orbital Napalm Barrage Explosion
     je dmg_code
-  cmp [rcx+00], #214 // Orbital railcannon Projectile
+  cmp [rcx+00], #223 // Orbital railcannon Projectile
     je dmg_code
-  cmp [rcx+00], #358 // Orbital railcannon Explosion
+  cmp [rcx+00], #372 // Orbital railcannon Explosion
     je dmg_code
 
   //Hangar
 
-  cmp [rcx+00], #175 // Eagle strafing run Projectile
+  cmp [rcx+00], #184 // Eagle strafing run Projectile
     je dmg_code
-  cmp [rcx+00], #298 // Eagle strafing run Explosion
+  cmp [rcx+00], #312 // Eagle strafing run Explosion
     je dmg_code
-  cmp [rcx+00], #339 // Eagle Airstrike Projectile
+  cmp [rcx+00], #353 // Eagle Airstrike Projectile
     je dmg_code
-  cmp [rcx+00], #341 // Eagle Airstrike Explosion
+  cmp [rcx+00], #355 // Eagle Airstrike Explosion
     je dmg_code
-  cmp [rcx+00], #151 // Eagle Clusterbomb Projectile
+  cmp [rcx+00], #160 // Eagle Clusterbomb Projectile
     je dmg_code
-  cmp [rcx+00], #314 // Eagle Clusterbomb Explosion
+  cmp [rcx+00], #328 // Eagle Clusterbomb Explosion
     je dmg_code
-  cmp [rcx+00], #316 // Napalm SEAF/Eagle Explosion
+  cmp [rcx+00], #330 // Napalm SEAF/Eagle Explosion
     je dmg_code
-  cmp [rcx+00], #414 // Napalm SEAF/Eagle heavy burn
+  cmp [rcx+00], #433 // Napalm SEAF/Eagle heavy burn
     je dmg_code
   //cmp [rcx+00], #? // Eagle smoke
   //  je dmg_code
-  cmp [rcx+00], #197 // Eagle 110MM rocket Projectile
+  cmp [rcx+00], #206 // Eagle 110MM rocket Projectile
     je dmg_code
-  cmp [rcx+00], #326 // Eagle 110MM rocket Explosion
+  cmp [rcx+00], #340 // Eagle 110MM rocket Explosion
     je dmg_code
-  cmp [rcx+00], #339 // 500KG bomb Projectile
+  cmp [rcx+00], #353 // 500KG bomb Projectile
     je dmg_code
-  cmp [rcx+00], #366 // 500KG Bomb Explosion
+  cmp [rcx+00], #380 // 500KG Bomb Explosion
     je dmg_code
 
   //Bridge
 
-  cmp [rcx+00], #211 // Orbital precison strike Projectile
+  cmp [rcx+00], #220 // Orbital precison strike Projectile
     je dmg_code
-  cmp [rcx+00], #358 // Orbital precison strike Explosion
+  cmp [rcx+00], #372 // Orbital precison strike Explosion
     je dmg_code
-  cmp [rcx+00], #209 // Orbital Gas Impact
+  cmp [rcx+00], #218 // Orbital Gas Impact
     je dmg_code
-  cmp [rcx+00], #360 // Orbital Gas Explosion
+  cmp [rcx+00], #374 // Orbital Gas Explosion
     je dmg_code
-  cmp [rcx+00], #419 // Orbital Gas
+  cmp [rcx+00], #438 // Orbital Gas
     je dmg_code
   //cmp [rcx+00], #? // Orbital ems Projectile
   //  je dmg_code
-  cmp [rcx+00], #365 // Orbital ems Explosion
+  cmp [rcx+00], #379 // Orbital ems Explosion
     je dmg_code
   //cmp [rcx+00], #? // Orbital smoke
   //  je dmg_code
 
   //Turrets
 
-  cmp [rcx+00], #161 // HMG Emplacement
+  cmp [rcx+00], #170 // HMG Emplacement
     je dmg_code
-  cmp [rcx+00], #168 // Tesla tower
+  cmp [rcx+00], #177 // Tesla tower
     je dmg_code
-  cmp [rcx+00], #95 // Gatling Turret
+  cmp [rcx+00], #104 // Gatling Turret
     je dmg_code
-  cmp [rcx+00], #183 // Mortar turret Projectile
+  cmp [rcx+00], #192 // Mortar turret Projectile
     je dmg_code
-  cmp [rcx+00], #307 // Mortar turret Explosion
+  cmp [rcx+00], #321 // Mortar turret Explosion
     je dmg_code
-  cmp [rcx+00], #173 // Autocannon Sentry Projectile
+  cmp [rcx+00], #182 // Autocannon Sentry Projectile
     je dmg_code
-  cmp [rcx+00], #303 // Autocannon sentry Explosion
+  cmp [rcx+00], #317 // Autocannon sentry Explosion
     je dmg_code
-  cmp [rcx+00], #184 // Rocket sentry turret Projectile
+  cmp [rcx+00], #193 // Rocket sentry turret Projectile
     je dmg_code
-  cmp [rcx+00], #324 // Rocket sentry turret Explosion
+  cmp [rcx+00], #338 // Rocket sentry turret Explosion
     je dmg_code
-  cmp [rcx+00], #291 // A/M-23 EMS Mortar Sentry Impact
+  cmp [rcx+00], #379 // A/M-23 EMS Mortar Sentry Explosion
     je dmg_code
-  cmp [rcx+00], #365 // A/M-23 EMS Mortar Sentry Explosion
+  cmp [rcx+00], #382 // Mini Missile Silo 2 impact
     je dmg_code
-  cmp [rcx+00], #367 // Mini Missile Silo 2 explosion
+  cmp [rcx+00], #381 // Mini Missile Silo 2 explosion
     je dmg_code
 
   //Mines
 
-  cmp [rcx+00], #329 // Anti personnel mines
+  cmp [rcx+00], #343 // Anti personnel mines
     je dmg_code
-  cmp [rcx+00], #330 // Incendiary mines Explosion
+  cmp [rcx+00], #343 // Incendiary mines Explosion
     je dmg_code
-  cmp [rcx+00], #330 // Anti tank mines
+  cmp [rcx+00], #344 // Anti tank mines
     je dmg_code
 
   //Guard dogs
 
-  cmp [rcx+00], #397 // LAS-5 "Guard Dog" Rover
+  cmp [rcx+00], #416 // LAS-5 "Guard Dog" Rover
     je dmg_code
-  cmp [rcx+00], #77 // Rifle "Guard Dog" Rover
+  cmp [rcx+00], #85 // Rifle "Guard Dog" Rover
     je dmg_code
-  cmp [rcx+00], #20 // AX/TX-13 Guard Dog "Dog Breath"
+  cmp [rcx+00], #26 // AX/TX-13 Guard Dog "Dog Breath"
     je dmg_code
-  cmp [rcx+00], #157 // K-9 Guard Dog
+  cmp [rcx+00], #166 // K-9 Guard Dog
     je dmg_code
 
-  cmp [rcx+00], #381 // Hellbomb / SEAF Mini-Nuke
+  cmp [rcx+00], #400 // Hellbomb / SEAF Mini-Nuke
     je dmg_code
 
 
@@ -4940,6 +4908,40 @@ aobUnlock3:
 [DISABLE]
 
 
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>117532</ID>
+          <Description>"Inf last mag                                                                           (by gir489)"</Description>
+          <Color>0000FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+aobscanmodule(aob_SubtractAmmo,game.dll,8B D7 4C 8D 04 52 42 83 2C 81 01 48 8B 45)
+registersymbol(aob_SubtractAmmo)
+alloc(newmem_SubtractAmmo,1024)
+label(return_SubtractAmmo)
+
+newmem_SubtractAmmo:
+  mov edx,edi
+  lea r8,[rdx+rdx*2]
+  cmp [rcx+r8*4], #2
+  jle short @f
+    sub [rcx+r8*4], #1
+  @@:
+  mov rax,[rbp+38]
+  jmp return_SubtractAmmo
+
+aob_SubtractAmmo:
+  jmp far newmem_SubtractAmmo
+  nop
+return_SubtractAmmo:
+
+[DISABLE]
+aob_SubtractAmmo:
+  db 8B D7 4C 8D 04 52 42 83 2C 81 01 48 8B 45 38
+
+unregistersymbol(aob_SubtractAmmo)
+dealloc(newmem_SubtractAmmo)
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
@@ -5697,12 +5699,7 @@ unregisterSymbol("eagle500kg_explosion")
       </CheatEntries>
     </CheatEntry>
   </CheatEntries>
-  <UserdefinedSymbols>
-    <SymbolEntry>
-      <Name>AvatarClimbAddr</Name>
-      <Address>2369A5F454C</Address>
-    </SymbolEntry>
-  </UserdefinedSymbols>
+  <UserdefinedSymbols/>
   <LuaScript>if not syntaxcheck then
 
   function cycleFullCompact( sender, force )
