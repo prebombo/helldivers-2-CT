@@ -101,3 +101,9 @@ IDs<br>
 ------29/08/2025------<br>
 IDs<br>
 Inf Stims<br>
+------04/09/2025------<br>
+IDs<br>
+Inf last Stim<br>
+Inf last Mag<br>
+Inf last grenade<br>
+Fast straction<br>
